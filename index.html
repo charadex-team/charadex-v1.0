@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- About Your Site                                                   -->
+  <!-- ----------------------------------------------------------------- -->
+
+  <!-- Website's icon in the browser -->
+  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+
+  <!-- Title of your site -->
+  <title>Charadex</title>
+
+  <!-- Description of your site -->
+  <meta name="description" content="An automated masterlist for your species!">
+
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Styles                                                            -->
+  <!-- ----------------------------------------------------------------- -->
+  
+  <!-- Bootstrap CSS -->
+  <!-- Using Bootstrap 4.5 because its closest to Toyhou.se's current version -->
+  <!-- https://getbootstrap.com/docs/4.5/getting-started/introduction/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Optional Styles                                                   -->
+  <!-- ----------------------------------------------------------------- -->
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="styles/charadex.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <script>
+    /* ------------------------------------------------------------------- */
+    /* Options
+    /* You can remove the items you're not using
+    /* ------------------------------------------------------------------- */
+    let yourOptions = {
+
+      // Sheet Information
+      sheetID: "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
+      sheetPage: "Public Masterlist",
+
+      // Amount of items shown on the page. Default is 12.
+      itemAmount: 12,
+
+      // Ascending  (1 2 3) || asc
+      // Descending (3 2 1) || desc
+      itemOrder: "desc",
+
+      // Creates 1 URL parameter that will filter the list based on a
+      // column of your choosing.
+      urlFilterParam: 'species',
+
+    };
+  </script>
+
+  <!-- --------------------------------------------------------------------
+  <-- Navbar 
+  <-------------------------------------------------------------------- -->
+  <nav class="nav navbar navbar-expand-md py-4">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="#"><i class="bi bi-box2-heart-fill"></i> Charadex</a>
+    
+      <!-- Toggle -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#charadexnav">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="charadexnav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown"><i class="fas fa-circle-question d-md-inline d-none"></i><span class="d-md-none">Resources</span></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/releases/latest">Download Latest</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki">Wiki</a>
+              <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Getting-Started">Getting Started</a>
+              <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Sheet-Set-Up">Sheet Set-Up</a>
+              <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Site-Set-Up">Site Set-Up</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="https://github.com/cheeriko/charadex/tree/main/custom_style_library">Custom Style Library</a>
+              <a class="dropdown-item d-none" target="_blank" href="https://cheeriko.github.io/charadex/quickdex/">Quickdex</a>
+            </div>
+          </li>
+          <li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/cheeriko/charadex"><i class="fas fa-heart d-md-inline d-none"></i><span class="d-md-none">Quickdex</span></a></li>
+          <li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/cheeriko/charadex"><i class="fab fa-github d-md-inline d-none"></i><span class="d-md-none">Github</span></a></li>
+          <li class="nav-item"><a class="nav-link" target="_blank" href="https://ko-fi.com/cheeriko"><i class="fas fa-mug-saucer d-md-inline d-none"></i><span class="d-md-none">Support</span></a></li>
+          <li class="nav-item"><a class="nav-link" href="javascript:void(0)" id="toggle"><i class="bi bi-emoji-sunglasses-fill d-md-inline d-none"></i><span class="d-md-none">Dark Mode</span></a></li>
+        </ul>
+      </div>
+    
+    </div>
+  </nav>
+
+  <div class="spinner-border m-auto" id="loading"></div>
+  
+  <!-- --------------------------------------------------------------------
+  <-- Masterlist
+  <-------------------------------------------------------------------- -->
+  <div class="container masterlist-container d-flex flex-column py-md-5 py-4">
+
+    <!-- URL Param Filter Buttons Render
+    <-- Remove this if you'd like to make your own buttons instead!
+    ------------------------------------------------------------------- -->
+    <div class="card p-4 mb-4" style="display:none;" id="filter-buttons">
+      <ul class="row no-gutters list list-unstyled m-n2"></ul>
+    </div>
+
+
+    <!-- Gallery Container
+    ------------------------------------------------------------------- -->
+    <div id="charadex-gallery">
+
+
+      <!-- Filters
+      ----------------------------------------------------------------- -->
+      <div class="card p-4 mb-4 sticky-top" style="display:none;" id="charadex-filters">
+        <div class="row no-gutters m-n2">
+
+          <!-- Custom Filter (Optional) 
+          <-- Fill in the <option></options> with the items you want it to filter
+              through. Make sure that filter="" matches the column with said items.
+              Do not remove 'All' -->
+          <div class="col-md-2 col-12 p-1">
+            <select class="form-control bg-faded" filter="designtype" id="filter">
+              <option>All</option>
+              <option>Official Design</option>
+              <option>Guest Design</option>
+              <option>MYO Design</option>
+            </select>
+          </div>
+
+          <!-- Search Filter (Optional)
+          <-- Fill in the <option></options> with the items you want it to filter
+              through. 
+              Do not remove 'All' -->
+          <div class="col-md-2 col-3 p-1">
+            <select class="form-control bg-faded" id="search-filter">
+              <option>All</option>
+              <option>Worth</option>
+              <option>Owner</option>
+              <option>Designer</option>
+              <option>Artist</option>
+            </select>
+          </div>
+
+          <!-- Search Bar (Optional) -->
+          <div class="col-md-3 col-9 p-1">
+            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
+          </div>
+
+          <!-- Pagination -->
+          <div class="col-md-5 col-12 d-flex justify-content-md-end justify-content-center p-1">
+            <div class="nav d-flex">
+              <div class="btn-prev page-item"><a class="page-link"><i class="bi bi-chevron-left"></i></a></div>
+              <ul class="pagination pagination-top justify-content-center m-0"></ul>
+              <div class="btn-next page-item"><a class="page-link"><i class="bi bi-chevron-right"></i></a></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+      <!-- Repeated Items Render Here
+      ----------------------------------------------------------------- -->
+      <ul class="row no-gutters list list-unstyled m-n2"></ul>
+
+    </div>
+
+  </div>
+
+
+  
+  <!-- --------------------------------------------------------------------
+  <-- Footer
+  <-- Please do not remove the credit
+  <-------------------------------------------------------------------- -->
+  <div class="footer p-md-5 p-4">
+    <div class="container">
+      
+      <div class="row no-gutters m-n3">
+
+        <div class="col-md p-3">
+          <h5 class="text-primary">About</h5>
+          <div class="pl-3">
+            <p>After Eclipse took out DeviantArt, I made Charadex to help other species creators organize and keep easier track of their masterlist.</p>
+        
+            <p>And it's not limited to species! If you just sell adopts or what to make a little organizer for your characters - this might help. I use it to keep track of role play AU's and my own designs too!</p>
+        
+            <p>© <i>2022 Cheeriko All Rights Reserved</i></p>
+          </div>
+        </div>
+  
+        <div class="col-md-auto p-3">
+          <h5 class="text-primary">Find Me</h5>
+          <div class="pl-3">
+            <a target="_blank" href="https://toyhou.se/cheeriko"><i class="fas fa-home fa-fw"></i> Toyhou.se</a><br>
+            <a target="_blank" href="https://www.deviantart.com/cheeriko"><i class="fab fa-deviantart fa-fw"></i> Deviantart</a><br>
+            <a target="_blank" href="https://ko-fi.com/cheeriko"><i class="fas fa-coffee fa-fw"></i> Ko-Fi</a><br>
+            <a target="_blank" href="https://github.com/cheeriko"><i class="fab fa-github fa-fw"></i> Github</a><br>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+  <!-- --------------------------------------------------------------------
+  <-- Repeat Items
+  <-- Do not remove 'display:none;'
+  <-- Edit these to your liking
+  <-------------------------------------------------------------------- -->
+  <div style="display:none;">
+
+
+    <!-- URL Param Filter Buttons
+    ------------------------------------------------------------------- -->
+    <li class="col-lg col-sm-6 p-2" id="charadex-filter-buttons">
+      <a class="btn btn-primary d-block link title" href=""></a>
+    </li>
+                
+
+    <!-- Gallery Items
+    ------------------------------------------------------------------- -->
+    <li class="col-lg-3 col-sm-6 p-2" id="charadex-entries">
+      <a class="card h-100 link" href="">
+        <h5 class="card-header text-center id"></h5>
+        <div class="card-body d-flex flex-fill">
+          <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+        </div>
+      </a>
+    </li>
+
+
+    <!-- Singular Item
+    ------------------------------------------------------------------- -->
+    <li class="col-12 p-2" id="charadex-card">
+
+      <!-- Prev & Next Topbar -->
+      <div class="card p-4 mb-4">
+        <div class="row no-gutters m-n1 text-sans-serif font-weight-bold text-uppercase">
+          <div class="col-md-4 col-12 text-center p-1 order-md-1"><a id="masterlistLink" href="">Masterlist</a></div>
+          <div class="col-md-4 col-6 p-1"><a id="entryPrev" href=""><i class="bi bi-chevron-left mr-2"></i><span></span></a></div>
+          <div class="col-md-4 col-6 text-right p-1 order-md-1"><a id="entryNext" href=""><span></span><i class="bi bi-chevron-right ml-2"></i></a></div>
+        </div>
+      </div>
+
+      <!-- Actual Card -->
+      <div class="card">
+
+        <!-- Header -->
+        <h2 class="card-header text-center p-4 id"></h2>
+
+
+        <!--Main Info -->
+        <div class="row no-gutters p-md-5 p-4">
+
+
+          <!-- Image -->
+          <div class="col-md-6 p-3">
+            <div class="mx-auto w-100 text-center" oncontextmenu="return false">
+              <img class="image img-fluid" src="">
+            </div>
+          </div>
+
+
+          <!-- Information List -->
+          <div class="col-md-6 p-3">
+            
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Owner</b>
+              <span class="owner"></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Artist</b>
+              <span class="artist"></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Designer</b>
+              <span class="designer"></span>
+            </div>
+              
+            <hr>
+  
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Worth</b>
+              <span>$<span class="worth"></span></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Status</b>
+              <span class="status"></span>
+            </div>
+              
+            <hr>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Design Type</b>
+              <span class="designtype"></span>
+            </div>
+              
+            <hr>
+              
+            <!-- Item -->
+            <div class="">
+              <b class="text-muted">Notes</b>
+              <div class="pl-3">
+                <span class="notes"></span>
+              </div>
+            </div>
+
+            <!-- Add more list items above this line-->
+          </div>
+        </div>
+      </div> 
+    </li>
+
+
+  </div>
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- JS                                                                -->
+  <!-- ----------------------------------------------------------------- -->
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <!-- List.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
+
+  <!-- Charadex Script -->
+  <script src="styles/charadex.js"></script>
+  <script>charadex(yourOptions);</script>
+
+
+</body>
+</html>
