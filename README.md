@@ -8,7 +8,7 @@ Please note I'm not an actual dev and have absolutely no formal training. I've j
 
 &nbsp;
 
-<p align="center">Do not download from this page - please download the latest version <a href="https://github.com/cheeriko/charadex/releases/latest">here</a>.</p>
+<p align="center">Do not download from this page - please download the latest version <a href="https://github.com/charadex-team/charadex-v1.0/releases/latest">here</a>.</p>
 
 &nbsp;
 
@@ -16,19 +16,19 @@ Please note I'm not an actual dev and have absolutely no formal training. I've j
 
 **Set Ups**
 
-- [Download](https://github.com/cheeriko/charadex/releases/latest)
-- [Getting Started](https://github.com/cheeriko/charadex/wiki/Getting-Started)
-- [Sheet Set-Up](https://github.com/cheeriko/charadex/wiki/Sheet-Set-Up)
-- [Site Set-Up](https://github.com/cheeriko/charadex/wiki/Site-Set-Up)
+- [Download](https://github.com/charadex-team/charadex-v1.0/releases/latest)
+- [Getting Started](https://charadex.com/wiki/Getting-Started)
+- [Sheet Set-Up](https://charadex.com/wiki/Sheet-Set-Up)
+- [Site Set-Up](https://charadex.com/wiki/Site-Set-Up)
 
 **Other Information**
 
-- [FAQ](https://github.com/cheeriko/charadex/wiki#faq)
-- [Credits](https://github.com/cheeriko/charadex/wiki#credits-for-framework)
-- [License](https://github.com/cheeriko/charadex/wiki#license)
-- [Change Log](https://github.com/cheeriko/charadex/wiki/Change-Log)
+- [FAQ](https://charadex.com/wiki#faq)
+- [Credits](https://charadex.com/wiki#credits-for-framework)
+- [License](https://charadex.com/wiki#license)
+- [Change Log](https://charadex.com/wiki/Change-Log)
 
 **Resources**
 
-- [Live Example](https://cheeriko.github.io/charadex/)
-- [Quickdex](https://cheeriko.github.io/charadex/quickdex/)
+- [Live Example](https://charadex.com/example)
+- [Quickdex](https://charadex.com/quickdex)
