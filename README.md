@@ -17,18 +17,17 @@ Please note I'm not an actual dev and have absolutely no formal training. I've j
 **Set Ups**
 
 - [Download](https://github.com/charadex-team/charadex-v1.0/releases/latest)
-- [Getting Started](https://charadex.com/wiki/Getting-Started)
-- [Sheet Set-Up](https://charadex.com/wiki/Sheet-Set-Up)
-- [Site Set-Up](https://charadex.com/wiki/Site-Set-Up)
+- [Wiki](https://charadex.com/wiki)
+- [Getting Started](https://charadex.com/wiki/getting-started)
+- [Sheet Set-Up](https://charadex.com/wiki/sheet-set-up)
+- [Site Set-Up](https://charadex.com/wiki/site-set-up)
 
 **Other Information**
 
 - [FAQ](https://charadex.com/wiki#faq)
-- [Credits](https://charadex.com/wiki#credits-for-framework)
+- [Credits](https://charadex.com/wiki#credits)
 - [License](https://charadex.com/wiki#license)
-- [Change Log](https://charadex.com/wiki/Change-Log)
 
 **Resources**
 
-- [Live Example](https://charadex.com/example)
 - [Quickdex](https://charadex.com/quickdex)
