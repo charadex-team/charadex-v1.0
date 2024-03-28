@@ -32,9 +32,51 @@ const scrubData = (sheetData) => {
 /* ================================================================ */
 /* Prev/Next in Pagination
 /* ================================================================ */
-let prevNextButtons = () => {
+let charadexPrevNext = () => {
     $('.btn-next').on('click', () => { $('.pagination .active').next().children('a')[0].click(); })
     $('.btn-prev').on('click', () => { $('.pagination .active').prev().children('a')[0].click(); })
+}
+
+
+
+/* ================================================================ */
+/* Search Filter
+/* ================================================================ */
+let charadexSearch = (info) => {
+    $("#search-filter").on('change', () => {
+        let selection = [$("#search-filter option:selected").text().toLowerCase()];
+        if (selection && !selection.includes('all')) {
+            $('#search').on('keyup', () => {
+                let searchString = $('#search').val();
+                info.search(searchString, selection);
+            });
+        };
+    });
+};
+
+/* ================================================================ */
+/* Custom Filter
+/* ================================================================ */
+let charadexFilter = (info) => {
+    $("#filter").on('change', () => {
+        let selection = $("#filter option:selected").text().toLowerCase();
+        let filterType = $("#filter").attr('filter');
+        if (selection && !selection.includes('all')) {
+            info.filter(function (i) { return i.values()[filterType].toLowerCase() == selection; });
+        } else {
+            info.filter();
+        }
+    });
+};
+
+
+/* ================================================================ */
+/* Function for Single Card
+/* ================================================================ */
+let charadexListFunctions = (dex) => {
+    charadexFilter(dex);
+    charadexSearch(dex);
+    charadexPrevNext();
 }
 
 
@@ -198,7 +240,7 @@ const charadex = (options) => {
                 }
 
                 // Back to masterlist (keeps species parameter)
-                $("#masterlistLink").attr("href", url.href.split('?id')[0].split('&id')[0]);
+                $("#masterlistLink").attr("href", cleanUrl);
 
             })();
 
@@ -214,7 +256,7 @@ const charadex = (options) => {
                 };
 
                 // Filtering out singular card
-                let designID = urlParams.get('id');
+                let designID = urlParams.get(charadexInfo.singleItemParam);
                 sheetArray = sheetArray.filter((i) => i.id.includes(designID))[0];
 
                 // Creates singular item
@@ -250,34 +292,7 @@ const charadex = (options) => {
                 // Sort based on ID
                 charadex.sort("orderID", { order: charadexInfo.itemOrder, })
 
-                /* ================================================================ */
-                /* Custom Filter
-                /* ================================================================ */
-                $("#filter").on('change', () => {
-                    let selection = $("#filter option:selected").text().toLowerCase();
-                    let filterType = $("#filter").attr('filter');
-                    if (selection && !selection.includes('all')) {
-                        charadex.filter(function (i) { return i.values()[filterType].toLowerCase() == selection; });
-                    } else {
-                        charadex.filter();
-                    }
-                });
-
-
-                /* ================================================================ */
-                /* Search Filter
-                /* ================================================================ */
-                $("#search-filter").on('change', () => {
-                    let selection = [$("#search-filter option:selected").text().toLowerCase()];
-                    if (selection && !selection.includes('all')) {
-                        $('#search').on('keyup', () => {
-                            let searchString = $('#search').val();
-                            charadex.search(searchString, selection);
-                        });
-                    }
-                });
-
-                prevNextButtons();
+                charadexListFunctions(charadex);
 
             })();
 
