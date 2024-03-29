@@ -3,7 +3,6 @@
 ======================================================================= */
 const scrubData = (sheetData) => {
 
-    const scrubbedData = [];
     cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
 
     const col = [];
@@ -15,16 +14,29 @@ const scrubData = (sheetData) => {
         });
     }
 
-    cleanJson.table.rows.forEach((info) => {
+
+    // Scrubs columns and puts them in a readable object
+    const scrubbedData = [];
+    cleanJson.table.rows.forEach((info, num) => {
         const row = {};
         const isBoolean = val => 'boolean' === typeof val;
         col.forEach((ele, ind) => {
-            row[ele] = info.c[ind] != null ? info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
+            row[ele] = info.c[ind] != null ?  info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
         });
+        row["orderID"] = num + 1;
         scrubbedData.push(row);
     });
 
-    return scrubbedData;
+
+    // Removes any items that are supposed ot be hidden
+    const publicData = [];
+    scrubbedData.forEach((k, v) => {
+        if(!scrubbedData[v]['hide']) {
+            publicData.push(scrubbedData[v]);
+        };
+    });
+
+    return publicData;
 
 }
 
@@ -91,6 +103,7 @@ const charadex = (options) => {
     ======================================================================= */
     let userOptions = options || {};
     let url = new URL(window.location.href);
+    let baseURL = window.location.origin + window.location.pathname;
     const urlParams = new URLSearchParams(window.location.search);
 
 
@@ -103,8 +116,8 @@ const charadex = (options) => {
         itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
         itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
         searchParams: userOptions.searchParams ? userOptions.searchParams : ['id', 'owner', 'artist', 'designer'],
-        singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
         singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
+        singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
         urlFilterParam: userOptions.urlFilterParam ? userOptions.urlFilterParam.toLowerCase().replace(/\s/g, '') : false,
     };
 
@@ -164,20 +177,14 @@ const charadex = (options) => {
 
         })();
 
-
         /* ================================================================ */
         /* Modifying Array
         /* ================================================================ */
         (() => {
 
-            for (let i = 0; i < sheetArray.length; i++){
-
-                // Add vanila ID so it'll sort nicer
-                sheetArray[i].orderID = i + 1;
-
-                // Adding link
-                sheetArray[i].cardlink = url.href + preParam + sheetArray[i][charadexInfo.singleItemParamKey];
-
+            // Adding link to card
+            for (var i in sheetArray){
+                sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][charadexInfo.singleItemParamVal];
             }
 
             // Filters out information based on URL parameters
@@ -205,39 +212,33 @@ const charadex = (options) => {
             // Same for images
             itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
 
-            console.log(itemArray);
-
             return itemArray;
 
         };
 
 
-        if (urlParams.has('id')) {
+        if (urlParams.has(charadexInfo.singleItemParamKey)) {
 
             /* ================================================================ */
             /* Prev & Next for Single Card
             /* ================================================================ */
             (() => {
 
-                // Clean up the URL of any nastiness
-                let cleanUrl = url.href.split(`?${charadexInfo.singleItemParamVal}`)[0].split(`&${charadexInfo.singleItemParamVal}`)[0];
-
                 for (let i = 0; i < sheetArray.length; i++){
-                    if (sheetArray[i].orderID == urlParams.get(charadexInfo.singleItemParamVal).replace(/\D+/gm, "")) {
+                    if (sheetArray[i].orderID == urlParams.get(charadexInfo.singleItemParamKey).replace(/\D+/gm, "")) {
 
                         // Prev
                         if (sheetArray[i - 1]) {
-                            $("#entryPrev").attr("href", cleanUrl + preParam + sheetArray[i - 1][charadexInfo.singleItemParamKey]);
-                            $("#entryPrev span").text(sheetArray[i - 1][charadexInfo.singleItemParamKey]);
+                            $("#entryPrev").attr("href", baseURL + preParam + sheetArray[i - 1][charadexInfo.singleItemParamVal]);
+                            $("#entryPrev span").text(sheetArray[i - 1][charadexInfo.singleItemParamVal]);
                         } else {
                             $("#entryPrev i").remove();
                         }
 
                         // Next
                         if (sheetArray[i + 1]) {
-                            console.log(sheetArray[i + 1]);
-                            $("#entryNext").attr("href", cleanUrl + preParam + sheetArray[i + 1][charadexInfo.singleItemParamKey]);
-                            $("#entryNext span").text(sheetArray[i + 1][charadexInfo.singleItemParamKey]);
+                            $("#entryNext").attr("href", baseURL + preParam + sheetArray[i + 1][charadexInfo.singleItemParamVal]);
+                            $("#entryNext span").text(sheetArray[i + 1][charadexInfo.singleItemParamVal]);
                         } else {
                             $("#entryNext i").remove();
                         }
@@ -246,7 +247,7 @@ const charadex = (options) => {
                 }
 
                 // Back to masterlist (keeps species parameter)
-                $("#masterlistLink").attr("href", cleanUrl);
+                $("#masterlistLink").attr("href", baseURL);
 
             })();
 
@@ -262,8 +263,8 @@ const charadex = (options) => {
                 };
 
                 // Filtering out singular card
-                let designID = urlParams.get(charadexInfo.singleItemParamVal);
-                sheetArray = sheetArray.filter((i) => i.id.includes(designID))[0];
+                let pageIDVal = urlParams.get(charadexInfo.singleItemParamVal);
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.singleItemParamKey].includes(pageIDVal))[0];
 
                 // Creates singular item
                 let charadexItem = new List("charadex-gallery", itemOptions, sheetArray);
@@ -307,6 +308,4 @@ const charadex = (options) => {
 
     })
 };
-
-
 
