@@ -71,16 +71,22 @@ let charadexPrevNext = () => {
 /* ================================================================ */
 /* Search Filter
 /* ================================================================ */
-let charadexSearch = (info) => {
-    $("#search-filter").on('change', () => {
-        let selection = [$("#search-filter option:selected").text().toLowerCase()];
-        if (selection && !selection.includes('all')) {
-            $('#search').on('keyup', () => {
-                let searchString = $('#search').val();
-                info.search(searchString, selection);
-            });
-        };
+let charadexSearch = (info, searchArray) => {
+
+    let arr = searchArray.map(function(v) {
+        return v.toLowerCase().replace(/\s/g, "");
     });
+
+    $('#search').on('keyup', () => {
+        let selection = $("#search-filter option:selected").val();
+        let searchString = $('#search').val();
+        if (selection && selection != 'all') {
+            info.search(searchString, [selection]);
+        } else {
+            info.search(searchString, arr);
+        }
+    });
+
 };
 
 
@@ -88,28 +94,16 @@ let charadexSearch = (info) => {
 /* ================================================================ */
 /* Custom Filter
 /* ================================================================ */
-let charadexFilter = (info) => {
+let charadexFilter = (info, filterKey) => {
     $("#filter").on('change', () => {
         let selection = $("#filter option:selected").text().toLowerCase();
-        let filterType = $("#filter").attr('filter');
         if (selection && !selection.includes('all')) {
-            info.filter(function (i) { return i.values()[filterType].toLowerCase() == selection; });
+            info.filter(function (i) { return i.values()[filterKey].toLowerCase() == selection; });
         } else {
             info.filter();
         }
     });
 };
-
-
-
-/* ================================================================ */
-/* Function for Single Card
-/* ================================================================ */
-let charadexListFunctions = (dex) => {
-    charadexFilter(dex);
-    charadexSearch(dex);
-    charadexPrevNext();
-}
 
 
 
@@ -134,10 +128,11 @@ const charadexLarge = (options) => {
         sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Public Masterlist",
         itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
         itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
-        searchParams: userOptions.searchParams ? userOptions.searchParams : ['id', 'owner', 'artist', 'designer'],
+        filterParams: userOptions.filterParams ? userOptions.filterParams : false,
+        searchParams: userOptions.searchParams ? userOptions.searchParams : false,
+        btnFilterParam: userOptions.btnFilterParam ? userOptions.btnFilterParam.toLowerCase().replace(/\s/g, '') : false,
         singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
         singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
-        urlFilterParam: userOptions.urlFilterParam ? userOptions.urlFilterParam.toLowerCase().replace(/\s/g, '') : false,
     };
 
 
@@ -153,7 +148,7 @@ const charadexLarge = (options) => {
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-        let preParam = url.search.includes(charadexInfo.urlFilterParam) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
+        let preParam = url.search.includes(charadexInfo.btnFilterParam) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
 
 
         /* ================================================================ */
@@ -161,17 +156,17 @@ const charadexLarge = (options) => {
         /* ================================================================ */
         (() => {
 
-            if (sheetArray[0].hasOwnProperty(charadexInfo.urlFilterParam)) {
+            if (sheetArray[0].hasOwnProperty(charadexInfo.btnFilterParam)) {
 
                 $('#filter-buttons').show();
 
                 // Creates Param Object Array
                 let urlParamArray = [];
-                const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.urlFilterParam]))];
+                const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.btnFilterParam]))];
                 uniqueArray.forEach((i) => {
                     urlParamArray.push({
                         title: i,
-                        link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.urlFilterParam + '=' + i.toLowerCase(),
+                        link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.btnFilterParam + '=' + i.toLowerCase(),
                     });
                 });
 
@@ -205,8 +200,8 @@ const charadexLarge = (options) => {
             }
 
             // Filters out information based on URL parameters
-            if (urlParams.has(charadexInfo.urlFilterParam) && charadexInfo.urlFilterParam) { 
-                sheetArray = sheetArray.filter((i) => i[charadexInfo.urlFilterParam].toLowerCase() === urlParams.get(charadexInfo.urlFilterParam).toLowerCase()); 
+            if (urlParams.has(charadexInfo.btnFilterParam) && charadexInfo.btnFilterParam) { 
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.btnFilterParam].toLowerCase() === urlParams.get(charadexInfo.btnFilterParam).toLowerCase()); 
             }
 
         })();
@@ -292,33 +287,83 @@ const charadexLarge = (options) => {
             /* ================================================================ */
             /* Charadex Gallery
             /* ================================================================ */
+
+            // Add needed filters
+            if (charadexInfo.filterParams) {
+
+                let filterSelect = $('#filter');
+
+                let filterArray = charadexInfo.filterParams;
+                filterArray.unshift("All");
+                
+                filterArray.forEach((element) => {
+
+                    let option_elem = document.createElement('option');
+                    
+                    option_elem.value = element.toLowerCase().replace(/\s/g, "");
+                    option_elem.textContent = element;
+                    
+                    filterSelect.append(option_elem);
+
+                });
+
+                $('#filter').parent().show();
+
+            }
+
+            // Add needed filters
+            if (charadexInfo.searchParams) {
+
+                let filterSelect = $('#search-filter');
+
+                let filterArray = charadexInfo.searchParams;
+                filterArray.unshift("All");
+                
+                filterArray.forEach((element) => {
+
+                    let option_elem = document.createElement('option');
+                    
+                    option_elem.value = element.toLowerCase().replace(/\s/g, "");
+                    option_elem.textContent = element;
+                    
+                    filterSelect.append(option_elem);
+
+                });
+
+                $('#search-filter').parent().show();
+
+            }
+
+
+            // Show Filters
             $('#charadex-filters').show();
 
-            (() => {
 
-                let galleryOptions = {
-                    item: 'charadex-entries',
-                    valueNames: sheetArrayKeys(),
-                    searchColumns: charadexInfo.searchParams,
-                    page: charadexInfo.itemAmount,
-                    pagination: [{
-                        innerWindow: 1,
-                        left: 1,
-                        right: 1,
-                        item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                        paginationClass: 'pagination-top',
-                    }],
-                };
+            // Create the Gallery
+            let galleryOptions = {
+                item: 'charadex-entries',
+                valueNames: sheetArrayKeys(),
+                searchColumns: charadexInfo.searchParams,
+                page: charadexInfo.itemAmount,
+                pagination: [{
+                    innerWindow: 1,
+                    left: 1,
+                    right: 1,
+                    item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                    paginationClass: 'pagination-top',
+                }],
+            };
 
-                let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-                // Sort based on ID
-                charadex.sort("orderID", { order: charadexInfo.itemOrder, })
+            // Sort based on ID
+            charadex.sort("orderID", { order: charadexInfo.itemOrder, })
 
-                // Calling all functions here
-                charadexListFunctions(charadex);
+            // Calling all functions here
+            charadexFilter(charadex, 'designtype');
+            charadexSearch(charadex, charadexInfo.searchParams);
+            charadexPrevNext();
 
-            })();
 
         }
 

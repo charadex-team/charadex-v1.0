@@ -266,12 +266,11 @@ a:active {
   background-color: var(--cd-navbar-background-color) !important;
   font-family: var(--cd-navbar-font-family) !important;
   z-index: 2000;
-  font-size: 125%;
 }
 
 .navbar .navbar-brand {
   color: var(--cd-navbar-brand-color) !important;
-  font-size: 125%;
+  font-size: 2rem;
 }
 
 .navbar .navbar-brand:hover, 
