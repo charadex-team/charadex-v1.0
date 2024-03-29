@@ -124,6 +124,11 @@ let addAll = (key) => {
     return key;
 };
 
+
+
+/* ================================================================ */
+/* Add options to a select element
+/* ================================================================ */
 let addOptions = (arr, filter) => {
     arr.forEach((val) => {
         let optionHTML = document.createElement('option');
@@ -132,6 +137,8 @@ let addOptions = (arr, filter) => {
         filter.append(optionHTML);
     });
 };
+
+
 
 /* ==================================================================== */
 /* Charadex
@@ -158,7 +165,6 @@ const charadexLarge = (options) => {
         filterParams: userOptions.filterParams ? addAll(userOptions.filterParams) : false,
         searchParams: userOptions.searchParams ? addAll(userOptions.searchParams) : false,
         btnFilterCol: userOptions.btnFilterCol ? keyCreator(userOptions.btnFilterCol) : false,
-        btnFilterParam: userOptions.btnFilterParam ? addAll(userOptions.btnFilterParam) : false,
         singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
         singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
     };
@@ -186,23 +192,18 @@ const charadexLarge = (options) => {
 
             if (sheetArray[0].hasOwnProperty(charadexInfo.btnFilterCol)) {
 
-                $('#filter-buttons').show();
-
                 // Creates Param Object Array
                 let urlParamArray = [];
                 const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.btnFilterCol]))];
                 uniqueArray.forEach((i) => {
                     urlParamArray.push({
                         title: i,
-                        link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.btnFilterCol + '=' + i.toLowerCase(),
+                        link: baseURL + '?' + charadexInfo.btnFilterCol + '=' + i.toLowerCase(),
                     });
                 });
 
                 // Adds All Button
-                urlParamArray.unshift({ title: 'All', link: url.href.split('&')[0].split('?')[0] });
-
-                // Sorts list
-                urlParamArray.sort((a, b) => { return a.title - b.title });
+                urlParamArray.unshift({ title: 'All', link: baseURL });
 
                 // List.js options
                 let buttonOptions = {
@@ -212,6 +213,9 @@ const charadexLarge = (options) => {
 
                 // Creates singular item
                 let urlParamButtons = new List("filter-buttons", buttonOptions, urlParamArray);
+
+                // Show Buttons
+                $('#filter-buttons').show();
 
             }
 
@@ -331,29 +335,32 @@ const charadexLarge = (options) => {
             $('#charadex-filters').show();
 
             // Create the Gallery
-            let galleryOptions = {
-                item: 'charadex-entries',
-                valueNames: sheetArrayKeys(),
-                searchColumns: charadexInfo.searchParams,
-                page: charadexInfo.itemAmount,
-                pagination: [{
-                    innerWindow: 1,
-                    left: 1,
-                    right: 1,
-                    item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                    paginationClass: 'pagination-top',
-                }],
-            };
+            (() => {
+                let galleryOptions = {
+                    item: 'charadex-entries',
+                    valueNames: sheetArrayKeys(),
+                    searchColumns: charadexInfo.searchParams,
+                    page: charadexInfo.itemAmount,
+                    pagination: [{
+                        innerWindow: 1,
+                        left: 1,
+                        right: 1,
+                        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                        paginationClass: 'pagination-top',
+                    }],
+                };
 
-            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+                let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-            // Sort based on ID
-            charadex.sort("orderID", { order: charadexInfo.itemOrder, })
+                // Sort based on ID
+                charadex.sort("orderID", { order: charadexInfo.itemOrder, })
 
-            // Calling all functions here
-            charadexFilter(charadex, charadexInfo.filterCol);
-            charadexSearch(charadex, charadexInfo.searchParams);
-            charadexPrevNext();
+                // Calling all functions here
+                charadexFilter(charadex, charadexInfo.filterCol);
+                charadexSearch(charadex, charadexInfo.searchParams);
+                charadexPrevNext();
+
+            })();
 
 
         }
