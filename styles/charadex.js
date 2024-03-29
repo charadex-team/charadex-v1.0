@@ -1,10 +1,28 @@
 /* ==================================================================== */
+/* URLs
+======================================================================= */
+let url = new URL(window.location.href);
+let baseURL = window.location.origin + window.location.pathname;
+let folderURL = window.location.origin + '/' + window.location.pathname.split("/")[1];
+
+
+
+/* ==================================================================== */
+/* Load Header and Footer
+======================================================================= */
+$.get(folderURL + '/includes/header.html', function (data) {$('#header').replaceWith(data);});
+$.get(folderURL + '/includes/footer.html', function (data) {$('#footer').replaceWith(data);});
+
+
+
+/* ==================================================================== */
 /* Clean Sheet Data
 ======================================================================= */
 const scrubData = (sheetData) => {
 
     cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
 
+    // Grab column headers
     const col = [];
     if (cleanJson.table.cols[0].label) {
         cleanJson.table.cols.forEach((headers) => {
@@ -13,7 +31,6 @@ const scrubData = (sheetData) => {
             }
         });
     }
-
 
     // Scrubs columns and puts them in a readable object
     const scrubbedData = [];
@@ -27,7 +44,6 @@ const scrubData = (sheetData) => {
         scrubbedData.push(row);
     });
 
-
     // Removes any items that are supposed ot be hidden
     const publicData = [];
     scrubbedData.forEach((k, v) => {
@@ -39,6 +55,7 @@ const scrubData = (sheetData) => {
     return publicData;
 
 }
+
 
 
 /* ================================================================ */
@@ -66,6 +83,8 @@ let charadexSearch = (info) => {
     });
 };
 
+
+
 /* ================================================================ */
 /* Custom Filter
 /* ================================================================ */
@@ -82,6 +101,7 @@ let charadexFilter = (info) => {
 };
 
 
+
 /* ================================================================ */
 /* Function for Single Card
 /* ================================================================ */
@@ -92,18 +112,17 @@ let charadexListFunctions = (dex) => {
 }
 
 
+
 /* ==================================================================== */
 /* Charadex
 ======================================================================= */
-const charadexComplex = async (options) => {
+const charadexComplex = (options) => {
 
 
     /* ==================================================================== */
     /* Options & URL
     ======================================================================= */
     let userOptions = options || {};
-    let url = new URL(window.location.href);
-    let baseURL = window.location.origin + window.location.pathname;
     const urlParams = new URLSearchParams(window.location.search);
 
 
@@ -125,9 +144,7 @@ const charadexComplex = async (options) => {
     /* ==================================================================== */
     /* Fetching the Sheet
     ======================================================================= */
-    fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`)
-    .then(i => i.text())
-    .then(JSON => {
+    fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`).then(i => i.text()).then(JSON => {
 
         $('#loading').hide();
         $('.masterlist-container').addClass('softload');
@@ -314,7 +331,7 @@ const charadexComplex = async (options) => {
 /* Charadex Simple
 /* This is used for smaller pages like traits and catalogue
 ======================================================================= */
-const charadexSimple = async (options) => {
+const charadexSimple = (options) => {
 
 
     /* ==================================================================== */

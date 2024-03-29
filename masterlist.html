@@ -81,45 +81,9 @@
     </script>
 
     <!-- --------------------------------------------------------------------
-  <-- Navbar 
-  <-------------------------------------------------------------------- -->
-    <nav class="nav navbar navbar-expand-md py-4">
-        <div class="container">
-
-            <!-- Brand -->
-            <a class="navbar-brand" href="#"><i class="bi bi-box2-heart-fill"></i> Charadex</a>
-
-            <!-- Toggle -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#charadexnav">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="charadexnav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" id="navbarDropdown" data-toggle="dropdown"><i class="fas fa-circle-question d-md-inline d-none"></i><span class="d-md-none">Resources</span></a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/releases/latest">Download Latest</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki">Wiki</a>
-                            <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Getting-Started">Getting Started</a>
-                            <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Sheet-Set-Up">Sheet Set-Up</a>
-                            <a class="dropdown-item" target="_blank" href="https://github.com/cheeriko/charadex/wiki/Site-Set-Up">Site Set-Up</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="https://github.com/cheeriko/charadex/tree/main/custom_style_library">Custom Style Library</a>
-                            <a class="dropdown-item d-none" target="_blank" href="https://cheeriko.github.io/charadex/quickdex/">Quickdex</a>
-                        </div>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/cheeriko/charadex"><i class="fas fa-heart d-md-inline d-none"></i><span class="d-md-none">Quickdex</span></a></li>
-                    <li class="nav-item"><a class="nav-link" target="_blank" href="https://github.com/cheeriko/charadex"><i class="fab fa-github d-md-inline d-none"></i><span class="d-md-none">Github</span></a></li>
-                    <li class="nav-item"><a class="nav-link" target="_blank" href="https://ko-fi.com/cheeriko"><i class="fas fa-mug-saucer d-md-inline d-none"></i><span class="d-md-none">Support</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="javascript:void(0)" id="toggle"><i class="bi bi-emoji-sunglasses-fill d-md-inline d-none"></i><span class="d-md-none">Dark Mode</span></a></li>
-                </ul>
-            </div>
-
-        </div>
-    </nav>
+    <-- Header
+    <-------------------------------------------------------------------- -->
+    <nav id="header"></nav>
 
     <div class="spinner-border m-auto" id="loading"></div>
 
@@ -202,38 +166,9 @@
 
 
     <!-- --------------------------------------------------------------------
-  <-- Footer
-  <-- Please do not remove the credit
-  <-------------------------------------------------------------------- -->
-    <div class="footer p-md-5 p-4">
-        <div class="container">
-
-            <div class="row no-gutters m-n3">
-
-                <div class="col-md p-3">
-                    <h5 class="text-primary">About</h5>
-                    <div class="pl-3">
-                        <p>After Eclipse took out DeviantArt, I made Charadex to help other species creators organize and keep easier track of their masterlist.</p>
-
-                        <p>And it's not limited to species! If you just sell adopts or what to make a little organizer for your characters - this might help. I use it to keep track of role play AU's and my own designs too!</p>
-
-                        <p>© <i>2022 Cheeriko All Rights Reserved</i></p>
-                    </div>
-                </div>
-
-                <div class="col-md-auto p-3">
-                    <h5 class="text-primary">Find Me</h5>
-                    <div class="pl-3">
-                        <a target="_blank" href="https://toyhou.se/cheeriko"><i class="fas fa-home fa-fw"></i> Toyhou.se</a><br>
-                        <a target="_blank" href="https://www.deviantart.com/cheeriko"><i class="fab fa-deviantart fa-fw"></i> Deviantart</a><br>
-                        <a target="_blank" href="https://ko-fi.com/cheeriko"><i class="fas fa-coffee fa-fw"></i> Ko-Fi</a><br>
-                        <a target="_blank" href="https://github.com/cheeriko"><i class="fab fa-github fa-fw"></i> Github</a><br>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <-- Footer
+    <-------------------------------------------------------------------- -->
+    <div id="footer"></div>
 
 
     <!-- --------------------------------------------------------------------
@@ -372,7 +307,7 @@
 
     <!-- Charadex Script -->
     <script src="styles/charadex.js"></script>
-    <script>charadex(yourOptions);</script>
+    <script>charadexComplex(yourOptions);</script>
 
 
 </body>
