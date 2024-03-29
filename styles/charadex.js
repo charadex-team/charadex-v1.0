@@ -95,7 +95,7 @@ let charadexListFunctions = (dex) => {
 /* ==================================================================== */
 /* Charadex
 ======================================================================= */
-const charadex = (options) => {
+const charadexComplex = async (options) => {
 
 
     /* ==================================================================== */
@@ -309,3 +309,86 @@ const charadex = (options) => {
     })
 };
 
+
+/* ==================================================================== */
+/* Charadex Simple
+/* This is used for smaller pages like traits and catalogue
+======================================================================= */
+const charadexSimple = async (options) => {
+
+
+    /* ==================================================================== */
+    /* Options & URL
+    ======================================================================= */
+    let userOptions = options || {};
+
+
+    /* ==================================================================== */
+    /* Sifting Through Options
+    ======================================================================= */
+    const charadexInfo = {
+        sheetID: userOptions.sheetID ? userOptions.sheetID.includes('/d/') ? userOptions.sheetID.split('/d/')[1].split('/edit')[0] : userOptions.sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
+        sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Public Masterlist",
+        itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
+        categorizeBy: userOptions.categorizeBy ? userOptions.categorizeBy : "rarity",
+        searchParams: userOptions.searchParams ? userOptions.searchParams : ['item', 'trait'],
+    };
+
+
+    /* ==================================================================== */
+    /* Fetching the Sheet
+    ======================================================================= */
+    fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`).then(i => i.text()).then(JSON => {
+
+        $('#loading').hide();
+        $('.masterlist-container').addClass('softload');
+
+        /* ================================================================ */
+        /* And so it begins
+        /* ================================================================ */
+        let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
+
+
+        /* ================================================================ */
+        /* Get Keys
+        /* (Allows list.js to call info from sheet)
+        /* ================================================================ */
+        let sheetArrayKeys = () => {
+
+            // Grab all keys from a single entry to create an array
+            let itemArray = Object.keys(sheetArray[0]);
+
+            // Same for images
+            itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
+
+            return itemArray;
+
+        };
+
+
+        /* ================================================================ */
+        /* Charadex Gallery
+        /* ================================================================ */
+        $('#charadex-filters').show();
+
+        (() => {
+
+            let galleryOptions = {
+                item: 'charadex-entries',
+                valueNames: sheetArrayKeys(),
+            };
+
+            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+
+            // Sort based on ID
+            charadex.sort(charadexInfo.categorizeBy, {order: charadexInfo.categorizeBy})
+
+            // Calling all functions here
+            charadexListFunctions(charadex);
+
+        })();
+
+
+    })
+
+};
