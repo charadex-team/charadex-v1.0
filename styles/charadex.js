@@ -103,7 +103,8 @@ const charadex = (options) => {
         itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
         itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
         searchParams: userOptions.searchParams ? userOptions.searchParams : ['id', 'owner', 'artist', 'designer'],
-        singleItemParam: userOptions.singleItemParam ? userOptions.singleItemParam : "id",
+        singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
+        singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
         urlFilterParam: userOptions.urlFilterParam ? userOptions.urlFilterParam.toLowerCase().replace(/\s/g, '') : false,
     };
 
@@ -111,7 +112,7 @@ const charadex = (options) => {
     /* ==================================================================== */
     /* Fetching the Sheet
     ======================================================================= */
-    fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&sheet=${charadexInfo.sheetPage}`)
+    fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`)
     .then(i => i.text())
     .then(JSON => {
 
@@ -122,7 +123,7 @@ const charadex = (options) => {
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-        let preParam = url.search.includes(charadexInfo.urlFilterParam) ? `&${charadexInfo.singleItemParam}=` : `?${charadexInfo.singleItemParam}=`; // Determines which is used in a link
+        let preParam = url.search.includes(charadexInfo.urlFilterParam) ? `&${charadexInfo.singleItemParamVal}=` : `?${charadexInfo.singleItemParamVal}=`; // Determines which is used in a link
 
 
         /* ================================================================ */
@@ -169,37 +170,42 @@ const charadex = (options) => {
         /* ================================================================ */
         (() => {
 
-            let len = sheetArray.length;
-            while (len--) {
-
-                // Adding link
-                sheetArray[len].link = url.href + preParam + sheetArray[len].id;
+            for (let i = 0; i < sheetArray.length; i++){
 
                 // Add vanila ID so it'll sort nicer
-                sheetArray[len].orderID = sheetArray[len].id.replace(/\D+/gm, "");
+                sheetArray[i].orderID = i + 1;
+
+                // Adding link
+                sheetArray[i].cardlink = url.href + preParam + sheetArray[i][charadexInfo.singleItemParamKey];
 
             }
 
-            // Sorts list from small to beeg number
-            sheetArray.sort((a, b) => { return a.orderID - b.orderID })
-
             // Filters out information based on URL parameters
-            if (urlParams.has(charadexInfo.urlFilterParam) && charadexInfo.urlFilterParam) { sheetArray = sheetArray.filter((i) => i[charadexInfo.urlFilterParam].toLowerCase() === urlParams.get(charadexInfo.urlFilterParam).toLowerCase()); }
+            if (urlParams.has(charadexInfo.urlFilterParam) && charadexInfo.urlFilterParam) { 
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.urlFilterParam].toLowerCase() === urlParams.get(charadexInfo.urlFilterParam).toLowerCase()); 
+            }
 
         })();
 
 
         /* ================================================================ */
-        /* Keys
+        /* Get Keys
         /* (Allows list.js to call info from sheet)
         /* ================================================================ */
         let sheetArrayKeys = () => {
 
+            // Grab all keys from a single entry to create
+            // an array
             let itemArray = Object.keys(sheetArray[0]);
-            let imageIndex = itemArray.indexOf('image');
-            let linkIndex = itemArray.indexOf('link');
-            itemArray[imageIndex] = { name: 'image', attr: 'src' };
-            itemArray[linkIndex] = { name: 'link', attr: 'href' };
+
+            // Find the index of the cardlink and change
+            // it to something list.js can render
+            itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
+
+            // Same for images
+            itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
+
+            console.log(itemArray);
 
             return itemArray;
 
@@ -213,25 +219,25 @@ const charadex = (options) => {
             /* ================================================================ */
             (() => {
 
-                let cleanUrl = url.href.split(`?${charadexInfo.singleItemParam}`)[0].split(`&${charadexInfo.singleItemParam}`)[0];
+                // Clean up the URL of any nastiness
+                let cleanUrl = url.href.split(`?${charadexInfo.singleItemParamVal}`)[0].split(`&${charadexInfo.singleItemParamVal}`)[0];
 
-                let len = sheetArray.length;
-                while (len--) {
-                    if (sheetArray[len].orderID == urlParams.get(charadexInfo.singleItemParam).replace(/\D+/gm, "")) {
+                for (let i = 0; i < sheetArray.length; i++){
+                    if (sheetArray[i].orderID == urlParams.get(charadexInfo.singleItemParamVal).replace(/\D+/gm, "")) {
 
                         // Prev
-                        if (sheetArray[len - 1]) {
-                            $("#entryPrev").attr("href", cleanUrl + preParam + sheetArray[len - 1].id);
-                            $("#entryPrev span").text(sheetArray[len - 1].id);
+                        if (sheetArray[i - 1]) {
+                            $("#entryPrev").attr("href", cleanUrl + preParam + sheetArray[i - 1][charadexInfo.singleItemParamKey]);
+                            $("#entryPrev span").text(sheetArray[i - 1][charadexInfo.singleItemParamKey]);
                         } else {
                             $("#entryPrev i").remove();
                         }
 
                         // Next
-                        if (sheetArray[len + 1]) {
-                            console.log(sheetArray[len + 1]);
-                            $("#entryNext").attr("href", cleanUrl + preParam + sheetArray[len + 1].id);
-                            $("#entryNext span").text(sheetArray[len + 1].id);
+                        if (sheetArray[i + 1]) {
+                            console.log(sheetArray[i + 1]);
+                            $("#entryNext").attr("href", cleanUrl + preParam + sheetArray[i + 1][charadexInfo.singleItemParamKey]);
+                            $("#entryNext span").text(sheetArray[i + 1][charadexInfo.singleItemParamKey]);
                         } else {
                             $("#entryNext i").remove();
                         }
@@ -256,7 +262,7 @@ const charadex = (options) => {
                 };
 
                 // Filtering out singular card
-                let designID = urlParams.get(charadexInfo.singleItemParam);
+                let designID = urlParams.get(charadexInfo.singleItemParamVal);
                 sheetArray = sheetArray.filter((i) => i.id.includes(designID))[0];
 
                 // Creates singular item
@@ -292,6 +298,7 @@ const charadex = (options) => {
                 // Sort based on ID
                 charadex.sort("orderID", { order: charadexInfo.itemOrder, })
 
+                // Calling all functions here
                 charadexListFunctions(charadex);
 
             })();
