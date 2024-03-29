@@ -153,7 +153,7 @@ const charadexLarge = (options) => {
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-        let preParam = url.search.includes(charadexInfo.urlFilterParam) ? `&${charadexInfo.singleItemParamVal}=` : `?${charadexInfo.singleItemParamVal}=`; // Determines which is used in a link
+        let preParam = url.search.includes(charadexInfo.urlFilterParam) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
 
 
         /* ================================================================ */
@@ -280,8 +280,7 @@ const charadexLarge = (options) => {
                 };
 
                 // Filtering out singular card
-                let pageIDVal = urlParams.get(charadexInfo.singleItemParamVal);
-                sheetArray = sheetArray.filter((i) => i[charadexInfo.singleItemParamKey].includes(pageIDVal))[0];
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.singleItemParamVal].includes(urlParams.get(charadexInfo.singleItemParamKey)))[0];
 
                 // Creates singular item
                 let charadexItem = new List("charadex-gallery", itemOptions, sheetArray);
