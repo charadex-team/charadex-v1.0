@@ -116,7 +116,7 @@ let charadexListFunctions = (dex) => {
 /* ==================================================================== */
 /* Charadex
 ======================================================================= */
-const charadexComplex = (options) => {
+const charadexLarge = (options) => {
 
 
     /* ==================================================================== */
@@ -331,7 +331,7 @@ const charadexComplex = (options) => {
 /* Charadex Simple
 /* This is used for smaller pages like traits and catalogue
 ======================================================================= */
-const charadexSimple = (options) => {
+const charadexSmall = (options) => {
 
 
     /* ==================================================================== */
