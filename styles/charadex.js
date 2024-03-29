@@ -107,6 +107,32 @@ let charadexFilter = (info, filterKey) => {
 
 
 
+/* ================================================================ */
+/* Custom Filter
+/* ================================================================ */
+let keyCreator = (key) => {
+    return key.toLowerCase().replace(/\s/g, "");
+};
+
+
+
+/* ================================================================ */
+/* Add All to Array
+/* ================================================================ */
+let addAll = (key) => {
+    key.unshift("All")
+    return key;
+};
+
+let addOptions = (arr, filter) => {
+    arr.forEach((val) => {
+        let optionHTML = document.createElement('option');
+        optionHTML.value = val.toLowerCase().replace(/\s/g, "");
+        optionHTML.textContent = val;
+        filter.append(optionHTML);
+    });
+};
+
 /* ==================================================================== */
 /* Charadex
 ======================================================================= */
@@ -128,9 +154,11 @@ const charadexLarge = (options) => {
         sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Public Masterlist",
         itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
         itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
-        filterParams: userOptions.filterParams ? userOptions.filterParams : false,
-        searchParams: userOptions.searchParams ? userOptions.searchParams : false,
-        btnFilterParam: userOptions.btnFilterParam ? userOptions.btnFilterParam.toLowerCase().replace(/\s/g, '') : false,
+        filterCol: userOptions.filterCol ? keyCreator(userOptions.filterCol) : false,
+        filterParams: userOptions.filterParams ? addAll(userOptions.filterParams) : false,
+        searchParams: userOptions.searchParams ? addAll(userOptions.searchParams) : false,
+        btnFilterCol: userOptions.btnFilterCol ? keyCreator(userOptions.btnFilterCol) : false,
+        btnFilterParam: userOptions.btnFilterParam ? addAll(userOptions.btnFilterParam) : false,
         singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
         singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
     };
@@ -148,7 +176,7 @@ const charadexLarge = (options) => {
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-        let preParam = url.search.includes(charadexInfo.btnFilterParam) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
+        let preParam = url.search.includes(charadexInfo.btnFilterCol) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
 
 
         /* ================================================================ */
@@ -156,17 +184,17 @@ const charadexLarge = (options) => {
         /* ================================================================ */
         (() => {
 
-            if (sheetArray[0].hasOwnProperty(charadexInfo.btnFilterParam)) {
+            if (sheetArray[0].hasOwnProperty(charadexInfo.btnFilterCol)) {
 
                 $('#filter-buttons').show();
 
                 // Creates Param Object Array
                 let urlParamArray = [];
-                const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.btnFilterParam]))];
+                const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.btnFilterCol]))];
                 uniqueArray.forEach((i) => {
                     urlParamArray.push({
                         title: i,
-                        link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.btnFilterParam + '=' + i.toLowerCase(),
+                        link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.btnFilterCol + '=' + i.toLowerCase(),
                     });
                 });
 
@@ -200,8 +228,8 @@ const charadexLarge = (options) => {
             }
 
             // Filters out information based on URL parameters
-            if (urlParams.has(charadexInfo.btnFilterParam) && charadexInfo.btnFilterParam) { 
-                sheetArray = sheetArray.filter((i) => i[charadexInfo.btnFilterParam].toLowerCase() === urlParams.get(charadexInfo.btnFilterParam).toLowerCase()); 
+            if (urlParams.has(charadexInfo.btnFilterCol) && charadexInfo.btnFilterCol) { 
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.btnFilterCol].toLowerCase() === urlParams.get(charadexInfo.btnFilterCol).toLowerCase()); 
             }
 
         })();
@@ -288,56 +316,19 @@ const charadexLarge = (options) => {
             /* Charadex Gallery
             /* ================================================================ */
 
-            // Add needed filters
+            // Add options to filters
             if (charadexInfo.filterParams) {
-
-                let filterSelect = $('#filter');
-
-                let filterArray = charadexInfo.filterParams;
-                filterArray.unshift("All");
-                
-                filterArray.forEach((element) => {
-
-                    let option_elem = document.createElement('option');
-                    
-                    option_elem.value = element.toLowerCase().replace(/\s/g, "");
-                    option_elem.textContent = element;
-                    
-                    filterSelect.append(option_elem);
-
-                });
-
+                addOptions(charadexInfo.filterParams, $('#filter'));
                 $('#filter').parent().show();
-
             }
 
-            // Add needed filters
             if (charadexInfo.searchParams) {
-
-                let filterSelect = $('#search-filter');
-
-                let filterArray = charadexInfo.searchParams;
-                filterArray.unshift("All");
-                
-                filterArray.forEach((element) => {
-
-                    let option_elem = document.createElement('option');
-                    
-                    option_elem.value = element.toLowerCase().replace(/\s/g, "");
-                    option_elem.textContent = element;
-                    
-                    filterSelect.append(option_elem);
-
-                });
-
+                addOptions(charadexInfo.searchParams, $('#search-filter'));
                 $('#search-filter').parent().show();
-
             }
-
 
             // Show Filters
             $('#charadex-filters').show();
-
 
             // Create the Gallery
             let galleryOptions = {
@@ -360,7 +351,7 @@ const charadexLarge = (options) => {
             charadex.sort("orderID", { order: charadexInfo.itemOrder, })
 
             // Calling all functions here
-            charadexFilter(charadex, 'designtype');
+            charadexFilter(charadex, charadexInfo.filterCol);
             charadexSearch(charadex, charadexInfo.searchParams);
             charadexPrevNext();
 
