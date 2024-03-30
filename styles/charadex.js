@@ -46,20 +46,41 @@
             scrubbedData.push(row);
         });
 
-        // Removes any items that are supposed ot be hidden
-        const publicData = [];
-        scrubbedData.forEach((k, v) => {
-            if(!scrubbedData[v]['hide']) {
-                publicData.push(scrubbedData[v]);
-            };
-        });
-
-        return publicData;
+        return scrubbedData;
 
     }
 
 
 
+
+/* ================================================================ */
+/* QOL Funcs
+/* ================================================================ */
+
+    let keyCreator = (key) => {
+        return key.toLowerCase().replace(/\s/g, "");
+    };
+
+    let addAll = (key) => {
+        key.unshift("All")
+        return key;
+    };
+
+    let addOptions = (arr, filter) => {
+        arr.forEach((val) => {
+            let optionHTML = document.createElement('option');
+            optionHTML.value = val.toLowerCase().replace(/\s/g, "");
+            optionHTML.textContent = val;
+            filter.append(optionHTML);
+        });
+    };
+
+    let sheetPage = (id, pageName) => {
+        return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL AND B = FALSE&sheet=${pageName}`
+    };
+
+
+    
 /* ================================================================ */
 /* Prev/Next in Pagination
 /* ================================================================ */
@@ -112,31 +133,6 @@
 
 
 
-/* ================================================================ */
-/* QOL Funcs
-/* ================================================================ */
-
-    let keyCreator = (key) => {
-        return key.toLowerCase().replace(/\s/g, "");
-    };
-
-
-    let addAll = (key) => {
-        key.unshift("All")
-        return key;
-    };
-
-    let addOptions = (arr, filter) => {
-        arr.forEach((val) => {
-            let optionHTML = document.createElement('option');
-            optionHTML.value = val.toLowerCase().replace(/\s/g, "");
-            optionHTML.textContent = val;
-            filter.append(optionHTML);
-        });
-    };
-
-
-
 /* ==================================================================== */
 /* Charadex
 ======================================================================= */
@@ -163,7 +159,7 @@
         /* ==================================================================== */
         /* Fetching the Sheet
         ======================================================================= */
-        fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`).then(i => i.text()).then(JSON => {
+        fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text()).then(JSON => {
 
 
             /* ================================================================ */
@@ -397,7 +393,7 @@
         /* ==================================================================== */
         /* Fetching the Sheet
         ======================================================================= */
-        fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`).then(i => i.text()).then(JSON => {
+        fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text()).then(JSON => {
 
             /* ================================================================ */
             /* And so it begins
