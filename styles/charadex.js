@@ -3,7 +3,7 @@
 ======================================================================= */
 
     let url = new URL(window.location.href);
-    let baseURL = window.location.origin + window.location.pathname;
+    let baseURL =  window.location.origin + window.location.pathname;
     let folderURL = window.location.origin + '/' + window.location.pathname.split("/")[1];
 
 
@@ -43,7 +43,6 @@
             col.forEach((ele, ind) => {
                 row[ele] = info.c[ind] != null ?  info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
             });
-            row["orderID"] = num + 1;
             scrubbedData.push(row);
         });
 
@@ -143,17 +142,10 @@
 ======================================================================= */
 const charadexLarge = (options) => {
 
-
-    /* ==================================================================== */
-    /* Options & URL
-    ======================================================================= */
-    let userOptions = options || {};
-    const urlParams = new URLSearchParams(window.location.search);
-
-
     /* ==================================================================== */
     /* Sifting Through Options
     ======================================================================= */
+    let userOptions = options || {};
     const charadexInfo = {
         sheetID: userOptions.sheetID ? userOptions.sheetID.includes('/d/') ? userOptions.sheetID.split('/d/')[1].split('/edit')[0] : userOptions.sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
         sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Public Masterlist",
@@ -162,9 +154,10 @@ const charadexLarge = (options) => {
         filterCol: userOptions.filterCol ? keyCreator(userOptions.filterCol) : false,
         searchParams: userOptions.searchParams ? addAll(userOptions.searchParams) : false,
         btnFilterCol: userOptions.btnFilterCol ? keyCreator(userOptions.btnFilterCol) : false,
-        singleItemParamKey: userOptions.singleItemParamKey ? userOptions.singleItemParamKey : "id",
         singleItemParamVal: userOptions.singleItemParamVal ? userOptions.singleItemParamVal : "id",
     };
+
+    const urlParams = new URLSearchParams(window.location.search);
 
 
     /* ==================================================================== */
@@ -172,14 +165,26 @@ const charadexLarge = (options) => {
     ======================================================================= */
     fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${charadexInfo.sheetPage}`).then(i => i.text()).then(JSON => {
 
-        $('#loading').hide();
-        $('.masterlist-container').addClass('softload');
 
         /* ================================================================ */
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-        let preParam = url.search.includes(charadexInfo.btnFilterCol) ? `&${charadexInfo.singleItemParamKey}=` : `?${charadexInfo.singleItemParamKey}=`; // Determines which is used in a link
+
+
+        /* ================================================================ */
+        /* Load Up
+        /* ================================================================ */
+    
+        $('#loading').hide();
+        $('.masterlist-container').addClass('softload');
+
+
+        /* ================================================================ */
+        /* URL Param Junk
+        /* ================================================================ */
+        let singleItemParamKey = Object.keys(sheetArray[0])[0]; // Get the key for single objects
+        let preParam = url.search.includes(charadexInfo.btnFilterCol) ? '?' + charadexInfo.btnFilterCol + '=' + urlParams.get(charadexInfo.btnFilterCol) + `&${singleItemParamKey}=` : `?${singleItemParamKey}=`; // Determines which is used in a link
 
 
         /* ================================================================ */
@@ -216,24 +221,23 @@ const charadexLarge = (options) => {
 
             }
 
-        })();
-
-        /* ================================================================ */
-        /* Modifying Array
-        /* ================================================================ */
-        (() => {
-
-            // Adding link to card
-            for (var i in sheetArray){
-                sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][charadexInfo.singleItemParamVal];
-            }
-
             // Filters out information based on URL parameters
             if (urlParams.has(charadexInfo.btnFilterCol) && charadexInfo.btnFilterCol) { 
                 sheetArray = sheetArray.filter((i) => i[charadexInfo.btnFilterCol].toLowerCase() === urlParams.get(charadexInfo.btnFilterCol).toLowerCase()); 
             }
 
         })();
+
+        
+        /* ================================================================ */
+        /* Modifying Array (Adding Link)
+        /* ================================================================ */
+        for (var i in sheetArray){
+            sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][charadexInfo.singleItemParamVal];
+        }
+
+        // Reverse based on preference
+        charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
 
 
         /* ================================================================ */
@@ -249,8 +253,6 @@ const charadexLarge = (options) => {
             // Find the index of the cardlink and change
             // it to something list.js can render
             itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
-
-            // Same for images
             itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
 
             return itemArray;
@@ -258,33 +260,35 @@ const charadexLarge = (options) => {
         };
 
 
-        if (urlParams.has(charadexInfo.singleItemParamKey)) {
+
+        /* ================================================================ */
+        /* Decide if Single Card or Not
+        /* ================================================================ */
+        if (urlParams.has(singleItemParamKey)) {
 
             /* ================================================================ */
             /* Prev & Next for Single Card
             /* ================================================================ */
             (() => {
 
-                for (let i = 0; i < sheetArray.length; i++){
-                    if (sheetArray[i].orderID == urlParams.get(charadexInfo.singleItemParamKey).replace(/\D+/gm, "")) {
+                let index = sheetArray.map(function(i) {return i[singleItemParamKey];}).indexOf(urlParams.get(singleItemParamKey));
+                let leftItem = sheetArray[index - 1];
+                let rightItem = sheetArray[index + 1];
 
-                        // Prev
-                        if (sheetArray[i - 1]) {
-                            $("#entryPrev").attr("href", baseURL + preParam + sheetArray[i - 1][charadexInfo.singleItemParamVal]);
-                            $("#entryPrev span").text(sheetArray[i - 1][charadexInfo.singleItemParamVal]);
-                        } else {
-                            $("#entryPrev i").remove();
-                        }
+                // Prev
+                if (leftItem) {
+                    $("#entryPrev").attr("href", baseURL + preParam + leftItem[singleItemParamKey]);
+                    $("#entryPrev span").text(leftItem[singleItemParamKey]);
+                } else {
+                    $("#entryPrev i").remove();
+                }
 
-                        // Next
-                        if (sheetArray[i + 1]) {
-                            $("#entryNext").attr("href", baseURL + preParam + sheetArray[i + 1][charadexInfo.singleItemParamVal]);
-                            $("#entryNext span").text(sheetArray[i + 1][charadexInfo.singleItemParamVal]);
-                        } else {
-                            $("#entryNext i").remove();
-                        }
-
-                    }
+                // Next
+                if (rightItem) {
+                    $("#entryNext").attr("href", baseURL + preParam + rightItem[singleItemParamKey]);
+                    $("#entryNext span").text(rightItem[singleItemParamKey]);
+                } else {
+                    $("#entryNext i").remove();
                 }
 
                 // Back to masterlist (keeps species parameter)
@@ -303,8 +307,7 @@ const charadexLarge = (options) => {
                     item: 'charadex-card',
                 };
 
-                // Filtering out singular card
-                sheetArray = sheetArray.filter((i) => i[charadexInfo.singleItemParamVal].includes(urlParams.get(charadexInfo.singleItemParamKey)))[0];
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.singleItemParamVal].includes(urlParams.get(singleItemParamKey)))[0];
 
                 // Creates singular item
                 let charadexItem = new List("charadex-gallery", itemOptions, sheetArray);
@@ -352,9 +355,6 @@ const charadexLarge = (options) => {
 
                 let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-                // Sort based on ID
-                charadex.sort("orderID", { order: charadexInfo.itemOrder, })
-
                 // Calling all functions here
                 charadexFilter(charadex, charadexInfo.filterCol);
                 charadexSearch(charadex, charadexInfo.searchParams);
@@ -362,9 +362,7 @@ const charadexLarge = (options) => {
 
             })();
 
-
         }
-
     })
 };
 
@@ -392,6 +390,7 @@ const charadexSmall = (options) => {
         itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
         filterCol: userOptions.filterCol ? keyCreator(userOptions.filterCol) : false,
         searchParams: userOptions.searchParams ? addAll(userOptions.searchParams) : false,
+        btnFilterCol: userOptions.btnFilterCol ? keyCreator(userOptions.btnFilterCol) : false,
     };
 
 
@@ -407,6 +406,49 @@ const charadexSmall = (options) => {
         /* And so it begins
         /* ================================================================ */
         let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
+        let preParam = url.search.includes(charadexInfo.btnFilterCol) ? `&${singleItemParamKey}=` : `?${singleItemParamKey}=`; // Determines which is used in a link
+
+
+        /* ================================================================ */
+        /* URL Param Buttons
+        /* ================================================================ */
+        (() => {
+
+            if (sheetArray[0].hasOwnProperty(charadexInfo.btnFilterCol)) {
+
+                // Creates Param Object Array
+                let urlParamArray = [];
+                const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.btnFilterCol]))];
+                uniqueArray.forEach((i) => {
+                    urlParamArray.push({
+                        title: i,
+                        link: baseURL + '?' + charadexInfo.btnFilterCol + '=' + i.toLowerCase(),
+                    });
+                });
+
+                // Adds All Button
+                urlParamArray.unshift({ title: 'All', link: baseURL });
+
+                // List.js options
+                let buttonOptions = {
+                    valueNames: ['title', { name: 'link', attr: 'href' }],
+                    item: 'charadex-filter-buttons',
+                };
+
+                // Creates singular item
+                let urlParamButtons = new List("filter-buttons", buttonOptions, urlParamArray);
+
+                // Show Buttons
+                $('#filter-buttons').show();
+
+            }
+
+            // Filters out information based on URL parameters
+            if (urlParams.has(charadexInfo.btnFilterCol) && charadexInfo.btnFilterCol) { 
+                sheetArray = sheetArray.filter((i) => i[charadexInfo.btnFilterCol].toLowerCase() === urlParams.get(charadexInfo.btnFilterCol).toLowerCase()); 
+            }
+
+        })();
 
 
         /* ================================================================ */
@@ -418,10 +460,6 @@ const charadexSmall = (options) => {
             // Grab all keys from a single entry to create
             // an array
             let itemArray = Object.keys(sheetArray[0]);
-
-            // Find the index of the cardlink and change
-            // it to something list.js can render
-            itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
 
             // Same for images
             itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };

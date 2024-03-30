@@ -71,10 +71,14 @@
             // populate the filter options
             // Note: If the sheet doesn't have more than 1 option
             // to filter through, it won't show up
-            filterCol: 'Rarity',
+            filterCols: 'Rarity',
 
             // Info you'd like people to be able to search though
-            searchParams: ['ID', 'Owner', 'Designer', 'Artist'],
+            searchParams: ['Item', 'Type', 'Rarity'],
+
+            // Creates 1 URL parameter that will filter the list based on a
+            // column of your choosing.
+            btnFilterCol: 'Type',
 
         };
     </script>
