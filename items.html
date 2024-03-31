@@ -71,14 +71,14 @@
             // populate the filter options
             // Note: If the sheet doesn't have more than 1 option
             // to filter through, it won't show up
-            filterCols: 'Rarity',
+            filterColumnumn: 'Rarity',
 
             // Info you'd like people to be able to search though
-            searchParams: ['Item', 'Type', 'Rarity'],
+            searchFilterParams: ['Item', 'Type', 'Rarity'],
 
             // Creates 1 URL parameter that will filter the list based on a
             // column of your choosing.
-            btnFilterCol: 'Type',
+            fauxFolderColumn: 'Type',
 
         };
     </script>
@@ -98,7 +98,7 @@
     <!-- --------------------------------------------------------------------
     <-- Masterlist
     <-------------------------------------------------------------------- -->
-    <div class="container masterlist-container d-flex flex-column py-md-5 py-4">
+    <div class="container masterlist-container" id="main-container">
 
         <!-- URL Param Filter Buttons Render
         <-- Remove this if you'd like to make your own buttons instead!

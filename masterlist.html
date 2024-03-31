@@ -67,18 +67,14 @@
             // Descending (3 2 1) || desc
             itemOrder: "asc",
 
-            // Which column you'd like to filter through
-            filterCol: 'Design Type',
+            // For the single column filter
+            filterColumn: 'Design Type',
 
-            // Info you'd like people to be able to search though
-            searchParams: ['ID', 'Owner', 'Designer', 'Artist'],
+            // Columns you'd like people to be able to search though
+            searchFilterParams: ['ID', 'Owner', 'Designer', 'Artist'],
 
-            // Creates 1 URL parameter that will filter the list based on a
-            // column of your choosing.
-            btnFilterCol: 'Type',
-
-            // URL Paramenter for single items to show
-            singleItemParamVal: "id",
+            // Column to create faux folder links from
+            fauxFolderColumn: 'Species',
 
         };
     </script>
@@ -98,14 +94,7 @@
     <!-- --------------------------------------------------------------------
     <-- Masterlist
     <-------------------------------------------------------------------- -->
-    <div class="container masterlist-container d-flex flex-column py-md-5 py-4">
-
-        <!-- URL Param Filter Buttons Render
-        <-- Remove this if you'd like to make your own buttons instead!
-        ------------------------------------------------------------------- -->
-        <div class="card p-4 mb-4" style="display:none;" id="filter-buttons">
-            <div class="row no-gutters list list-unstyled m-n2"></div>
-        </div>
+    <div class="container masterlist-container" id="main-container">
 
 
         <!-- Gallery Container
@@ -115,34 +104,60 @@
 
             <!-- Filters
             ----------------------------------------------------------------- -->
-            <div class="card p-4 mb-4 sticky-top" style="display:none;" id="charadex-filters">
-                <div class="row no-gutters m-n2">
+            <div class="card p-md-5 p-4 mb-4">
 
-                    <!-- Custom Filter (Optional) -->
-                    <div class="col-md-2 col-12 p-1" style="display: none;">
-                        <select class="form-control bg-faded" id="filter"></select>
-                    </div>
+                <h1 class="mb-0"><a href="masterlist.html">Species Masterlist</a></h1>
 
-                    <!-- Search Filter (Optional) -->
-                    <div class="col-md-2 col-3 p-1" style="display: none;">
-                        <select class="form-control bg-faded" id="search-filter"></select>
-                    </div>
-
-                    <!-- Search Bar (Optional) -->
-                    <div class="col-md-3 col-9 p-1">
-                        <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="col-md-5 col-12 d-flex justify-content-md-end justify-content-center p-1">
-                        <div class="nav d-flex">
-                            <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                            <ul class="pagination pagination-top justify-content-center m-0"></ul>
-                            <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
-                        </div>
-                    </div>
-
+                <!-- Button Filter
+                <-- Remove this if you'd like to make your own buttons instead!
+                ------------------------------------------------------------------- -->
+                <div style="display:none;" id="filter-buttons">
+                    <hr class="mb-3">
+                    <div class="row no-gutters mx-n1"></div>
                 </div>
+
+                <!-- Filters -->
+                <div style="display:none;" id="charadex-filters">
+                    <hr class="w-100 mb-4">
+                    <div class="row no-gutters m-n1">
+
+                        <!-- Custom Filter -->
+                        <div class="col-md-3 col-12 p-1" style="display: none;">
+                            <select class="form-control bg-faded" id="filter"></select>
+                        </div>
+
+                        <!-- Search Filter -->
+                        <div class="col-md-3 col-3 p-1" style="display: none;">
+                            <select class="form-control bg-faded" id="search-filter"></select>
+                        </div>
+
+                        <!-- Search Bar -->
+                        <div class="col-md col-9 p-1">
+                            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div style="display: none;" id="charadex-pagination">
+                    <hr class="mb-4 mt-4">
+                    <div class="nav d-flex justify-content-center mb-n4">
+                        <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                        <ul class="pagination pagination-top justify-content-center m-0"></ul>
+                        <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                </div>
+
+                <!-- Prev & Next Topbar -->
+                <div style="display: none;" id="prevNext">
+                    <hr class="mb-4">
+                    <div class="row no-gutters px-2 mb-n3 font-weight-bold text-uppercase">
+                        <div class="col-6 px-1"><a id="entryPrev" href=""><i class="fa fa-chevron-left mr-2"></i><span></span></a></div>
+                        <div class="col-6 px-1 text-right order-md-1"><a id="entryNext" href=""><span></span><i class="fa fa-chevron-right ml-2"></i></a></div>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -173,9 +188,9 @@
 
         <!-- URL Param Filter Buttons
         ------------------------------------------------------------------- -->
-        <li class="col-lg col-sm-6 p-2" id="charadex-filter-buttons">
-            <a class="btn btn-primary d-block link title" href=""></a>
-        </li>
+        <div class="col-lg-3 col-md-4 col-sm-6 p-1" id="charadex-filter-buttons">
+            <a class="btn btn-primary d-block" href=""></a>
+        </div>
 
 
         <!-- Gallery Items
@@ -193,15 +208,6 @@
         <!-- Singular Item
         ------------------------------------------------------------------- -->
         <li class="col-12 p-2" id="charadex-card">
-
-            <!-- Prev & Next Topbar -->
-            <div class="card p-4 mb-4">
-                <div class="row no-gutters m-n1 text-sans-serif font-weight-bold text-uppercase">
-                    <div class="col-md-4 col-12 text-center p-1 order-md-1"><a id="masterlistLink" href="">Masterlist</a></div>
-                    <div class="col-md-4 col-6 p-1"><a id="entryPrev" href=""><i class="fa fa-chevron-left mr-2"></i><span></span></a></div>
-                    <div class="col-md-4 col-6 text-right p-1 order-md-1"><a id="entryNext" href=""><span></span><i class="fa fa-chevron-right ml-2"></i></a></div>
-                </div>
-            </div>
 
             <!-- Actual Card -->
             <div class="card">

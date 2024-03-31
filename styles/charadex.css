@@ -123,16 +123,16 @@ body {
   ================================================================ */
 
   /* Background */
-  --cd-pagination-background-color:      var(--cd-faded-background-color);
-  --cd-pagination-background-hover:      var(--cd-primary-color);
+  --cd-pagination-background-color:      transparent;
+  --cd-pagination-background-hover:      transparent;
 
   /* Text */
   --cd-pagination-text-color:            var(--cd-faded-text-color);
-  --cd-pagination-text-color-hover:      var(--cd-primary-text-color);
+  --cd-pagination-text-color-hover:      var(--cd-primary-color);
 
   /* Border */
   --cd-pagination-border-radius:         var(--cd-border-radius);
-  --cd-pagination-border-width:          var(--cd-border-width);
+  --cd-pagination-border-width:          0;
   --cd-pagination-border-style:          var(--cd-border-style);
   --cd-pagination-border-color:          var(--cd-border-color);
   --cd-pagination-border-color-hover:    var(--cd-primary-color);
@@ -290,6 +290,16 @@ a:active {
 .navbar .navbar-toggler {
   color: var(--cd-navbar-link-color) !important;
   border: none !important;
+}
+
+.navbar .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-link-icon {
+    font-size: .5rem;
+    margin-left: .25rem;
 }
 
 
@@ -531,6 +541,17 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+#main-container {
+    min-height: calc(100vh - 105px);
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    #main-container {
+        padding: 5rem 1.5rem;
+    }
 }
 
 /* Adds min height so footer stays at the bottom */
