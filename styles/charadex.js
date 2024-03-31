@@ -417,18 +417,33 @@
             let itemRowHTML = $("#item-list-row");
             let itemColHTML = $("#item-list-col");
 
-
             for (let k = 0; k < inventoryItemKeys.length; k++) {
                 let invent = inventorySorted[inventoryItemKeys[k]];
-                inventoryHTML.prepend([
-                    sectionHTML.clone().show().html(headerHTML.text(inventoryItemKeys[k]).clone()),
-                    sectionHTML.html(
+                inventoryHTML.append([
+                    sectionHTML.clone().addClass('new-list-section').html([
+                        headerHTML.text(inventoryItemKeys[k]).clone(),
+                        itemRowHTML.clone().html(invent.map(i  => itemColHTML.clone())),
+                        invent.forEach((i) => {
+                            console.log(inventoryItemKeys[k]);
+                            console.log(i.type);
+                            inventoryItemKeys[k] == i.type ? $("#item-list-col .item-img").attr('src', i.image) : ""
+                        }),
+                        invent.forEach((i) => {inventoryItemKeys[k] == i.type ? $("#item-list-col .item").html(i.item) : ""}),
+                    ])
+                ]);
+            };
+
+            $("#item-list .new-list-section").show();
+
+
+            /*
+            sectionHTML.clone().show().html(headerHTML.text(inventoryItemKeys[k]).clone()),
+                    sectionHTML.html(invent.map(i  => itemColHTML.clone())
                         itemRowHTML.clone().html(
                         invent.map(i  => itemColHTML.clone()),
                         invent.map(i  => $("#item-list-col .item").html(i.item)))
                     )
-                ]);
-            };
+                    */
 
             // Render card
             let charadexItem = new List("charadex-gallery", itemOptions, scrubbedCard);
