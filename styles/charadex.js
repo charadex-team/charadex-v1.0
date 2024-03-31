@@ -396,7 +396,7 @@
                 for (var c in scrubbedCard) {
                     if (c === keyCreator(i.item)) {
                         let inventoryItems = {
-                            type: keyCreator(i.type),
+                            type: i.type,
                             item: keyCreator(i.item),
                             image: i.image,
                             amount: scrubbedCard[keyCreator(i.item)],
@@ -406,8 +406,29 @@
                 }
             });
 
-            // Group by the item type
-            let groupedItems = Object.groupBy(inventoryItemArr, ({ type }) => type);
+            // Make some delicious keys
+            let inventorySorted = Object.groupBy(inventoryItemArr, ({ type }) => type);
+            let inventoryItemKeys = [...new Set(inventoryItemArr.map(i => i['type']))];
+
+            // Grab dom elements for later use
+            let inventoryHTML = $("#item-list");
+            let sectionHTML = $("#item-list-section");
+            let headerHTML = $("#item-type-title");
+            let itemRowHTML = $("#item-list-row");
+            let itemColHTML = $("#item-list-col");
+
+
+            for (let k = 0; k < inventoryItemKeys.length; k++) {
+                let invent = inventorySorted[inventoryItemKeys[k]];
+                inventoryHTML.prepend([
+                    sectionHTML.clone().show().html(headerHTML.text(inventoryItemKeys[k]).clone()),
+                    sectionHTML.html(
+                        itemRowHTML.clone().html(
+                        invent.map(i  => itemColHTML.clone()),
+                        invent.map(i  => $("#item-list-col .item").html(i.item)))
+                    )
+                ]);
+            };
 
             // Render card
             let charadexItem = new List("charadex-gallery", itemOptions, scrubbedCard);
