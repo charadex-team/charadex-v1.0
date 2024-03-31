@@ -554,6 +554,11 @@ body {
     }
 }
 
+/* Make images not look ugly when resized */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
 /* Adds min height so footer stays at the bottom */
 .masterlist-container {
   -ms-flex: 1 1 auto!important;
@@ -581,16 +586,25 @@ button:focus,
   max-width: 950px !important;
 }
 
-/* Make images not look ugly when resized */
-img {
-  image-rendering: -webkit-optimize-contrast;
-}
-
 /* Prevents awkward load in stutter */
 #charadex-gallery .list .card-body {
   min-height: calc(200px + 2.5rem);
-} #charadex-gallery .list .card-body img {
+} 
+
+#charadex-gallery .list .card-body img {
   max-height: 200px;
+}
+
+/* Combines search and its companion filter */
+#search-filter.form-control {
+  border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
+  border-right: 0 !important;
+} 
+
+#search.filtered.form-control {
+  margin-left: -.5rem;
+  width: calc(100% + .5rem) !important;
+  border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
 }
 
 /* Loading Icon */
@@ -604,14 +618,4 @@ img {
   opacity: .5;
   border-color: var(--cd-body-text-color);
   border-right-color: transparent !important;
-}
-
-/* Combines search and its companion filter */
-#search-filter.form-control {
-  border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
-  border-right: 0 !important;
-} #search.form-control {
-  margin-left: -.5rem;
-  width: calc(100% + .5rem) !important;
-  border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
 }
