@@ -57,8 +57,8 @@
             itemSheetPage: userOptions.itemSheetPage ? userOptions.itemSheetPage : 'Items',
             itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
             itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
-            fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
-            filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
+            fauxFolderColumn: userOptions.fauxFolderColumn ? createKey(userOptions.fauxFolderColumn) : false,
+            filterColumn: userOptions.filterColumn ? createKey(userOptions.filterColumn) : false,
             searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
             includeDesigns: userOptions.includeDesigns ? true : false
         }
@@ -69,7 +69,7 @@
 /* ================================================================ */
 /* QOL Funcs
 /* ================================================================ */
-    let keyCreator = (key) => {
+    let createKey = (key) => {
         return key.toLowerCase().replace(/\s/g, "");
     };
 
@@ -388,18 +388,17 @@
             // Filter out the right card
             let singleArr = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
             let scrubbedCard = Object.entries(singleArr).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
-            let singleCard = [];
 
             // Merge the user's inventory with the item sheet
             let inventoryItemArr = [];
             itemSheetArray.forEach((i) => {
                 for (var c in scrubbedCard) {
-                    if (c === keyCreator(i.item)) {
+                    if (c === createKey(i.item)) {
                         let inventoryItems = {
                             type: i.type,
-                            item: keyCreator(i.item),
+                            item: createKey(i.item),
                             image: i.image,
-                            amount: scrubbedCard[keyCreator(i.item)],
+                            amount: scrubbedCard[createKey(i.item)],
                         };
                         inventoryItemArr.push(inventoryItems);
                     };
@@ -410,40 +409,34 @@
             let inventorySorted = Object.groupBy(inventoryItemArr, ({ type }) => type);
             let inventoryItemKeys = [...new Set(inventoryItemArr.map(i => i['type']))];
 
-            // Grab dom elements for later use
-            let inventoryHTML = $("#item-list");
-            let sectionHTML = $("#item-list-section");
-            let headerHTML = $("#item-type-title");
-            let itemRowHTML = $("#item-list-row");
-            let itemColHTML = $("#item-list-col");
-
+            // Loop through items and add general structure to dom
             for (let k = 0; k < inventoryItemKeys.length; k++) {
-                let invent = inventorySorted[inventoryItemKeys[k]];
-                inventoryHTML.append([
-                    sectionHTML.clone().addClass('new-list-section').html([
-                        headerHTML.text(inventoryItemKeys[k]).clone(),
-                        itemRowHTML.clone().html(invent.map(i  => itemColHTML.clone())),
-                        invent.forEach((i) => {
-                            console.log(inventoryItemKeys[k]);
-                            console.log(i.type);
-                            inventoryItemKeys[k] == i.type ? $("#item-list-col .item-img").attr('src', i.image) : ""
-                        }),
-                        invent.forEach((i) => {inventoryItemKeys[k] == i.type ? $("#item-list-col .item").html(i.item) : ""}),
+
+                // Get the item types for future refence
+                let currUserItems = inventorySorted[inventoryItemKeys[k]];
+
+                // Only append to this section
+                $("#item-list").append([
+
+                    // Clone each section depending on how many types there are
+                    $("#item-list-section").clone().addClass('new-list-section').attr('id', createKey(inventoryItemKeys[k])).html([
+
+                        // Add header info
+                        $("#item-type-title").text(inventoryItemKeys[k]).clone(),
+
+                        // Rows and add amount of columns needed
+                        $("#item-list-row").clone().html(currUserItems.map(i  => $("#item-list-col").clone())),
+
                     ])
                 ]);
             };
 
+            for (let k = 0; k < inventoryItemArr.length; k++) {
+                $("#" + createKey(inventoryItemArr[k].type) + ' .item-img').attr('src', inventoryItemArr[k].image);
+                $("#" + createKey(inventoryItemArr[k].type) + ' .item').html(inventoryItemArr[k].item);
+            }
+
             $("#item-list .new-list-section").show();
-
-
-            /*
-            sectionHTML.clone().show().html(headerHTML.text(inventoryItemKeys[k]).clone()),
-                    sectionHTML.html(invent.map(i  => itemColHTML.clone())
-                        itemRowHTML.clone().html(
-                        invent.map(i  => itemColHTML.clone()),
-                        invent.map(i  => $("#item-list-col .item").html(i.item)))
-                    )
-                    */
 
             // Render card
             let charadexItem = new List("charadex-gallery", itemOptions, scrubbedCard);
