@@ -124,7 +124,7 @@
 /* ================================================================ */
     let charadexSearch = (info, searchArr) => {
 
-        if (searchArr && searchArr.length > 1) {
+        if (searchArr && searchArr.length > 2) {
             addOptions(searchArr, $('#search-filter'));
             $('#search-filter').parent().show();
             $('#search').addClass('filtered');
