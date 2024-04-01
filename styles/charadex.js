@@ -225,31 +225,33 @@
 /* Prev and Next Links
 /* ================================================================ */
     let prevNextLinks = (array, url, params, currParam, key) => {
+        if($("#entryPrev").length != 0) {
 
-        let index = array.map(function (i) { return i[key]; }).indexOf(currParam.get(key));
-        let leftItem = array[index - 1];
-        let rightItem = array[index + 1];
+            let index = array.map(function (i) { return i[key]; }).indexOf(currParam.get(key));
+            let leftItem = array[index - 1];
+            let rightItem = array[index + 1];
 
-        // Prev
-        if (leftItem) {
-            $("#entryPrev").attr("href", url + params + leftItem[key]);
-            $("#entryPrev span").text(leftItem[key]);
-        } else {
-            $("#entryPrev i").remove();
+            // Prev
+            if (leftItem) {
+                $("#entryPrev").attr("href", url + params + leftItem[key]);
+                $("#entryPrev span").text(leftItem[key]);
+            } else {
+                $("#entryPrev i").remove();
+            }
+
+            // Next
+            if (rightItem) {
+                $("#entryNext").attr("href", url + params + rightItem[key]);
+                $("#entryNext span").text(rightItem[key]);
+            } else {
+                $("#entryNext i").remove();
+            }
+
+            // Back to masterlist (keeps species parameter)
+            $("#masterlistLink").attr("href", url);
+            $('#prevNext').show();
+
         }
-
-        // Next
-        if (rightItem) {
-            $("#entryNext").attr("href", url + params + rightItem[key]);
-            $("#entryNext span").text(rightItem[key]);
-        } else {
-            $("#entryNext i").remove();
-        }
-
-        // Back to masterlist (keeps species parameter)
-        $("#masterlistLink").attr("href", url);
-        $('#prevNext').show();
-
     };
 
 
