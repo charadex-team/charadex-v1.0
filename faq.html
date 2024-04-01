@@ -58,27 +58,17 @@
 
             // Sheet Information
             sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
-            sheetPage: "prompts",
+            sheetPage: "faq",
 
             // Amount of items shown on the page. Default is 12.
-            itemAmount: 12,
+            itemAmount: 24,
 
             // Ascending  (1 2 3) || asc
             // Descending (3 2 1) || desc
-            itemOrder: "desc",
+            itemOrder: "asc",
 
-            // Which column you'd like to filter through, it'll auto-
-            // populate the filter options
-            // Note: If the sheet doesn't have more than 1 option
-            // to filter through, it won't show up
-            filterColumnumn: 'Rarity',
-
-            // Info you'd like people to be able to search though
-            searchFilterParams: ['Item', 'Type', 'Rarity'],
-
-            // Creates 1 URL parameter that will filter the list based on a
-            // column of your choosing.
-            fauxFolderColumn: 'Type',
+            // Columns you'd like people to be able to search though
+            searchFilterParams: ['Tags'],
 
         };
     </script>
@@ -100,13 +90,6 @@
     <-------------------------------------------------------------------- -->
     <div class="container masterlist-container" id="main-container">
 
-        <!-- URL Param Filter Buttons Render
-        <-- Remove this if you'd like to make your own buttons instead!
-        ------------------------------------------------------------------- -->
-        <div class="card p-4 mb-4" style="display:none;" id="filter-buttons">
-            <div class="row no-gutters list list-unstyled m-n2"></div>
-        </div>
-
 
         <!-- Gallery Container
         ------------------------------------------------------------------- -->
@@ -115,34 +98,51 @@
 
             <!-- Filters
             ----------------------------------------------------------------- -->
-            <div class="card p-4 mb-4 sticky-top" style="display:none;" id="charadex-filters">
-                <div class="row no-gutters m-n2">
+            <div class="card p-md-5 p-4 mb-4">
 
-                    <!-- Custom Filter (Optional) -->
-                    <div class="col-md-2 col-12 p-1" style="display: none;">
-                        <select class="form-control bg-faded" id="filter"></select>
-                    </div>
+                <h3 class="mb-0"><a href="faq.html">FAQ</a></h3>
 
-                    <!-- Search Filter (Optional) -->
-                    <div class="col-md-2 col-3 p-1" style="display: none;">
-                        <select class="form-control bg-faded" id="search-filter"></select>
-                    </div>
-
-                    <!-- Search Bar (Optional) -->
-                    <div class="col-md-3 col-9 p-1">
-                        <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="col-md-5 col-12 d-flex justify-content-md-end justify-content-center p-1">
-                        <div class="nav d-flex">
-                            <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                            <ul class="pagination pagination-top justify-content-center m-0"></ul>
-                            <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
-                        </div>
-                    </div>
-
+                <!-- Button Filter
+                <-- Remove this if you'd like to make your own buttons instead!
+                ------------------------------------------------------------------- -->
+                <div style="display:none;" id="filter-buttons">
+                    <hr class="mb-3">
+                    <div class="row no-gutters mx-n1"></div>
                 </div>
+
+                <!-- Filters -->
+                <div style="display:none;" id="charadex-filters">
+                    <hr class="w-100 mb-4">
+                    <div class="row no-gutters m-n1">
+
+                        <!-- Custom Filter -->
+                        <div class="col-md-3 col-12 p-1" style="display: none;">
+                            <select class="form-control bg-faded" id="filter"></select>
+                        </div>
+
+                        <!-- Search Filter -->
+                        <div class="col-md-3 col-3 p-1" style="display: none;">
+                            <select class="form-control bg-faded" id="search-filter"></select>
+                        </div>
+
+                        <!-- Search Bar -->
+                        <div class="col-md col-9 p-1">
+                            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div style="display: none;" id="charadex-pagination">
+                    <hr class="mb-4 mt-4">
+                    <div class="nav d-flex justify-content-center mb-n4">
+                        <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                        <ul class="pagination pagination-top justify-content-center m-0"></ul>
+                        <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                </div>
+
             </div>
 
 
@@ -171,22 +171,35 @@
     <div style="display:none;">
 
 
-        <!-- URL Param Filter Buttons
+        <!-- Gallery Items
         ------------------------------------------------------------------- -->
-        <li class="col-lg col-sm-6 p-2" id="charadex-filter-buttons">
-            <a class="btn btn-primary d-block link title" href=""></a>
+        <li class="col-12 p-2" id="charadex-entries">
+            <div class="card d-block p-4">
+                <a class="d-block cardlink" href="">
+                    <b><span class="question"></span></b>
+                </a>
+                <div class="px-4 pt-2 text-pre answer"></div>
+                <hr>
+                <div class="row no-gutters small px-2 mb-n2">
+                    <div class="col-auto"><b>Tags</b></div>
+                    <div class="col text-right tags"></div>
+                </div>
+            </div>
         </li>
 
 
-        <!-- Gallery Items
+        <!-- Singular Item
         ------------------------------------------------------------------- -->
-        <li class="col-lg-3 col-sm-6 p-2" id="charadex-entries">
-            <a class="card h-100 cardlink" href="">
-                <h5 class="card-header text-center id"></h5>
-                <div class="card-body d-flex flex-fill">
-                    <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+        <li class="col-12 p-2" id="charadex-card">
+            <div class="card d-block p-4">
+                <b><span class="question"></span></b>
+                <div class="px-4 pt-2 text-pre answer"></div>
+                <hr>
+                <div class="row no-gutters small px-2 mb-n2">
+                    <div class="col-auto"><b>Tags</b></div>
+                    <div class="col text-right tags"></div>
                 </div>
-            </a>
+            </div>
         </li>
 
 
@@ -207,7 +220,7 @@
 
     <!-- Charadex Script -->
     <script src="styles/charadex.js"></script>
-    <script>charadexCards(yourOptions);</script>
+    <script>masterlist(yourOptions);</script>
 
 
 </body>
