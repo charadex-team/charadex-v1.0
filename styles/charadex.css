@@ -195,31 +195,6 @@ body {
 
 }
 
-body.dark {
-  /* ============================================================= */
-  /* Backgrounds
-  ================================================================ */
-  --cd-body-background-color:            #2e2e2e;
-  --cd-content-background-color:         #313131;
-  --cd-faded-background-color:           #2a2a2a;
-
-  /* Background Extras */
-  --cd-body-background-image:              url();
-
-  /* ============================================================= */
-  /* Text
-  ================================================================ */
-  --cd-body-text-color:                  #f0f0f0;
-  --cd-faded-text-color:                 #a8a8a8;
-  --cd-navbar-text-color:                var(--cd-faded-text-color);
-  --cd-link-text-color:                  var(--cd-primary-color);
-
-  /* ============================================================= */
-  /* Borders
-  ================================================================ */
-  --cd-border-color:                     rgba(255,255,255,.12);
-}
-
 
 /* ============================================================= */
 /* General Page Styles
@@ -235,7 +210,7 @@ body {
 
   /* Global Background */
   background-color: var(--cd-body-background-color);
-  background-image: var(--cd-background-body-image);
+  background-image: var(--cd-body-background-image);
   background-position: center;
   background-size: cover;
 
