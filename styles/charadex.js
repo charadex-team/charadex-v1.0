@@ -93,7 +93,7 @@
 
     let loadPage = () => {
         $('#loading').hide();
-        $('.masterlist-container').addClass('softload');
+        $('#main-container').addClass('softload');
     } 
 
 
@@ -485,6 +485,94 @@
         }
 
         // 'Load' the page after the above is said and done
+        loadPage();
+
+    }; 
+
+
+/* ==================================================================== */
+/* For showing off just cards
+======================================================================= */
+    const frontPage = (options) => {
+
+        const charadexInfo = optionSorter(options);
+
+        //Designs
+        let addDesigns = async () => {
+            if($("#designs .gallery-row").length != 0) {
+
+                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, 'masterlist')).then(i => i.text());
+                let designs = scrubData(designJSON).reverse().slice(0, 6);
+                let cardKey = Object.keys(designs[0])[0];
+
+                let designsArr = [];
+                designs.forEach((i) => {
+                    if (i.designtype !== 'MYO Slot') {
+                        let colHTML = $("#designs .gallery-item").clone();
+                        colHTML.find(".link").attr('href', baseURL + "?" + cardKey + "=" + i.id);
+                        colHTML.find(".image").attr('src', i.image);
+                        colHTML.find(".id").html(i.id);
+                        designsArr.push(colHTML);
+                    }
+                });
+
+                // Make items show up
+                $("#designs .gallery-row").html(designsArr);
+
+            }
+        }
+
+        //Designs
+        let addStaff = async () => {
+            if($("#staff .gallery-row").length != 0) {
+
+                const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'mods')).then(i => i.text());
+                let mods = scrubData(modsJSON);
+
+                let modsArr = [];
+                mods.forEach((i) => {
+                    let colHTML = $("#staff .gallery-item").clone();
+                    colHTML.find(".link").attr('href', i.link);
+                    colHTML.find(".image").attr('src', i.image);
+                    colHTML.find(".username").html(i.username);
+                    colHTML.find(".jobtitle").html(i.jobtitle);
+                    modsArr.push(colHTML);
+                });
+
+                // Make items show up
+                $("#staff .gallery-row").html(modsArr);
+
+            }
+        }
+
+        //Events
+        let addEvents = async () => {
+            if($("#events .gallery-row").length != 0) {
+
+                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'prompts')).then(i => i.text());
+                let events = scrubData(eventsJSON);
+                let newestEvents = events.sort(function(a,b){return a.enddate() - b.enddate()});
+                let lastEvents = newestEvents.slice(0, 4)
+
+                let eventsArr = [];
+                lastEvents.forEach((i) => {
+                    let colHTML = $("#events .gallery-item").clone();
+                    colHTML.find(".link").attr('href', i.link);
+                    colHTML.find(".title").html(i.title);
+                    colHTML.find(".startdate").html(i.startdate);
+                    colHTML.find(".enddate").html(i.enddate);
+                    eventsArr.push(colHTML);
+                });
+
+                // Make items show up
+                $("#events .gallery-row").html(eventsArr);
+
+            }
+        }
+
+        addDesigns();
+        addStaff();
+        addEvents();
         loadPage();
 
     }; 

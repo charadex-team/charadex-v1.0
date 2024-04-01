@@ -49,11 +49,24 @@
 
 <body>
 
+    <script>
+        /* ------------------------------------------------------------------- */
+        /* Only needs the sheet ID
+        /* ------------------------------------------------------------------- */
+        let yourOptions = {
+            sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
+        };
+    </script>
+
 
     <!-- --------------------------------------------------------------------
     <-- Header
     <-------------------------------------------------------------------- -->
     <nav id="header"></nav>
+
+
+    <!-- Spinner for loading-->
+    <div class="spinner-border m-auto" id="loading"></div>
 
 
     <!-- --------------------------------------------------------------------
@@ -62,19 +75,94 @@
     <-------------------------------------------------------------------- -->
     <div class="container py-md-5 my-4 py-4" id="main-container">
 
+        <div class="row no-gutters m-n2">
 
-        <!-- General Info
-        <-------------------------------------------------------------------- -->
-        <div class="card px-md-5 pt-md-5 p-4 mb-5">
-            <h1 class="text-primary mb-3">Terms of Service</h1>
-            <div class="pl-4">
-                <p>All owners of [species] are covered under the following Terms of Service. By becoming the owner of a [species], you agree to these terms.</p>
+            <div class="col-12 p-2">
+                <div class="card p-md-5 p-4 h-100">
+                    <div class="hero-title d-flex px-4 pb-4 pt-5 mb-4" style="background-image: url();">
+                        <h1 class="m-auto display-2">Charadex</h1>
+                    </div>
+                    <div class="px-4 text-muted">
+                        <p>Write about your species...</p>
+                    </div>
+                    <hr class="my-4">
+                    <div class="d-flex justify-content-center align-items-center mb-n4">
+                        <a href="https://charadex.com/"><i class="fas fa-floppy-disk fa-fw mx-3"></i></a>
+                        <a href="https://github.com/charadex-team"><i class="fab fa-github fa-fw mx-3"></i></a>
+                        <a href="https://discord.gg/3ghSjBug6a"><i class="fab fa-discord fa-fw mx-3"></i></a>
+                        <a href="https://ko-fi.com/charadex"><i class="fas fa-mug-saucer fa-fw mx-3"></i></a>
+                        <a href="https://sheezy.art/cheeriko/persona/charadex"><i class="fas fa-crop fa-fw mx-3"></i></a>
+                        <a href="https://bsky.app/profile/charadex.bsky.social"><i class="fas fa-cloud fa-fw mx-3"></i></a>
+                    </div>
+                </div>
             </div>
-            <hr>
-            <div class="text-center small text-muted">
-                These terms may be subject to change.<br>
-                Last Update: 03/30/24
+
+            <div class="col-md-6 p-2">
+                <div class="card p-md-5 p-4 h-100" id="events">
+                    <h4 class="mb-0">Events</h4>
+                    <hr class="mb-4">
+                    <div class="row no-gutters gallery-row m-n1">
+
+                        <div class="col-12 gallery-item p-1">
+                            <div class="card bg-faded p-3">
+                                <h5 class="m-0">
+                                    <a class="link title" href=""></a>
+                                </h5>
+                                <hr class="my-2">
+                                <div class="row no-gutters small my-n2">
+                                    <div class="col-md-6 p-2 d-flex justify-content-between">
+                                        <b>Starts</b> <span class="startdate"></span>
+                                    </div>
+                                    <div class="col-md-6 p-2 d-flex justify-content-between">
+                                        <b>Ends</b> <span class="enddate"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+
+            <div class="col-md-6 p-2">
+                <div class="card p-md-5 p-4 h-100" id="staff">
+                    <h4 class="mb-0">Staff</h4>
+                    <hr class="mb-4">
+                    <div class="row no-gutters gallery-row m-n1">
+
+                        <div class="col-md-6 gallery-item p-1">
+                            <div class="row no-gutters m-n2">
+                                <div class="col-5 p-2">
+                                    <img class="img-fluid img-thumbnail image" src="">
+                                </div>
+                                <div class="col-7 p-2">
+                                    <a class="d-block mt-2 link" href=""><b class="username"></b></a>
+                                    <span class="badge badge-primary jobtitle"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 p-2">
+                <div class="card p-md-5 p-4 h-100" id="designs">
+                    <h4 class="mb-0">Latest Designs</h4>
+                    <hr class="mb-4">
+                    <div class="row no-gutters gallery-row m-n1">
+
+                        <div class="col-lg-2 col-md-4 col-6 gallery-item p-1">
+                            <a class="d-block text-center link" href="">
+                                <img class="image img-fluid img-thumbnail" src=""><br>
+                                <span class="btn btn-primary d-block mt-2 id"></span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -98,6 +186,7 @@
 
     <!-- Charadex Script -->
     <script src="styles/charadex.js"></script>
+    <script>frontPage(yourOptions);</script>
 
 
 </body>

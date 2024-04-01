@@ -564,15 +564,15 @@ img {
 }
 
 /* Adds min height so footer stays at the bottom */
-.masterlist-container {
+#main-container {
   -ms-flex: 1 1 auto!important;
   flex: 1 1 auto!important;
 }
 
 /* Fades container in on load so its not as jarring */
-.masterlist-container {
+#main-container {
   opacity: 0;
-} .masterlist-container.softload {
+} #main-container.softload {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
@@ -629,13 +629,20 @@ p:last-child {
   border-right-color: transparent !important;
 }
 
-/* Capitalizes all usernames */
-.username {
-    text-transform: capitalize;
-}
+
+/* ============================================================= */
+/* Custom Classes
+/* ============================================================= */
 
 /* Makes sure your text formatting is preserved from the sheet */
 /* Best for large areas like notes */
 .text-pre {
     white-space: pre;
+}
+
+.hero-title {
+    color: var(--cd-primary-text-color);
+    background-color: var(--cd-primary-color);
+    border-radius: var(--cd-border-radius);
+    min-height: 250px;
 }
