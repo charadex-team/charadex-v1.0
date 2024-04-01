@@ -438,10 +438,11 @@ a:active {
 
 
 /* ============================================================= */
-/* Button
+/* Buttons & Badges
 /* ============================================================= */
 
-.btn.btn-primary {
+.btn.btn-primary,
+.badge.badge-primary {
   color: var(--cd-button-text-color) !important;
   background-color: var(--cd-button-background-color) !important;
   border-width: var(--cd-button-border-width) !important;
@@ -452,7 +453,10 @@ a:active {
 
 .btn.btn-primary:hover,
 .btn.btn-primary:focus,
-.btn.btn-primary:active {
+.btn.btn-primary:active,
+a.badge.badge-primary:hover,
+a.badge.badge-primary:focus,
+a.badge.badge-primary:active  {
   color: var(--cd-button-text-color-hover) !important;
   border-color: var(--cd-button-border-color-hover) !important;
   background-color: var(--cd-button-background-color-hover) !important;
@@ -579,6 +583,11 @@ button:focus,
 .form-control:focus {
   outline: none !important;
   box-shadow: none !important;
+}
+
+/* Remove margin from last paragraphs */
+p:last-child {
+    margin-bottom: 0 !important;
 }
 
 /* Small container for more compact view */
