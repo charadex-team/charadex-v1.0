@@ -619,3 +619,14 @@ button:focus,
   border-color: var(--cd-body-text-color);
   border-right-color: transparent !important;
 }
+
+/* Capitalizes all usernames */
+.username {
+    text-transform: capitalize;
+}
+
+/* Makes sure your text formatting is preserved from the sheet */
+/* Best for large areas like notes */
+.text-pre {
+    white-space: pre;
+}
