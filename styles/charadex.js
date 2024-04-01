@@ -104,6 +104,7 @@
     let sheetArrayKeys = (arr) => {
         let itemArray = Object.keys(arr[0]);
         if (itemArray.indexOf('cardlink')) itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
+        if (itemArray.indexOf('link')) itemArray[itemArray.indexOf('link')] = { name: 'link', attr: 'href' };
         if (itemArray.indexOf('image')) itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
         return itemArray;
     };
