@@ -57,8 +57,8 @@
             itemSheetPage: userOptions.itemSheetPage ? userOptions.itemSheetPage : 'Items',
             itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
             itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
-            fauxFolderColumn: userOptions.fauxFolderColumn ? createKey(userOptions.fauxFolderColumn) : false,
-            filterColumn: userOptions.filterColumn ? createKey(userOptions.filterColumn) : false,
+            fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
+            filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
             searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
             includeDesigns: userOptions.includeDesigns ? true : false
         }
@@ -69,7 +69,7 @@
 /* ================================================================ */
 /* QOL Funcs
 /* ================================================================ */
-    let createKey = (key) => {
+    let keyCreator = (key) => {
         return key.toLowerCase().replace(/\s/g, "");
     };
 
@@ -393,50 +393,30 @@
             let inventoryItemArr = [];
             itemSheetArray.forEach((i) => {
                 for (var c in scrubbedCard) {
-                    if (c === createKey(i.item)) {
+                    if (c === keyCreator(i.item)) {
                         let inventoryItems = {
                             type: i.type,
-                            item: createKey(i.item),
+                            item: i.item,
                             image: i.image,
-                            amount: scrubbedCard[createKey(i.item)],
+                            amount: scrubbedCard[keyCreator(i.item)],
                         };
                         inventoryItemArr.push(inventoryItems);
                     };
                 }
             });
 
-            // Make some delicious keys
-            let inventorySorted = Object.groupBy(inventoryItemArr, ({ type }) => type);
-            let inventoryItemKeys = [...new Set(inventoryItemArr.map(i => i['type']))];
+            // Throw all the boys in a column 
+            let cols = [];
+            inventoryItemArr.forEach((val) => {
+                let colHTML = $("#item-list-col").clone();
+                colHTML.find(".item-img").attr('src', val.image);
+                colHTML.find(".item").html(val.item);
+                colHTML.find(".amount").html(val.amount);
+                cols.push(colHTML);
+            });
 
-            // Loop through items and add general structure to dom
-            for (let k = 0; k < inventoryItemKeys.length; k++) {
-
-                // Get the item types for future refence
-                let currUserItems = inventorySorted[inventoryItemKeys[k]];
-
-                // Only append to this section
-                $("#item-list").append([
-
-                    // Clone each section depending on how many types there are
-                    $("#item-list-section").clone().addClass('new-list-section').attr('id', createKey(inventoryItemKeys[k])).html([
-
-                        // Add header info
-                        $("#item-type-title").text(inventoryItemKeys[k]).clone(),
-
-                        // Rows and add amount of columns needed
-                        $("#item-list-row").clone().html(currUserItems.map(i  => $("#item-list-col").clone())),
-
-                    ])
-                ]);
-            };
-
-            for (let k = 0; k < inventoryItemArr.length; k++) {
-                $("#" + createKey(inventoryItemArr[k].type) + ' .item-img').attr('src', inventoryItemArr[k].image);
-                $("#" + createKey(inventoryItemArr[k].type) + ' .item').html(inventoryItemArr[k].item);
-            }
-
-            $("#item-list .new-list-section").show();
+            // Make items show up
+            $("#item-list-row").html(cols);
 
             // Render card
             let charadexItem = new List("charadex-gallery", itemOptions, scrubbedCard);
