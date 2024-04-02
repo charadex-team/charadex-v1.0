@@ -279,7 +279,7 @@
         // Filter through array based on folders
         if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn, urlParams);
 
-        // Reverse baseds on preference
+        // Reverse based on preference
         charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
 
         // Add card links to the remaining array
@@ -496,39 +496,54 @@
     const frontPage = (options) => {
 
         const charadexInfo = optionSorter(options);
+        quickURL = baseURL.substring(0, baseURL.lastIndexOf('/')) + "/";
 
-        //Designs
-        let addDesigns = async () => {
-            if($("#designs .gallery-row").length != 0) {
+        //Events
+        let addEvents = async () => {
+            if($("#events .gallery-row").length != 0) {
 
-                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, 'masterlist')).then(i => i.text());
-                let designs = scrubData(designJSON).reverse().slice(0, 6);
-                let cardKey = Object.keys(designs[0])[0];
+                // Grab dah sheet
+                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'prompts')).then(i => i.text());
+                let events = scrubData(eventsJSON);
+                let cardKey = Object.keys(events[0])[0];
 
-                let designsArr = [];
-                designs.forEach((i) => {
-                    if (i.designtype !== 'MYO Slot') {
-                        let colHTML = $("#designs .gallery-item").clone();
-                        colHTML.find(".link").attr('href', baseURL + "?" + cardKey + "=" + i.id);
-                        colHTML.find(".image").attr('src', i.image);
-                        colHTML.find(".id").html(i.id);
-                        designsArr.push(colHTML);
-                    }
+                // Sort by End Date
+                let newestEvents = events.sort(function(a, b) {
+                    var c = new Date(a.enddate);
+                    var d = new Date(b.enddate);
+                    return d-c;
+                });
+
+                // Pull first 3 from sorted
+                let lastEvents = newestEvents.slice(0, 3)
+
+                // Beyblade let it RIP
+                let eventsArr = [];
+                lastEvents.forEach((i) => {
+                    let colHTML = $("#events .gallery-item").clone();
+                    colHTML.find(".link").attr('href', quickURL + "prompts.html?" + cardKey + "=" + i.title);
+                    colHTML.find(".title").html(i.title);
+                    colHTML.find(".startdate").html(i.startdate);
+                    colHTML.find(".enddate").html(i.enddate);
+                    eventsArr.push(colHTML);
                 });
 
                 // Make items show up
-                $("#designs .gallery-row").html(designsArr);
+                $("#events .gallery-row").html(eventsArr);
 
             }
         }
+        addEvents();
 
-        //Designs
+        //Staff
         let addStaff = async () => {
             if($("#staff .gallery-row").length != 0) {
 
+                // Grab dah sheet
                 const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'mods')).then(i => i.text());
                 let mods = scrubData(modsJSON);
 
+                // Nyoom
                 let modsArr = [];
                 mods.forEach((i) => {
                     let colHTML = $("#staff .gallery-item").clone();
@@ -544,35 +559,39 @@
 
             }
         }
+        addStaff();
 
-        //Events
-        let addEvents = async () => {
-            if($("#events .gallery-row").length != 0) {
+        //Designs
+        let addDesigns = async () => {
+            if($("#designs .gallery-row").length != 0) {
 
-                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'prompts')).then(i => i.text());
-                let events = scrubData(eventsJSON);
-                let newestEvents = events.sort(function(a,b){return a.enddate() - b.enddate()});
-                let lastEvents = newestEvents.slice(0, 4)
+                // Grab dah sheet
+                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, 'masterlist')).then(i => i.text());
+                let designs = scrubData(designJSON);
 
-                let eventsArr = [];
-                lastEvents.forEach((i) => {
-                    let colHTML = $("#events .gallery-item").clone();
-                    colHTML.find(".link").attr('href', i.link);
-                    colHTML.find(".title").html(i.title);
-                    colHTML.find(".startdate").html(i.startdate);
-                    colHTML.find(".enddate").html(i.enddate);
-                    eventsArr.push(colHTML);
+                // Filter out any MYO slots, reverse and pull the first 4
+                let selectDesigns = designs.filter((i) => {return i.designtype != 'MYO Slot'}).reverse().slice(0, 4);
+                
+                // Grab your key for single card
+                let cardKey = Object.keys(selectDesigns[0])[0];
+
+                let designsArr = [];
+                selectDesigns.forEach((i) => {
+                    let colHTML = $("#designs .gallery-item").clone();
+                    colHTML.find(".link").attr('href', quickURL + "masterlist.html?" + cardKey + "=" + i.id);
+                    colHTML.find(".image").attr('src', i.image);
+                    colHTML.find(".id").html(i.id);
+                    designsArr.push(colHTML);
                 });
 
                 // Make items show up
-                $("#events .gallery-row").html(eventsArr);
+                $("#designs .gallery-row").html(designsArr);
 
             }
         }
-
         addDesigns();
-        addStaff();
-        addEvents();
+
+        // Loading...
         loadPage();
 
     }; 

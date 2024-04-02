@@ -574,6 +574,10 @@ p:last-child {
   max-height: 200px;
 }
 
+#designs img {
+    max-height: 150px;
+}
+
 /* Combines search and its companion filter */
 #search-filter.form-control {
   border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
