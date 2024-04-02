@@ -188,7 +188,7 @@
 
             // Creates Param Object Array
             let urlParamArray = [];
-            const uniqueArray = [...new Set(array.map(i => i[fauxFolderColumn]))];
+            const uniqueArray = [...new Set(array.map(i => i[fauxFolderColumn]))].filter(n => n);
             uniqueArray.forEach((i) => {
                 urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolderColumn + '=' + i.toLowerCase()));
             });
