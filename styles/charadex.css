@@ -574,7 +574,7 @@ p:last-child {
   max-height: 200px;
 }
 
-#designs img {
+.gallery-img {
     max-height: 150px;
 }
 

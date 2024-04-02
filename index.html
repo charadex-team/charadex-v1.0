@@ -100,15 +100,17 @@
             </div>
 
             <div class="col-md-6 p-2">
-                <div class="card p-md-5 p-4 h-100" id="events">
-                    <h4 class="mb-0">Events</h4>
-                    <hr class="mb-4">
-                    <div class="row no-gutters gallery-row m-n1">
+                <div class="card p-md-5 p-4 h-100" id="prompt-gallery">
 
-                        <div class="col-12 gallery-item p-1">
+                    <h4 class="mb-0">Prompts</h4>
+                    <hr class="mb-4">
+                    <div class="list row no-gutters gallery-row m-n1"></div>
+
+                    <div class="d-none">
+                        <div class="col-12 gallery-item p-1" id="prompt-item">
                             <div class="card bg-faded p-3">
                                 <h5 class="m-0">
-                                    <a class="link title" href=""></a>
+                                    <a class="cardlink title" href=""></a>
                                 </h5>
                                 <hr class="my-2">
                                 <div class="row no-gutters small my-n2">
@@ -121,47 +123,51 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
 
             <div class="col-md-6 p-2">
-                <div class="card p-md-5 p-4 h-100" id="staff">
+                <div class="card p-md-5 p-4 h-100" id="staff-gallery">
+
                     <h4 class="mb-0">Staff</h4>
                     <hr class="mb-4">
-                    <div class="row no-gutters gallery-row m-n1">
+                    <div class="list row no-gutters gallery-row m-n1"></div>
 
-                        <div class="col-md-6 gallery-item p-1">
-                            <div class="row no-gutters m-n2">
-                                <div class="col-3 p-1 my-auto">
+                    <div class="d-none">
+                        <div class="col-md-6 gallery-item p-1" id="staff-item">
+                            <div class="row no-gutters m-n1">
+                                <div class="col-4 p-1 my-auto">
                                     <img class="img-fluid img-thumbnail image" src="">
                                 </div>
-                                <div class="col-9 p-1">
+                                <div class="col-8 p-1">
                                     <a class="d-block mt-2 link text-truncate" href=""><b class="username"></b></a>
                                     <span class="badge badge-primary jobtitle"></span>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+
                 </div>
             </div>
 
             <div class="col-md-12 p-2">
-                <div class="card p-md-5 p-4 h-100" id="designs">
+                <div class="card p-md-5 p-4 h-100" id="design-gallery">
+
                     <h4 class="mb-0">Latest Designs</h4>
                     <hr class="mb-4">
-                    <div class="row no-gutters gallery-row m-n1">
+                    <div class="list row no-gutters gallery-row m-n1"></div>
 
-                        <div class="col-md-3 col-6 gallery-item p-1">
-                            <a class="card p-2 bg-faded d-block text-center link" href="">
-                                <img class="image img-fluid" src=""><br>
+                    <div class="d-none">
+                        <div class="col-md-3 col-6 gallery-item p-1" id="design-item">
+                            <a class="card p-2 bg-faded d-block text-center cardlink" href="">
+                                <img class="image img-fluid gallery-img" src=""><br>
                                 <span class="btn btn-primary d-block mt-2 id"></span>
                             </a>
                         </div>
-
                     </div>
+
                 </div>
             </div>
 
@@ -185,6 +191,9 @@
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- List.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
 
     <!-- Charadex Script -->
     <script src="styles/charadex.js"></script>

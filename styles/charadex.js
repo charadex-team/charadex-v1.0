@@ -41,7 +41,9 @@
             scrubbedData.push(row);
         });
 
-        return scrubbedData;
+        let publicData = scrubbedData.filter((i) => {return i['hide'] !== true;});
+
+        return publicData;
 
     }
 
@@ -88,7 +90,7 @@
     };
 
     let sheetPage = (id, pageName) => {
-        return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL AND B=FALSE&sheet=${pageName}`
+        return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
     };
 
     let loadPage = () => {
@@ -498,9 +500,9 @@
         const charadexInfo = optionSorter(options);
         quickURL = baseURL.substring(0, baseURL.lastIndexOf('/')) + "/";
 
-        //Events
+        // Events
         let addEvents = async () => {
-            if($("#events .gallery-row").length != 0) {
+            if($("#prompt-gallery").length != 0) {
 
                 // Grab dah sheet
                 const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'prompts')).then(i => i.text());
@@ -515,55 +517,46 @@
                 });
 
                 // Pull first 3 from sorted
-                let lastEvents = newestEvents.slice(0, 3)
+                let lastEvents = newestEvents.slice(0, 3);
 
-                // Beyblade let it RIP
-                let eventsArr = [];
-                lastEvents.forEach((i) => {
-                    let colHTML = $("#events .gallery-item").clone();
-                    colHTML.find(".link").attr('href', quickURL + "prompts.html?" + cardKey + "=" + i.title);
-                    colHTML.find(".title").html(i.title);
-                    colHTML.find(".startdate").html(i.startdate);
-                    colHTML.find(".enddate").html(i.enddate);
-                    eventsArr.push(colHTML);
-                });
+                // Add card link
+                for (var i in lastEvents) {lastEvents[i].cardlink = quickURL + "prompts.html?" + cardKey + "=" + lastEvents[i][cardKey];}
 
-                // Make items show up
-                $("#events .gallery-row").html(eventsArr);
+                // Nyoom
+                let galleryOptions = {
+                    item: 'prompt-item',
+                    valueNames: sheetArrayKeys(lastEvents),
+                };
+
+                // Render Gallery
+                let charadex = new List('prompt-gallery', galleryOptions, lastEvents);
 
             }
-        }
-        addEvents();
+        }; addEvents();
 
-        //Staff
+        // Staff
         let addStaff = async () => {
-            if($("#staff .gallery-row").length != 0) {
+            if($("#staff-gallery").length != 0) {
 
                 // Grab dah sheet
                 const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'mods')).then(i => i.text());
                 let mods = scrubData(modsJSON);
 
                 // Nyoom
-                let modsArr = [];
-                mods.forEach((i) => {
-                    let colHTML = $("#staff .gallery-item").clone();
-                    colHTML.find(".link").attr('href', i.link);
-                    colHTML.find(".image").attr('src', i.image);
-                    colHTML.find(".username").html(i.username);
-                    colHTML.find(".jobtitle").html(i.jobtitle);
-                    modsArr.push(colHTML);
-                });
+                let galleryOptions = {
+                    item: 'staff-item',
+                    valueNames: sheetArrayKeys(mods),
+                };
 
-                // Make items show up
-                $("#staff .gallery-row").html(modsArr);
+                // Render Gallery
+                let charadex = new List('staff-gallery', galleryOptions, mods);
 
             }
-        }
-        addStaff();
+        }; addStaff();
 
-        //Designs
+        // Designs
         let addDesigns = async () => {
-            if($("#designs .gallery-row").length != 0) {
+            if($("#design-gallery").length != 0) {
 
                 // Grab dah sheet
                 const designJSON = await fetch(sheetPage(charadexInfo.sheetID, 'masterlist')).then(i => i.text());
@@ -571,25 +564,22 @@
 
                 // Filter out any MYO slots, reverse and pull the first 4
                 let selectDesigns = designs.filter((i) => {return i.designtype != 'MYO Slot'}).reverse().slice(0, 4);
-                
-                // Grab your key for single card
+
+                // Add cardlink
                 let cardKey = Object.keys(selectDesigns[0])[0];
+                for (var i in selectDesigns) {selectDesigns[i].cardlink = quickURL + "masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey];}
 
-                let designsArr = [];
-                selectDesigns.forEach((i) => {
-                    let colHTML = $("#designs .gallery-item").clone();
-                    colHTML.find(".link").attr('href', quickURL + "masterlist.html?" + cardKey + "=" + i.id);
-                    colHTML.find(".image").attr('src', i.image);
-                    colHTML.find(".id").html(i.id);
-                    designsArr.push(colHTML);
-                });
+                // Nyoom
+                let galleryOptions = {
+                    item: 'design-item',
+                    valueNames: sheetArrayKeys(selectDesigns),
+                };
 
-                // Make items show up
-                $("#designs .gallery-row").html(designsArr);
+                // Render Gallery
+                let charadex = new List('design-gallery', galleryOptions, selectDesigns);
 
             }
-        }
-        addDesigns();
+        }; addDesigns();
 
         // Loading...
         loadPage();
