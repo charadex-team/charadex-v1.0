@@ -512,6 +512,10 @@ hr {
   border-top-style: var(--cd-hr-border-style) !important;
 }
 
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
 /* ============================================================= */
 /* Chee's Tweaks
 /* ============================================================= */
@@ -525,6 +529,8 @@ body {
 #main-container {
     min-height: calc(100vh - 105px);
     padding: 1rem;
+    -ms-flex: 1 1 auto!important;
+    flex: 1 1 auto!important;
 }
 
 @media (min-width: 768px) {
@@ -533,21 +539,10 @@ body {
     }
 }
 
-/* Make images not look ugly when resized */
-img {
-  image-rendering: -webkit-optimize-contrast;
-}
-
-/* Adds min height so footer stays at the bottom */
-#main-container {
-  -ms-flex: 1 1 auto!important;
-  flex: 1 1 auto!important;
-}
-
 /* Fades container in on load so its not as jarring */
-#main-container {
+.container-load {
   opacity: 0;
-} #main-container.softload {
+} .container-load.softload {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
