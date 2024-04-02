@@ -607,7 +607,7 @@ p:last-child {
 /* Makes sure your text formatting is preserved from the sheet */
 /* Best for large areas like notes */
 .text-pre {
-    white-space: pre;
+    white-space: break-spaces;
 }
 
 .hero-title {
