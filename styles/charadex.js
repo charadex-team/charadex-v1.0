@@ -409,7 +409,8 @@
 
             // If it is a single item, fetch the items page too
             const itemJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.itemSheetPage)).then(i => i.text());
-            let itemSheetArray = scrubData(itemJSON);
+            let itemSheetArr = scrubData(itemJSON);
+            let itemCardKey = Object.keys(itemSheetArr[0])[0];
 
             // List.js options
             let itemOptions = {
@@ -419,39 +420,62 @@
 
             // Filter out the right card
             let singleArr = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
-            let scrubbedCard = Object.entries(singleArr).reduce((a,[k,v]) => (v ? (a[k]=v, a) : a), {});
 
             // Merge the user's inventory with the item sheet
+            // Also remove any items they dont have atm
             let inventoryItemArr = [];
-            itemSheetArray.forEach((i) => {
-                for (var c in scrubbedCard) {
-                    if (c === keyCreator(i.item)) {
+            itemSheetArr.forEach((i) => {
+                for (var c in singleArr) {
+                    if (c === keyCreator(i.item) && ((singleArr[keyCreator(i.item)] !== "0" && singleArr[keyCreator(i.item)] !== ""))) {
                         let inventoryItems = {
                             type: i.type,
                             item: i.item,
                             image: i.image,
-                            amount: scrubbedCard[keyCreator(i.item)],
+                            itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i.item,
+                            amount: singleArr[keyCreator(i.item)],
                         };
                         inventoryItemArr.push(inventoryItems);
                     };
                 }
             });
 
-            // Throw all the boys in a column 
-            let cols = [];
-            inventoryItemArr.forEach((val) => {
-                let colHTML = $("#item-list-col").clone();
-                colHTML.find(".item-img").attr('src', val.image);
-                colHTML.find(".item").html(val.item);
-                colHTML.find(".amount").html(val.amount);
-                cols.push(colHTML);
-            });
+            // Group by the item type
+            let orderItems = Object.groupBy(inventoryItemArr, ({ type }) => type);
+
+            // Create Rows
+            let rows = [];
+            for (var i in orderItems) {
+
+                if (i == "Misc") {
+                    delete i;
+                }
+
+                // Get the headers and cols
+                let cols = [];
+                orderItems[i].forEach((v) => {
+                    let HTML = $("#item-list-col").clone();
+                    HTML.find(".item-img").attr('src', v.image);
+                    HTML.find(".itemlink").attr('href', v.itemlink);
+                    HTML.find(".item").html(v.item);
+                    HTML.find(".amount").html(v.amount);
+                    cols.push(HTML);
+                });
+                
+                // Smack everything together
+                let rowHTML = $("#item-list-section").clone().html([
+                    $("#item-list-header").clone().html(i), 
+                    $("#item-list-row").clone().html(cols)
+                ]);
+
+                rows.push(rowHTML);
+
+            };
 
             // Make items show up
-            $("#item-list-row").html(cols);
+            $("#item-list").html(rows);
 
             // Render card
-            let charadexItem = new List("charadex-gallery", itemOptions, scrubbedCard);
+            let charadexItem = new List("charadex-gallery", itemOptions, singleArr);
 
 
         } else {
@@ -493,12 +517,12 @@
 
 
 /* ==================================================================== */
-/* For showing off just cards
+/* This is just to fill out some of the front page automatically
+/* You're free to delete and create something yourself!
 ======================================================================= */
     const frontPage = (options) => {
 
         const charadexInfo = optionSorter(options);
-        quickURL = baseURL.substring(0, baseURL.lastIndexOf('/')) + "/";
 
         // Events
         let addEvents = async () => {
@@ -520,7 +544,7 @@
                 let lastEvents = newestEvents.slice(0, 3);
 
                 // Add card link
-                for (var i in lastEvents) {lastEvents[i].cardlink = quickURL + "prompts.html?" + cardKey + "=" + lastEvents[i][cardKey];}
+                for (var i in lastEvents) {lastEvents[i].cardlink = folderURL + "/prompts.html?" + cardKey + "=" + lastEvents[i][cardKey];}
 
                 // Nyoom
                 let galleryOptions = {
@@ -567,7 +591,7 @@
 
                 // Add cardlink
                 let cardKey = Object.keys(selectDesigns[0])[0];
-                for (var i in selectDesigns) {selectDesigns[i].cardlink = quickURL + "masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey];}
+                for (var i in selectDesigns) {selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey];}
 
                 // Nyoom
                 let galleryOptions = {

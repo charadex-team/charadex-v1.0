@@ -175,21 +175,30 @@
                 <!-- Header -->
                 <h2 class="card-header text-center p-4"><span class="text-capitalize username"></span>'s Inventory</h2>
 
-                <!--Main Info -->
-                <div class="p-md-5 p-4">
-                    <div class="row no-gutters m-n2" id="item-list-row">
+                <!-- Items -->
+                <div class="px-md-5 pb-md-5 pt-md-0 p-4" id="item-list"></div>
 
-                        <div class="col-md-4 col-6 p-2" id="item-list-col">
-                            <div class="card d-block text-center bg-faded p-3">
-                                <img class="item-img img-fluid" src="">
-                                <div class="btn btn-primary d-block mt-3">
-                                    <span class="item"></span> x<span class="amount"></span>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Item sections -->
+                <div class="d-none">
 
+                    <!-- Each section -->
+                    <div class="mt-md-5 mt-4" id="item-list-section">
+                        <h4 id="item-list-header"></h4>
+                        <div class="row no-gutters m-n2" id="item-list-row"></div>
                     </div>
+
+                    <!-- Each section's items -->
+                    <div class="col-md-4 col-6 p-2" id="item-list-col">
+                        <div class="card d-block text-center bg-faded p-2">
+                            <img class="item-img img-fluid gallery-img" src="">
+                            <a class="btn btn-primary d-block mt-3 itemlink" href="">
+                                <span class="item"></span> x<span class="amount"></span>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
         </li>
 
