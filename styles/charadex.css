@@ -46,7 +46,7 @@ body {
   --cd-border-color:                     rgba(0, 0, 0, 0.125);
   --cd-border-width:                     1px;
   --cd-border-style:                     solid;
-  --cd-border-radius:                    .75rem;
+  --cd-border-radius:                    1rem;
 
   /* ============================================================= */
   /* Navbar
@@ -123,16 +123,16 @@ body {
   ================================================================ */
 
   /* Background */
-  --cd-pagination-background-color:      var(--cd-faded-background-color);
-  --cd-pagination-background-hover:      var(--cd-primary-color);
+  --cd-pagination-background-color:      transparent;
+  --cd-pagination-background-hover:      transparent;
 
   /* Text */
   --cd-pagination-text-color:            var(--cd-faded-text-color);
-  --cd-pagination-text-color-hover:      var(--cd-primary-text-color);
+  --cd-pagination-text-color-hover:      var(--cd-primary-color);
 
   /* Border */
   --cd-pagination-border-radius:         var(--cd-border-radius);
-  --cd-pagination-border-width:          var(--cd-border-width);
+  --cd-pagination-border-width:          0;
   --cd-pagination-border-style:          var(--cd-border-style);
   --cd-pagination-border-color:          var(--cd-border-color);
   --cd-pagination-border-color-hover:    var(--cd-primary-color);
@@ -195,31 +195,6 @@ body {
 
 }
 
-body.dark {
-  /* ============================================================= */
-  /* Backgrounds
-  ================================================================ */
-  --cd-body-background-color:            #2e2e2e;
-  --cd-content-background-color:         #313131;
-  --cd-faded-background-color:           #2a2a2a;
-
-  /* Background Extras */
-  --cd-body-background-image:              url();
-
-  /* ============================================================= */
-  /* Text
-  ================================================================ */
-  --cd-body-text-color:                  #f0f0f0;
-  --cd-faded-text-color:                 #a8a8a8;
-  --cd-navbar-text-color:                var(--cd-faded-text-color);
-  --cd-link-text-color:                  var(--cd-primary-color);
-
-  /* ============================================================= */
-  /* Borders
-  ================================================================ */
-  --cd-border-color:                     rgba(255,255,255,.12);
-}
-
 
 /* ============================================================= */
 /* General Page Styles
@@ -235,7 +210,7 @@ body {
 
   /* Global Background */
   background-color: var(--cd-body-background-color);
-  background-image: var(--cd-background-body-image);
+  background-image: var(--cd-body-background-image);
   background-position: center;
   background-size: cover;
 
@@ -266,12 +241,11 @@ a:active {
   background-color: var(--cd-navbar-background-color) !important;
   font-family: var(--cd-navbar-font-family) !important;
   z-index: 2000;
-  font-size: 125%;
 }
 
 .navbar .navbar-brand {
   color: var(--cd-navbar-brand-color) !important;
-  font-size: 125%;
+  font-size: 2rem;
 }
 
 .navbar .navbar-brand:hover, 
@@ -291,6 +265,16 @@ a:active {
 .navbar .navbar-toggler {
   color: var(--cd-navbar-link-color) !important;
   border: none !important;
+}
+
+.navbar .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .nav-link-icon {
+    font-size: .5rem;
+    margin-left: .25rem;
 }
 
 
@@ -429,10 +413,11 @@ a:active {
 
 
 /* ============================================================= */
-/* Button
+/* Buttons & Badges
 /* ============================================================= */
 
-.btn.btn-primary {
+.btn.btn-primary,
+.badge.badge-primary {
   color: var(--cd-button-text-color) !important;
   background-color: var(--cd-button-background-color) !important;
   border-width: var(--cd-button-border-width) !important;
@@ -443,7 +428,10 @@ a:active {
 
 .btn.btn-primary:hover,
 .btn.btn-primary:focus,
-.btn.btn-primary:active {
+.btn.btn-primary:active,
+a.badge.badge-primary:hover,
+a.badge.badge-primary:focus,
+a.badge.badge-primary:active  {
   color: var(--cd-button-text-color-hover) !important;
   border-color: var(--cd-button-border-color-hover) !important;
   background-color: var(--cd-button-background-color-hover) !important;
@@ -524,6 +512,15 @@ hr {
   border-top-style: var(--cd-hr-border-style) !important;
 }
 
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Fix any border radiuses that were messed from before */
+.rounded {border-radius: var(--cd-border-radius) !important}
+.rounded-circle {border-radius: 100%;}
+.rounded-0 {border-radius: 0 !important;}
+
 /* ============================================================= */
 /* Chee's Tweaks
 /* ============================================================= */
@@ -534,16 +531,23 @@ body {
   flex-direction: column;
 }
 
-/* Adds min height so footer stays at the bottom */
-.masterlist-container {
-  -ms-flex: 1 1 auto!important;
-  flex: 1 1 auto!important;
+#main-container {
+    min-height: calc(100vh - 105px);
+    padding: 1rem;
+    -ms-flex: 1 1 auto!important;
+    flex: 1 1 auto!important;
+}
+
+@media (min-width: 768px) {
+    #main-container {
+        padding: 5rem 1.5rem;
+    }
 }
 
 /* Fades container in on load so its not as jarring */
-.masterlist-container {
+.container-load {
   opacity: 0;
-} .masterlist-container.softload {
+} .container-load.softload {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
@@ -556,21 +560,39 @@ button:focus,
   box-shadow: none !important;
 }
 
+/* Remove margin from last paragraphs */
+p:last-child {
+    margin-bottom: 0 !important;
+}
+
 /* Small container for more compact view */
 .container {
   max-width: 950px !important;
 }
 
-/* Make images not look ugly when resized */
-img {
-  image-rendering: -webkit-optimize-contrast;
-}
-
 /* Prevents awkward load in stutter */
 #charadex-gallery .list .card-body {
   min-height: calc(200px + 2.5rem);
-} #charadex-gallery .list .card-body img {
+} 
+
+#charadex-gallery .list .card-body img {
   max-height: 200px;
+}
+
+.gallery-img {
+    max-height: 150px;
+}
+
+/* Combines search and its companion filter */
+#search-filter.form-control {
+  border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
+  border-right: 0 !important;
+} 
+
+#search.filtered.form-control {
+  margin-left: -.5rem;
+  width: calc(100% + .5rem) !important;
+  border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
 }
 
 /* Loading Icon */
@@ -586,12 +608,20 @@ img {
   border-right-color: transparent !important;
 }
 
-/* Combines search and its companion filter */
-#search-filter.form-control {
-  border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
-  border-right: 0 !important;
-} #search.form-control {
-  margin-left: -.5rem;
-  width: calc(100% + .5rem) !important;
-  border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
+
+/* ============================================================= */
+/* Custom Classes
+/* ============================================================= */
+
+/* Makes sure your text formatting is preserved from the sheet */
+/* Best for large areas like notes */
+.text-pre {
+    white-space: break-spaces;
+}
+
+.hero-title {
+    color: var(--cd-primary-text-color);
+    background-color: var(--cd-primary-color);
+    border-radius: var(--cd-border-radius);
+    min-height: 250px;
 }

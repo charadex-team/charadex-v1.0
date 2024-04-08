@@ -1,302 +1,612 @@
 /* ==================================================================== */
-/* Dark/Light Toggle
+/* URLs
 ======================================================================= */
-  
-const bodyClass = document.body.classList;
-
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && localStorage.getItem('toggle') == null) {
-  bodyClass.add('dark');
-} if (localStorage.getItem('toggle') == 'true') {
-  bodyClass.add('dark');
-}
-
-$(document).on("click", "#toggle", function() {
-  bodyClass.contains('dark')
-    ? (bodyClass.remove('dark'))
-    : (bodyClass.add('dark')); 
-  localStorage.setItem('toggle', bodyClass.contains('dark'));
-}); 
+    let url = new URL(window.location.href);
+    let baseURL = window.location.origin + window.location.pathname;
+    let folderURL = window.location.origin + '/' + window.location.pathname.replace(/\/[^\/]+$/,"");
+    //let importURL = window.location.hostname == 'localhost' ? : ;
 
 
 /* ==================================================================== */
-/* Charadex
+/* Load Header and Footer
 ======================================================================= */
-const charadex = (options) => {
-
-  /* ==================================================================== */
-  /* Options & URL
-  ======================================================================= */
-  let userOptions = options || {};
-  let url = new URL(window.location.href);
-  const urlParams = new URLSearchParams(window.location.search);
+    $.get(folderURL + '/includes/header.html', function (data) { $('#header').replaceWith(data); });
+    $.get(folderURL + '/includes/footer.html', function (data) { $('#footer').replaceWith(data); });
 
 
-  /* ==================================================================== */
-  /* Sifting Through Options
-  ======================================================================= */
-  const charadexInfo = {
-    sheetID: userOptions.sheetID ? userOptions.sheetID.includes('/d/') ? userOptions.sheetID.split('/d/')[1].split('/edit')[0] : userOptions.sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
-    sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Public Masterlist",
-    itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
-    itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
-    searchParams: userOptions.searchParams ? userOptions.searchParams : ['id', 'owner', 'artist', 'designer'],
-    urlFilterParam: userOptions.urlFilterParam ? userOptions.urlFilterParam.toLowerCase().replace(/\s/g,'') : false,
-  };
+/* ==================================================================== */
+/* Clean Sheet Data
+======================================================================= */
+    const scrubData = (sheetData) => {
 
+        cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
 
-  /* ==================================================================== */
-  /* Clean Sheet Data
-  ======================================================================= */
-  const scrubData = (sheetData) => {
-
-    const scrubbedData = [];
-    cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
-
-    const col = [];
-    if (cleanJson.table.cols[0].label) {
-      cleanJson.table.cols.forEach((headers) => {
-        if (headers.label) {
-          col.push(headers.label.toLowerCase().replace(/\s/g, ""));
+        // Grab column headers
+        const col = [];
+        if (cleanJson.table.cols[0].label) {
+            cleanJson.table.cols.forEach((headers) => {
+                if (headers.label) {
+                    col.push(headers.label.toLowerCase().replace(/\s/g, ""));
+                }
+            });
         }
-      });
+
+        // Scrubs columns and puts them in a readable object
+        const scrubbedData = [];
+        cleanJson.table.rows.forEach((info, num) => {
+            const row = {};
+            const isBoolean = val => 'boolean' === typeof val;
+            col.forEach((ele, ind) => {
+                row[ele] = info.c[ind] != null ? info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
+            });
+            scrubbedData.push(row);
+        });
+
+        let publicData = scrubbedData.filter((i) => {return i['hide'] !== true;});
+
+        return publicData;
+
     }
 
-    cleanJson.table.rows.forEach((info) => {
-      const row = {};
-      const isBoolean = val => 'boolean' === typeof val;
-      col.forEach((ele, ind) => {
-        row[ele] = info.c[ind] != null ? info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
-      });
-      scrubbedData.push(row);
-    });
 
-    return scrubbedData;
-
-  }
-
-
-  /* ==================================================================== */
-  /* Fetching the Sheet
-  ======================================================================= */
-  fetch(`https://docs.google.com/spreadsheets/d/${charadexInfo.sheetID}/gviz/tq?tqx=out:json&headers=1&sheet=${charadexInfo.sheetPage}`)
-    .then(i => i.text())
-    .then(JSON => {
-
-      $('#loading').hide();
-      $('.masterlist-container').addClass('softload');
-
-      /* ================================================================ */
-      /* And so it begins
-      /* ================================================================ */
-      let sheetArray = scrubData(JSON); // Clean up sheet data so we can use it
-      let preParam = url.search.includes(charadexInfo.urlFilterParam) ? '&id=' : '?id='; // Determines which is used in a link
-
-
-      /* ================================================================ */
-      /* URL Param Buttons
-      /* ================================================================ */
-      (() => {
-
-        if (sheetArray[0].hasOwnProperty(charadexInfo.urlFilterParam)) {
-
-          $('#filter-buttons').show();
-
-          // Creates Param Object Array
-          let urlParamArray = [];
-          const uniqueArray = [...new Set(sheetArray.map(i => i[charadexInfo.urlFilterParam]))];
-          uniqueArray.forEach((i) => {
-            urlParamArray.push({
-              title: i,
-              link: url.href.split('&')[0].split('?')[0] + '?' + charadexInfo.urlFilterParam + '=' + i.toLowerCase(),
-            });
-          });
-
-          // Adds All Button
-          urlParamArray.unshift({ title: 'All', link: url.href.split('&')[0].split('?')[0]});
-      
-          // Sorts list
-          urlParamArray.sort((a, b) => {return a.title - b.title});
-        
-          // List.js options
-          let buttonOptions = {
-            valueNames: ['title', {name: 'link', attr: 'href'}],
-            item: 'charadex-filter-buttons',
-          };
-  
-          // Creates singular item
-          let urlParamButtons = new List("filter-buttons", buttonOptions, urlParamArray);
-
+/* ================================================================ */
+/* Sort Options
+/* ================================================================ */
+    let optionSorter = (op) => {
+        let userOptions = op || {};
+        let defaultOptions = {
+            sheetID: userOptions.sheetID ? userOptions.sheetID.includes('/d/') ? userOptions.sheetID.split('/d/')[1].split('/edit')[0] : userOptions.sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
+            sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "Masterlist",
+            itemSheetPage: userOptions.itemSheetPage ? userOptions.itemSheetPage : 'Items',
+            itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
+            itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
+            fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
+            filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
+            searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
+            includeDesigns: userOptions.includeDesigns ? true : false
         }
-
-      })();
-        
-
-      /* ================================================================ */
-      /* Modifying Array
-      /* ================================================================ */
-      (() => {
-
-        let len = sheetArray.length;
-        while (len--) {
-
-          // Adding link
-          sheetArray[len].link = url.href + preParam + sheetArray[len].id;
-          
-          // Add vanila ID so it'll sort nicer
-          sheetArray[len].orderID = sheetArray[len].id.replace(/\D+/gm,"");
-
-        }
-      
-        // Sorts list from small to beeg number
-        sheetArray.sort((a, b) => {return a.orderID - b.orderID})
-
-        // Filters out information based on URL parameters
-        if (urlParams.has(charadexInfo.urlFilterParam) && charadexInfo.urlFilterParam) {sheetArray = sheetArray.filter((i) => i[charadexInfo.urlFilterParam].toLowerCase() === urlParams.get(charadexInfo.urlFilterParam).toLowerCase());}
-
-      })();
+        return defaultOptions;
+    }
 
 
-      /* ================================================================ */
-      /* Keys
-      /* (Allows list.js to call info from sheet)
-      /* ================================================================ */
-      let sheetArrayKeys = () => {
+/* ================================================================ */
+/* QOL Funcs
+/* ================================================================ */
+    let keyCreator = (key) => {
+        return key.toLowerCase().replace(/\s/g, "");
+    };
 
-        let itemArray = Object.keys(sheetArray[0]);
-        let imageIndex = itemArray.indexOf('image');
-        let linkIndex = itemArray.indexOf('link');
-        itemArray[imageIndex] = {name: 'image', attr: 'src'};
-        itemArray[linkIndex] = {name: 'link', attr: 'href'};
+    let addAll = (key) => {
+        key.unshift("All")
+        return key;
+    };
 
+    let addOptions = (arr, filter) => {
+        arr.forEach((val) => {
+            let optionHTML = document.createElement('option');
+            optionHTML.value = val.toLowerCase().replace(/\s/g, "");
+            optionHTML.textContent = val;
+            filter.append(optionHTML);
+        });
+    };
+
+    let sheetPage = (id, pageName) => {
+        return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
+    };
+
+    let loadPage = () => {
+        $('#loading').hide();
+        $('#main-container').addClass('softload');
+    } 
+
+
+/* ================================================================ */
+/* Get Keys
+/* Makes an array for List.js to use
+/* ================================================================ */
+    let sheetArrayKeys = (arr) => {
+        let itemArray = Object.keys(arr[0]);
+        if (itemArray.indexOf('cardlink')) itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
+        if (itemArray.indexOf('link')) itemArray[itemArray.indexOf('link')] = { name: 'link', attr: 'href' };
+        if (itemArray.indexOf('image')) itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
         return itemArray;
+    };
 
-      };
+
+/* ================================================================ */
+/* Pagination
+/* ================================================================ */
+    let showPagination = (arr, amt) => {
+        $('.btn-next').on('click', () => { $('.pagination .active').next().children('a')[0].click(); })
+        $('.btn-prev').on('click', () => { $('.pagination .active').prev().children('a')[0].click(); })
+        if (arr.length > amt) $('#charadex-pagination').show()
+    }
 
 
-      if (urlParams.has('id')) {
-        
-        /* ================================================================ */
-        /* Prev & Next for Single Card
-        /* ================================================================ */
-        (() => {
+/* ================================================================ */
+/* Search Filter
+/* ================================================================ */
+    let charadexSearch = (info, searchArr) => {
 
-          let len = sheetArray.length;
-          while (len--) {
-            if (sheetArray[len].orderID == urlParams.get('id').replace(/\D+/gm,"")) {
-              
-              // Prev
-              if (sheetArray[len - 1]) {
-                $("#entryPrev").attr("href", url.href.split('?id')[0].split('&id')[0] + preParam + sheetArray[len - 1].id);
-                $("#entryPrev span").text(sheetArray[len - 1].id);
-              } else {
-                $("#entryPrev i").remove();
-              }
+        if (searchArr && searchArr.length > 2) {
+            addOptions(searchArr, $('#search-filter'));
+            $('#search-filter').parent().show();
+            $('#search').addClass('filtered');
+        }
 
-              // Next
-              if (sheetArray[len + 1]) {
-                console.log(sheetArray[len + 1]);
-                $("#entryNext").attr("href", url.href.split('?id')[0].split('&id')[0] + preParam + sheetArray[len + 1].id);
-                $("#entryNext span").text(sheetArray[len + 1].id);
-              } else {
-                $("#entryNext i").remove();
-              }
+        let arr = searchArr.map(function (v) {return v.toLowerCase().replace(/\s/g, "");});
 
+        $('#search').on('keyup', () => {
+            let selection = $("#search-filter option:selected").val();
+            let searchString = $('#search').val();
+            if (selection && selection != 'all') {
+                info.search(searchString, [selection]);
+            } else {
+                info.search(searchString, arr);
             }
-          }
+        });
 
-          // Back to masterlist (keeps species parameter)
-          $("#masterlistLink").attr("href", url.href.split('?id')[0].split('&id')[0]);
-
-        })();
-
-        /* ================================================================ */
-        /* Charadex Single Card
-        /* ================================================================ */
-        (() => {
-
-          // List.js options
-          let itemOptions = {
-            valueNames: sheetArrayKeys(),
-            item: 'charadex-card',
-          };
-
-          // Filtering out singular card
-          let designID = urlParams.get('id');
-          sheetArray = sheetArray.filter((i) => i.id.includes(designID))[0];
-
-          // Creates singular item
-          let charadexItem = new List("charadex-gallery", itemOptions, sheetArray);
-
-        })();
-
-      } else { 
-        
-        /* ================================================================ */
-        /* Charadex Gallery
-        /* ================================================================ */
         $('#charadex-filters').show();
 
-        (() => { 
+    };
 
-          let galleryOptions = {
-            item: 'charadex-entries',
-            valueNames: sheetArrayKeys(),
-            searchColumns: charadexInfo.searchParams,
-            page: charadexInfo.itemAmount,
-            pagination: [{
-              innerWindow: 1,
-              left: 1,
-              right: 1,
-              item: `<li class='page-item'><a class='page page-link'></a></li>`,
-              paginationClass: 'pagination-top',
-            }],
-          };
 
-          let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-          // Sort based on ID
-          charadex.sort("orderID", {order: charadexInfo.itemOrder,})
+/* ================================================================ */
+/* Custom Filter
+/* ================================================================ */
+    let charadexFilterSelect = (info, arr, filterKey) => {
+        if (filterKey) {
 
-          /* ================================================================ */
-          /* Custom Filter
-          /* ================================================================ */
-          $("#filter").on('change', () => {
-            let selection = $("#filter option:selected").text().toLowerCase();
-            let filterType = $("#filter").attr('filter');
-            if (selection && !selection.includes('all')) {
-              charadex.filter(function (i) {return i.values()[filterType].toLowerCase() == selection;});
+            const filterArr = [...new Set(arr.map(i => i[filterKey]))];
+            
+            if (filterArr.length > 2) {
+
+                addOptions(addAll(filterArr), $('#filter'));
+                
+                $("#filter").on('change', () => {
+                    let selection = $("#filter option:selected").text().toLowerCase();
+                    if (selection && !selection.includes('all')) {
+                        info.filter(function (i) { return i.values()[filterKey].toLowerCase() == selection; });
+                    } else {
+                        info.filter();
+                    }
+                });
+
+                $('#filter').parent().show();
+                $('#charadex-filters').show();
+
+            }
+        }
+    };
+
+
+
+/* ================================================================ */
+/* Faux Folder Function
+/* ================================================================ */
+    let fauxFolderButtons = (array, fauxFolderColumn, params) => {
+
+        if (array[0].hasOwnProperty(fauxFolderColumn)) {
+
+            // Creates Param Object Array
+            let urlParamArray = [];
+            const uniqueArray = [...new Set(array.map(i => i[fauxFolderColumn]))].filter(n => n);
+            uniqueArray.forEach((i) => {
+                urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolderColumn + '=' + i.toLowerCase()));
+            });
+
+            if (urlParamArray.length > 1) {
+
+                // Adds All button
+                urlParamArray.unshift($('#charadex-filter-buttons a').text('All').attr("href", baseURL));
+
+                // Smacks the links in your flex column
+                let btnCols = [];
+                for (var i in urlParamArray) {btnCols.push($('#charadex-filter-buttons').html(urlParamArray[i]).clone());}
+                $('#filter-buttons .row').append(btnCols);
+
+                // Show Buttons
+                $('#filter-buttons').show();
+
+            }
+
+        }
+
+        // Filters out information based on URL parameters
+        if (params.has(fauxFolderColumn) && fauxFolderColumn) {
+            return array.filter((i) => i[fauxFolderColumn].toLowerCase() === params.get(fauxFolderColumn).toLowerCase());
+        } else {
+            return array;
+        }
+
+    };
+
+
+
+
+/* ================================================================ */
+/* Prev and Next Links
+/* ================================================================ */
+    let prevNextLinks = (array, url, params, currParam, key) => {
+        if($("#entryPrev").length != 0) {
+
+            let index = array.map(function (i) { return i[key]; }).indexOf(currParam.get(key));
+            let leftItem = array[index - 1];
+            let rightItem = array[index + 1];
+
+            // Prev
+            if (leftItem) {
+                $("#entryPrev").attr("href", url + params + leftItem[key]);
+                $("#entryPrev span").text(leftItem[key]);
             } else {
-              charadex.filter();
+                $("#entryPrev i").remove();
             }
-          });
-          
 
-          /* ================================================================ */
-          /* Search Filter
-          /* ================================================================ */
-          $("#search-filter").on('change', () => {
-            let selection = [$("#search-filter option:selected").text().toLowerCase()];
-            if (selection && !selection.includes('all')) {
-              $('#search').on('keyup', () => {
-                let searchString = $('#search').val();
-                charadex.search(searchString, selection);
-              });
+            // Next
+            if (rightItem) {
+                $("#entryNext").attr("href", url + params + rightItem[key]);
+                $("#entryNext span").text(rightItem[key]);
+            } else {
+                $("#entryNext i").remove();
             }
-          });
-          
 
-          /* ================================================================ */
-          /* Prev/Next in Pagination
-          /* ================================================================ */
-          $('.btn-next').on('click', () => {$('.pagination .active').next().children('a')[0].click();})
-          $('.btn-prev').on('click', () => {$('.pagination .active').prev().children('a')[0].click();})
+            // Back to masterlist (keeps species parameter)
+            $("#masterlistLink").attr("href", url);
+            $('#prevNext').show();
+
+        }
+    };
+
+
+/* ==================================================================== */
+/* Masterlist
+======================================================================= */
+    const masterlist = async (options) => {
+
+        // Sort through options
+        const charadexInfo = optionSorter(options);
+
+        // Fetch sheet data to use
+        const JSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
+
+        // Clean up sheet data so we can use it
+        let sheetArray = scrubData(JSON);
+
+        // Grab all our url info
+        const urlParams = new URLSearchParams(window.location.search);
+        let cardKey = Object.keys(sheetArray[0])[0];
+        let preParam = url.search.includes(charadexInfo.fauxFolderColumn) ? '?' + charadexInfo.fauxFolderColumn + '=' + urlParams.get(charadexInfo.fauxFolderColumn) + `&${cardKey}=` : `?${cardKey}=`;
+
+        // Create faux folders
+        // Filter through array based on folders
+        if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn, urlParams);
+
+        // Reverse based on preference
+        charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
+
+        // Add card links to the remaining array
+        for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
+
+        // Decide if the url points to profile or entire gallery
+        if (urlParams.has(cardKey)) {
+
+            // Render the prev/next links on profiles
+            prevNextLinks(sheetArray, baseURL, preParam, urlParams, cardKey);
+
+            // List.js options
+            let itemOptions = {
+                valueNames: sheetArrayKeys(sheetArray),
+                item: 'charadex-card',
+            };
+
+            // Filter out the right card
+            let singleCard = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
+
+            // Render card
+            let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
+
+
+        } else {
+
+
+            // Create the Gallery
+            (() => {
+
+                let galleryOptions = {
+                    item: 'charadex-entries',
+                    valueNames: sheetArrayKeys(sheetArray),
+                    searchColumns: charadexInfo.searchFilterParams,
+                    page: charadexInfo.itemAmount,
+                    pagination: [{
+                        innerWindow: 1,
+                        left: 1,
+                        right: 1,
+                        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                        paginationClass: 'pagination-top',
+                    }],
+                };
+
+                // Render Gallery
+                let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+
+                // Make filters workie
+                charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
+                charadexSearch(charadex, charadexInfo.searchFilterParams);
+
+                // Show pagination
+                showPagination(sheetArray, charadexInfo.itemAmount);
+
+            })();
+
+        }
+
+        // 'Load' the page after the above is said and done
+        loadPage();
+
+    }; 
+
+
+/* ==================================================================== */
+/* For showing off just cards
+======================================================================= */
+    const cards = async (options) => {
+
+        // Sort through options
+        const charadexInfo = optionSorter(options);
+
+        // Fetch sheet data to use
+        const JSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
+
+        // Clean up sheet data so we can use it
+        let sheetArray = scrubData(JSON);
+
+        // Create the Gallery
+        (() => {
+
+            let galleryOptions = {
+                item: 'charadex-entries',
+                valueNames: sheetArrayKeys(sheetArray),
+            };
+
+            // Render Gallery
+            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
         })();
-        
-      }
 
-    })
-};
+        // 'Load' the page after the above is said and done
+        loadPage();
+
+    }; 
 
 
+/* ==================================================================== */
+/* Inventories
+======================================================================= */
+    const inventories = async (options) => {
 
+        // Sort through options
+        const charadexInfo = optionSorter(options);
+
+        // Fetch sheet data to use
+        const userJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
+
+        // Clean up sheet data so we can use it
+        let sheetArray = scrubData(userJSON);
+
+        // Grab all our url info
+        const urlParams = new URLSearchParams(window.location.search);
+        let cardKey = Object.keys(sheetArray[0])[0];
+        let preParam = `?${cardKey}=`;
+
+        // Put in alphabetical order
+        sheetArray.sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()))
+
+        // Add card links to the remaining array
+        for (var i in sheetArray) {sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey];}
+
+        // Decide if the url points to profile or entire gallery
+        if (urlParams.has(cardKey)) {
+
+            // If it is a single item, fetch the items page too
+            const itemJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.itemSheetPage)).then(i => i.text());
+            let itemSheetArr = scrubData(itemJSON);
+            let itemCardKey = Object.keys(itemSheetArr[0])[0];
+
+            // List.js options
+            let itemOptions = {
+                valueNames: sheetArrayKeys(sheetArray),
+                item: 'charadex-card',
+            };
+
+            // Filter out the right card
+            let singleArr = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
+
+            // Merge the user's inventory with the item sheet
+            // Also remove any items they dont have atm
+            let inventoryItemArr = [];
+            itemSheetArr.forEach((i) => {
+                for (var c in singleArr) {
+                    if (c === keyCreator(i.item) && ((singleArr[keyCreator(i.item)] !== "0" && singleArr[keyCreator(i.item)] !== ""))) {
+                        let inventoryItems = {
+                            type: i.type,
+                            item: i.item,
+                            image: i.image,
+                            itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i.item,
+                            amount: singleArr[keyCreator(i.item)],
+                        };
+                        inventoryItemArr.push(inventoryItems);
+                    };
+                }
+            });
+
+            // Group by the item type
+            let orderItems = Object.groupBy(inventoryItemArr, ({ type }) => type);
+
+            // Create Rows
+            let rows = [];
+            for (var i in orderItems) {
+
+                if (i == "Misc") {
+                    delete i;
+                }
+
+                // Get the headers and cols
+                let cols = [];
+                orderItems[i].forEach((v) => {
+                    let HTML = $("#item-list-col").clone();
+                    HTML.find(".item-img").attr('src', v.image);
+                    HTML.find(".itemlink").attr('href', v.itemlink);
+                    HTML.find(".item").html(v.item);
+                    HTML.find(".amount").html(v.amount);
+                    cols.push(HTML);
+                });
+                
+                // Smack everything together
+                let rowHTML = $("#item-list-section").clone().html([
+                    $("#item-list-header").clone().html(i), 
+                    $("#item-list-row").clone().html(cols)
+                ]);
+
+                rows.push(rowHTML);
+
+            };
+
+            // Make items show up
+            $("#item-list").html(rows);
+
+            // Render card
+            let charadexItem = new List("charadex-gallery", itemOptions, singleArr);
+
+
+        } else {
+
+            // Show pagination
+            showPagination(sheetArray, charadexInfo.itemAmount);
+
+            // Create the Gallery
+            (() => {
+
+                let galleryOptions = {
+                    item: 'charadex-entries',
+                    valueNames: sheetArrayKeys(sheetArray),
+                    searchColumns: [cardKey],
+                    page: charadexInfo.itemAmount,
+                    pagination: [{
+                        innerWindow: 1,
+                        left: 1,
+                        right: 1,
+                        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                        paginationClass: 'pagination-top',
+                    }],
+                };
+
+                // Render Gallery
+                let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+
+                // Make filters workie
+                charadexSearch(charadex, [cardKey]);
+
+            })();
+
+        }
+
+        // 'Load' the page after the above is said and done
+        loadPage();
+
+    }; 
+
+
+/* ==================================================================== */
+/* This is just to fill out some of the front page automatically
+/* You're free to delete and create something yourself!
+======================================================================= */
+    const frontPage = (options) => {
+
+        const charadexInfo = optionSorter(options);
+
+        // Events
+        let addEvents = async () => {
+            if($("#prompt-gallery").length != 0) {
+
+                // Grab dah sheet
+                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'prompts')).then(i => i.text());
+                let events = scrubData(eventsJSON);
+                let cardKey = Object.keys(events[0])[0];
+
+                // Sort by End Date
+                let newestEvents = events.sort(function(a, b) {
+                    var c = new Date(a.enddate);
+                    var d = new Date(b.enddate);
+                    return d-c;
+                });
+
+                // Pull first 3 from sorted
+                let lastEvents = newestEvents.slice(0, 3);
+
+                // Add card link
+                for (var i in lastEvents) {lastEvents[i].cardlink = folderURL + "/prompts.html?" + cardKey + "=" + lastEvents[i][cardKey];}
+
+                // Nyoom
+                let galleryOptions = {
+                    item: 'prompt-item',
+                    valueNames: sheetArrayKeys(lastEvents),
+                };
+
+                // Render Gallery
+                let charadex = new List('prompt-gallery', galleryOptions, lastEvents);
+
+            }
+        }; addEvents();
+
+        // Staff
+        let addStaff = async () => {
+            if($("#staff-gallery").length != 0) {
+
+                // Grab dah sheet
+                const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, 'mods')).then(i => i.text());
+                let mods = scrubData(modsJSON);
+
+                // Nyoom
+                let galleryOptions = {
+                    item: 'staff-item',
+                    valueNames: sheetArrayKeys(mods),
+                };
+
+                // Render Gallery
+                let charadex = new List('staff-gallery', galleryOptions, mods);
+
+            }
+        }; addStaff();
+
+        // Designs
+        let addDesigns = async () => {
+            if($("#design-gallery").length != 0) {
+
+                // Grab dah sheet
+                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, 'masterlist')).then(i => i.text());
+                let designs = scrubData(designJSON);
+
+                // Filter out any MYO slots, reverse and pull the first 4
+                let selectDesigns = designs.filter((i) => {return i.designtype != 'MYO Slot'}).reverse().slice(0, 4);
+
+                // Add cardlink
+                let cardKey = Object.keys(selectDesigns[0])[0];
+                for (var i in selectDesigns) {selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey];}
+
+                // Nyoom
+                let galleryOptions = {
+                    item: 'design-item',
+                    valueNames: sheetArrayKeys(selectDesigns),
+                };
+
+                // Render Gallery
+                let charadex = new List('design-gallery', galleryOptions, selectDesigns);
+
+            }
+        }; addDesigns();
+
+        // Loading...
+        loadPage();
+
+    }; 

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- About Your Site                                                   -->
+    <!-- ----------------------------------------------------------------- -->
+    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <title>Charadex</title>
+    <meta property="title" content="Charadex" />
+    <meta property="type" content="website" />
+    <meta property="url" content="https://www.charadex.com/" />
+    <meta property="image" content="meta.png" />
+    <meta name="description" content="A tool for organizing small ARPGs and species.">
+
+    <!-- No AI scraping directives -->
+    <meta name="robots" content="noai">
+    <meta name="robots" content="noimageai">
+
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- Styles                                                            -->
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Bootstrap CSS -->
+    <!-- Using Bootstrap 4.5 because its closest to Toyhou.se's current version -->
+    <!-- https://getbootstrap.com/docs/4.5/getting-started/introduction/ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- Optional Styles                                                   -->
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/charadex.css">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+    <script>
+        /* ------------------------------------------------------------------- */
+        /* Options
+        /* You can remove the items you're not using
+        /* ------------------------------------------------------------------- */
+        let yourOptions = {
+
+            // Sheet Information
+            sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
+            sheetPage: "faq",
+
+            // Amount of items shown on the page. Default is 12.
+            itemAmount: 24,
+
+            // Ascending  (1 2 3) || asc
+            // Descending (3 2 1) || desc
+            itemOrder: "asc",
+
+            // Columns you'd like people to be able to search though
+            searchFilterParams: ['Tags'],
+
+        };
+    </script>
+
+
+    <!-- --------------------------------------------------------------------
+    <-- Header
+    <-------------------------------------------------------------------- -->
+    <nav id="header"></nav>
+
+
+    <!-- Spinner for loading-->
+    <div class="spinner-border m-auto" id="loading"></div>
+
+
+    <!-- --------------------------------------------------------------------
+    <-- Masterlist
+    <-------------------------------------------------------------------- -->
+    <div class="container masterlist-container" id="main-container">
+
+
+        <!-- Gallery Container
+        ------------------------------------------------------------------- -->
+        <div id="charadex-gallery">
+
+
+            <!-- Filters
+            ----------------------------------------------------------------- -->
+            <div class="card p-md-5 p-4 mb-4">
+
+                <h3 class="mb-0"><a href="faq.html">FAQ</a></h3>
+
+                <!-- Faux Folders
+                <-- Remove this if you'd like to make your own buttons instead!
+                ------------------------------------------------------------------- -->
+                <div style="display:none;" id="filter-buttons">
+                    <hr class="mb-3">
+                    <div class="row no-gutters mx-n1"></div>
+                </div>
+
+
+                <!-- Search Bar -->
+                <div style="display:none;" id="charadex-filters">
+                    <hr class="w-100 mb-4">
+                    <div class="row no-gutters m-n1">
+                        <div class="col p-1">
+                            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div style="display: none;" id="charadex-pagination">
+                    <hr class="mb-4 mt-4">
+                    <div class="nav d-flex justify-content-center mb-n4">
+                        <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                        <ul class="pagination pagination-top justify-content-center m-0"></ul>
+                        <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Repeated Items Render Here
+            ----------------------------------------------------------------- -->
+            <ul class="row no-gutters list list-unstyled m-n2"></ul>
+
+        </div>
+
+    </div>
+
+
+    <!-- --------------------------------------------------------------------
+    <-- Footer
+    <-------------------------------------------------------------------- -->
+    <div id="footer"></div>
+
+
+    <!-- --------------------------------------------------------------------
+    <-- Repeat Items
+    <-- Do not remove 'display:none;'
+    <-- Edit these to your liking
+    <-------------------------------------------------------------------- -->
+    <div style="display:none;">
+
+
+        <!-- Gallery Items
+        ------------------------------------------------------------------- -->
+        <li class="col-12 p-2" id="charadex-entries">
+            <div class="card d-block p-4">
+                <a class="d-block cardlink" href="">
+                    <b><span class="question"></span></b>
+                </a>
+                <div class="px-4 pt-2 text-pre answer"></div>
+                <hr>
+                <div class="row no-gutters small px-2 mb-n2">
+                    <div class="col-auto"><b>Tags</b></div>
+                    <div class="col text-right tags"></div>
+                </div>
+            </div>
+        </li>
+
+
+        <!-- Singular Item
+        ------------------------------------------------------------------- -->
+        <li class="col-12 p-2" id="charadex-card">
+            <div class="card d-block p-4">
+                <b><span class="question"></span></b>
+                <div class="px-4 pt-2 text-pre answer"></div>
+                <hr>
+                <div class="row no-gutters small px-2 mb-n2">
+                    <div class="col-auto"><b>Tags</b></div>
+                    <div class="col text-right tags"></div>
+                </div>
+            </div>
+        </li>
+
+
+    </div>
+
+    <!-- ----------------------------------------------------------------- -->
+    <!-- JS                                                                -->
+    <!-- ----------------------------------------------------------------- -->
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- List.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
+
+    <!-- Charadex Script -->
+    <script src="styles/charadex.js"></script>
+    <script>masterlist(yourOptions);</script>
+
+
+</body>
+
+</html>
