@@ -4,7 +4,6 @@
     let url = new URL(window.location.href);
     let baseURL = window.location.origin + window.location.pathname;
     let folderURL = window.location.origin + '/' + window.location.pathname.replace(/\/[^\/]+$/,"");
-    //let importURL = window.location.hostname == 'localhost' ? : ;
 
 
 /* ==================================================================== */
