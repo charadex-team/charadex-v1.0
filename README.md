@@ -1,10 +1,10 @@
-# Charadex v.1.4
+# Charadex v.1.5.0
 
-After Eclipse took out DeviantArt, I made Charadex to help other species creators organize and keep easier track of their masterlist.
+Charadex v1.0 is a tool designed to simplify the creation and maintenance of species websites.
 
-And it's not limited to species! If you just sell adopts or what to make a little organizer for your characters - this might help. I use it to keep track of role play AU's and my own designs too!
+By utilizing Google Sheets, users can generate logs of designs, items, player inventories, and other data, which is then utilized to create a user-friendly website that external users can easily navigate. Additionally, it can be hosted for free and is relatively easy to maintain and customize.
 
-Please note I'm not an actual dev and have absolutely no formal training. I've just been learning JS here and there and I feel like even jank code is better than no code LOL
+If you're interested in using this tool, please refer to the links provided below. I've done my best to write up clear and concise documentation.
 
 &nbsp;
 
@@ -14,20 +14,22 @@ Please note I'm not an actual dev and have absolutely no formal training. I've j
 
 # Navigation
 
-**Set Ups**
+**Setting Up**
 
 - [Download](https://github.com/charadex-team/charadex-v1.0/releases/latest)
-- [Wiki](https://charadex.com/wiki)
-- [Getting Started](https://charadex.com/wiki/getting-started)
-- [Sheet Set-Up](https://charadex.com/wiki/sheet-set-up)
-- [Site Set-Up](https://charadex.com/wiki/site-set-up)
+- [Wiki](https://github.com/charadex-team/charadex-v1.0/wiki)
+- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/getting-started)
+- [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/hosting)
+- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/sheet-set-up)
+- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/site-set-up)
 
 **Other Information**
 
-- [FAQ](https://charadex.com/wiki#faq)
-- [Credits](https://charadex.com/wiki#credits)
-- [License](https://charadex.com/wiki#license)
+- [FAQ](https://github.com/charadex-team/charadex-v1.0/wiki#faq)
+- [Credits](https://github.com/charadex-team/charadex-v1.0/wiki#credits)
+- [License](https://github.com/charadex-team/charadex-v1.0/wiki#license)
 
-**Resources**
+**Extra**
 
-- [Quickdex](https://charadex.com/quickdex)
+- [Discord Server](https://discord.gg/3ghSjBug6a)
+- [Ko-Fi](https://ko-fi.com/charadex)
