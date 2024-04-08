@@ -46,7 +46,7 @@ body {
   --cd-border-color:                     rgba(0, 0, 0, 0.125);
   --cd-border-width:                     1px;
   --cd-border-style:                     solid;
-  --cd-border-radius:                    .75rem;
+  --cd-border-radius:                    1rem;
 
   /* ============================================================= */
   /* Navbar
@@ -515,6 +515,11 @@ hr {
 img {
   image-rendering: -webkit-optimize-contrast;
 }
+
+/* Fix any border radiuses that were messed from before */
+.rounded {border-radius: var(--cd-border-radius) !important}
+.rounded-circle {border-radius: 100%;}
+.rounded-0 {border-radius: 0 !important;}
 
 /* ============================================================= */
 /* Chee's Tweaks
