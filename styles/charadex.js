@@ -102,7 +102,7 @@ let sheetPage = (id, pageName) => {
 
 let loadPage = () => {
     $('#loading').hide();
-    $('#main-container').addClass('softload');
+    $('.softload').addClass('active');
 }
 
 
@@ -700,3 +700,8 @@ const frontPage = (options) => {
     loadPage();
 
 }; 
+
+/* ==================================================================== */
+/* Softload other pages like species and world
+======================================================================= */
+loadPage();

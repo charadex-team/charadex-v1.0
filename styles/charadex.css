@@ -545,11 +545,11 @@ body {
 }
 
 /* Fades container in on load so its not as jarring */
-.container-load {
+.softload {
   opacity: 0;
-} .container-load.softload {
+} .softload.active {
   opacity: 1;
-  transition: opacity 1s ease-out;
+  transition: opacity 2s ease;
 }
 
 /* Remove ugly box shadow */
