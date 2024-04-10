@@ -64,6 +64,7 @@ let optionSorter = (op) => {
         fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
         filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
         searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
+        sortTypes: userOptions.sortTypes ? userOptions.sortTypes : false,
         
         itemSheetPage: userOptions.itemSheetPage ? userOptions.itemSheetPage : 'items',
         masterlistSheetPage: userOptions.masterlistSheetPage ? userOptions.masterlistSheetPage : 'masterlist',
@@ -494,7 +495,7 @@ const inventories = async (options) => {
     let preParam = `?${cardKey}=`;
 
     // Put in alphabetical order
-    sheetArray.sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()))
+    sheetArray.sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()));
 
     // Add card links to the remaining array
     for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
@@ -533,6 +534,13 @@ const inventories = async (options) => {
                 };
             }
         });
+
+        // Sort items by type if applicable
+        if (charadexInfo.sortTypes) {
+            inventoryItemArr.sort(function (a, b) {
+                return charadexInfo.sortTypes.indexOf(a.type) - charadexInfo.sortTypes.indexOf(b.type);
+            });
+        };
 
         // Group by the item type
         let orderItems = Object.groupBy(inventoryItemArr, ({ type }) => type);

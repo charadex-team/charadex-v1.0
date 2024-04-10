@@ -11,7 +11,7 @@ let sheetID = "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak";
 let sheetPages = {
 
     masterlist: "masterlist",
-    inventories: "inventory",
+    inventory: "inventory",
     items: "items",
     traits: "traits",
     prompts: "prompts",
@@ -31,7 +31,6 @@ let options = {
     /* --------------------------------------------------------------- */
     index: {
 
-        // Sheet Information
         masterlistSheetPage: sheetPages.masterlist,
         staffSheetPage: sheetPages.staff,
         promptSheetPage: sheetPages.prompts,
@@ -45,20 +44,11 @@ let options = {
 
         sheetPage: sheetPages.masterlist,
 
-        // Amount of items shown on the page. Default is 12.
         itemAmount: 12,
-
-        // Ascending  (1 2 3) || asc
-        // Descending (3 2 1) || desc
         itemOrder: "asc",
 
-        // For the single column filter
         filterColumn: 'Design Type',
-
-        // Columns you'd like people to be able to search though
         searchFilterParams: ['ID', 'Owner', 'Designer', 'Artist'],
-
-        // Column to create faux folder links from
         fauxFolderColumn: 'Species',
 
     },
@@ -68,23 +58,13 @@ let options = {
     /* --------------------------------------------------------------- */
     items: {
 
-        // Sheet Information
         sheetPage: sheetPages.items,
     
-        // Amount of items shown on the page. Default is 12.
         itemAmount: 24,
-    
-        // Ascending  (1 2 3) || asc
-        // Descending (3 2 1) || desc
         itemOrder: "asc",
     
-        // For the single column filter
         filterColumn: 'Rarity',
-    
-        // Columns you'd like people to be able to search though
         searchFilterParams: ['Item'],
-    
-        // Column to create faux folder links from
         fauxFolderColumn: 'Type',
     
     },
@@ -94,14 +74,12 @@ let options = {
     /* --------------------------------------------------------------- */
     inventory: {
 
-        // Sheet Information
-        sheetPage: sheetPages.inventories,
+        sheetPage: sheetPages.inventory,
         itemSheetPage: sheetPages.items,
     
-        // Amount of items shown on the page. Default is 12.
         itemAmount: 24,
-    
-        // Info you'd like people to be able to search though
+        sortTypes: ['Currency', 'MYO Slot', 'Pet', 'Trait', 'Misc'],
+        
         searchFilterParams: ['Username'],
     
     },
@@ -111,17 +89,11 @@ let options = {
     /* --------------------------------------------------------------- */
     prompts: {
     
-        // Sheet Information
         sheetPage: sheetPages.prompts,
-    
-        // Amount of items shown on the page. Default is 12.
+
         itemAmount: 24,
-    
-        // Ascending  (1 2 3) || asc
-        // Descending (3 2 1) || desc
         itemOrder: "desc",
-    
-        // Columns you'd like people to be able to search though
+
         searchFilterParams: ['Title'],
     
     },
@@ -131,23 +103,13 @@ let options = {
     /* --------------------------------------------------------------- */
     traits: {
     
-        // Sheet Information
         sheetPage: sheetPages.traits,
-    
-        // Amount of items shown on the page. Default is 12.
+
         itemAmount: 24,
-    
-        // Ascending  (1 2 3) || asc
-        // Descending (3 2 1) || desc
         itemOrder: "asc",
-    
-        // For the single column filter
+
         filterColumn: 'Rarity',
-    
-        // Columns you'd like people to be able to search though
         searchFilterParams: ['Trait'],
-    
-        // Column to create faux folder links from
         fauxFolderColumn: 'Type',
     
     },
@@ -157,7 +119,6 @@ let options = {
     /* --------------------------------------------------------------- */
     staff: {
     
-        // Sheet Information
         sheetPage: sheetPages.staff,
     
     },
@@ -167,17 +128,11 @@ let options = {
     /* --------------------------------------------------------------- */
     faq: {
     
-        // Sheet Information
         sheetPage: sheetPages.faq,
     
-        // Amount of items shown on the page. Default is 12.
         itemAmount: 24,
-    
-        // Ascending  (1 2 3) || asc
-        // Descending (3 2 1) || desc
         itemOrder: "asc",
     
-        // Columns you'd like people to be able to search though
         searchFilterParams: ['Tags'],
     
     },
