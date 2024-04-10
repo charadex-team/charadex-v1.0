@@ -51,28 +51,29 @@ const scrubData = (sheetData) => {
 /* ================================================================ */
 /* Sort Options
 /* ================================================================ */
-let optionSorter = (op) => {
-    let userOptions = op || {};
+let optionSorter = (options) => {
+
+    // Clean up the sheetID - in case they used a link instead
+    let scrubbedSheetId = sheetID ? sheetID.includes('/d/') ? sheetID.split('/d/')[1].split('/edit')[0] : sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc";
+
+    // Call all options, make defaults of our own
+    let userOptions = options;
     let defaultOptions = {
 
-        sheetID: sheetID ? sheetID.includes('/d/') ? sheetID.split('/d/')[1].split('/edit')[0] : sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
+        sheetID: scrubbedSheetId,
         sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "masterlist",
-
-        itemAmount: userOptions.itemAmount ? userOptions.itemAmount : 12,
-        itemOrder: userOptions.itemOrder ? userOptions.itemOrder : "desc",
 
         fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
         filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
         searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
-        sortTypes: userOptions.sortTypes ? userOptions.sortTypes : false,
-        
-        itemSheetPage: userOptions.itemSheetPage ? userOptions.itemSheetPage : 'items',
-        masterlistSheetPage: userOptions.masterlistSheetPage ? userOptions.masterlistSheetPage : 'masterlist',
-        staffSheetPage: userOptions.staffSheetPage ? userOptions.staffSheetPage : 'mods',
-        promptSheetPage: userOptions.promptSheetPage ? userOptions.promptSheetPage : 'faq',
 
     }
-    return defaultOptions;
+
+    let mergedOptions = {...userOptions, ...defaultOptions};
+    console.log(mergedOptions);
+
+    return mergedOptions;
+
 }
 
 
@@ -614,81 +615,96 @@ const frontPage = (options) => {
     // Events
     let addEvents = async () => {
         if ($("#prompt-gallery").length != 0) {
+            if ( charadexInfo.numOfPrompts != 0) {
 
-            // Grab dah sheet
-            const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.promptSheetPage)).then(i => i.text());
-            let events = scrubData(eventsJSON);
-            let cardKey = Object.keys(events[0])[0];
-
-            // Sort by End Date
-            let newestEvents = events.sort(function (a, b) {
-                var c = new Date(a.enddate);
-                var d = new Date(b.enddate);
-                return d - c;
-            });
-
-            // Pull first 3 from sorted
-            let lastEvents = newestEvents.slice(0, 3);
-
-            // Add card link
-            for (var i in lastEvents) { lastEvents[i].cardlink = folderURL + "/prompts.html?" + cardKey + "=" + lastEvents[i][cardKey]; }
-
-            // Nyoom
-            let galleryOptions = {
-                item: 'prompt-item',
-                valueNames: sheetArrayKeys(lastEvents),
-            };
-
-            // Render Gallery
-            let charadex = new List('prompt-gallery', galleryOptions, lastEvents);
-
+                // Grab dah sheet
+                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.promptSheetPage)).then(i => i.text());
+                let events = scrubData(eventsJSON);
+                let cardKey = Object.keys(events[0])[0];
+    
+                // Sort by End Date
+                let newestEvents = events.sort(function (a, b) {
+                    var c = new Date(a.enddate);
+                    var d = new Date(b.enddate);
+                    return d - c;
+                });
+    
+                // Show x Amount on Index
+                let indexEvents = newestEvents.slice(0, charadexInfo.numOfPrompts);
+    
+                // Add card link
+                for (var i in indexEvents) { indexEvents[i].cardlink = folderURL + "/prompts.html?" + cardKey + "=" + indexEvents[i][cardKey]; }
+    
+                // Nyoom
+                let galleryOptions = {
+                    item: 'prompt-item',
+                    valueNames: sheetArrayKeys(indexEvents),
+                };
+    
+                // Render Gallery
+                let charadex = new List('prompt-gallery', galleryOptions, indexEvents);
+    
+            } else {
+                $("#prompt-gallery").hide();
+            }
         }
     }; addEvents();
 
     // Staff
     let addStaff = async () => {
         if ($("#staff-gallery").length != 0) {
+            if (charadexInfo.numOfStaff != 0) {
 
-            // Grab dah sheet
-            const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.staffSheetPage)).then(i => i.text());
-            let mods = scrubData(modsJSON);
+                // Grab dah sheet
+                const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.staffSheetPage)).then(i => i.text());
+                let mods = scrubData(modsJSON);
 
-            // Nyoom
-            let galleryOptions = {
-                item: 'staff-item',
-                valueNames: sheetArrayKeys(mods),
-            };
+                // Show x Amount on Index
+                let indexMods = mods.slice(0, charadexInfo.numOfStaff);
 
-            // Render Gallery
-            let charadex = new List('staff-gallery', galleryOptions, mods);
+                // Nyoom
+                let galleryOptions = {
+                    item: 'staff-item',
+                    valueNames: sheetArrayKeys(indexMods),
+                };
 
+                // Render Gallery
+                let charadex = new List('staff-gallery', galleryOptions, indexMods);
+
+            } else {
+                $("#staff-gallery").hide();
+            }
         }
     }; addStaff();
 
     // Designs
     let addDesigns = async () => {
         if ($("#design-gallery").length != 0) {
+            if (charadexInfo.numOfDesigns != 0) {
 
-            // Grab dah sheet
-            const designJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.masterlistSheetPage)).then(i => i.text());
-            let designs = scrubData(designJSON);
+                // Grab dah sheet
+                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.masterlistSheetPage)).then(i => i.text());
+                let designs = scrubData(designJSON);
 
-            // Filter out any MYO slots, reverse and pull the first 4
-            let selectDesigns = designs.filter((i) => { return i.designtype != 'MYO Slot' }).reverse().slice(0, 4);
+                // Filter out any MYO slots, reverse and pull the first 4
+                let selectDesigns = designs.filter((i) => { return i.designtype != 'MYO Slot' }).reverse().slice(0, charadexInfo.numOfDesigns);
 
-            // Add cardlink
-            let cardKey = Object.keys(selectDesigns[0])[0];
-            for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
+                // Add cardlink
+                let cardKey = Object.keys(selectDesigns[0])[0];
+                for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
 
-            // Nyoom
-            let galleryOptions = {
-                item: 'design-item',
-                valueNames: sheetArrayKeys(selectDesigns),
-            };
+                // Nyoom
+                let galleryOptions = {
+                    item: 'design-item',
+                    valueNames: sheetArrayKeys(selectDesigns),
+                };
 
-            // Render Gallery
-            let charadex = new List('design-gallery', galleryOptions, selectDesigns);
+                // Render Gallery
+                let charadex = new List('design-gallery', galleryOptions, selectDesigns);
 
+            } else {
+                $("#design-gallery").hide();
+            }
         }
     }; addDesigns();
 
