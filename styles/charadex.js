@@ -348,9 +348,6 @@ const charadexLarge = async (options) => {
 
     }
 
-    // 'Load' the page after the above is said and done
-    loadPage();
-
 };
 
 
@@ -380,9 +377,6 @@ const charadexSmall = async (options) => {
         let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
     })();
-
-    // 'Load' the page after the above is said and done
-    loadPage();
 
 };
 
@@ -468,9 +462,6 @@ const masterlist = async (options) => {
         })();
 
     }
-
-    // 'Load' the page after the above is said and done
-    loadPage();
 
 };
 
@@ -609,9 +600,6 @@ const inventories = async (options) => {
 
     }
 
-    // 'Load' the page after the above is said and done
-    loadPage();
-
 };
 
 
@@ -704,12 +692,10 @@ const frontPage = (options) => {
         }
     }; addDesigns();
 
-    // Loading...
-    loadPage();
-
 }; 
 
+
 /* ==================================================================== */
-/* Softload other pages like species and world
+/* Softload pages
 ======================================================================= */
-loadPage();
+$(window).on('pageshow',function(){loadPage()});
