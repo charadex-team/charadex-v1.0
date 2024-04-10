@@ -10,12 +10,12 @@
     <!-- ----------------------------------------------------------------- -->
     <!-- About Your Site                                                   -->
     <!-- ----------------------------------------------------------------- -->
-    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <title>Charadex</title>
     <meta property="title" content="Charadex" />
     <meta property="type" content="website" />
     <meta property="url" content="https://www.charadex.com/" />
-    <meta property="image" content="meta.png" />
+    <meta property="image" content="assets/meta.png" />
     <meta name="description" content="A tool for organizing small ARPGs and species.">
 
     <!-- No AI scraping directives -->
@@ -50,37 +50,6 @@
 </head>
 
 <body>
-
-    <script>
-        /* ------------------------------------------------------------------- */
-        /* Options
-        /* You can remove the items you're not using
-        /* ------------------------------------------------------------------- */
-        let yourOptions = {
-
-            // Sheet Information
-            sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
-            sheetPage: "masterlist",
-
-            // Amount of items shown on the page. Default is 12.
-            itemAmount: 12,
-
-            // Ascending  (1 2 3) || asc
-            // Descending (3 2 1) || desc
-            itemOrder: "asc",
-
-            // For the single column filter
-            filterColumn: 'Design Type',
-
-            // Columns you'd like people to be able to search though
-            searchFilterParams: ['ID', 'Owner', 'Designer', 'Artist'],
-
-            // Column to create faux folder links from
-            fauxFolderColumn: 'Species',
-
-        };
-    </script>
-
 
 
     <!-- --------------------------------------------------------------------
@@ -215,7 +184,7 @@
             <div class="card">
 
                 <!-- Header -->
-                <h2 class="card-header text-center p-4 id"></h2>
+                <h2 class="card-header text-center p-4 subid"></h2>
 
 
                 <!--Main Info -->
@@ -331,8 +300,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
 
     <!-- Charadex Script -->
+    <script src="styles/config.js"></script>
     <script src="styles/charadex.js"></script>
-    <script>masterlist(yourOptions);</script>
+    <script>masterlist(options.masterlist);</script>
 
 
 </body>

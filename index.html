@@ -10,12 +10,12 @@
     <!-- ----------------------------------------------------------------- -->
     <!-- About Your Site                                                   -->
     <!-- ----------------------------------------------------------------- -->
-    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <title>Charadex</title>
     <meta property="title" content="Charadex" />
     <meta property="type" content="website" />
     <meta property="url" content="https://www.charadex.com/" />
-    <meta property="image" content="meta.png" />
+    <meta property="image" content="assets/meta.png" />
     <meta name="description" content="A tool for organizing small ARPGs and species.">
 
     <!-- No AI scraping directives -->
@@ -50,15 +50,6 @@
 </head>
 
 <body>
-
-    <script>
-        /* ------------------------------------------------------------------- */
-        /* Only needs the sheet ID
-        /* ------------------------------------------------------------------- */
-        let yourOptions = {
-            sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
-        };
-    </script>
 
 
     <!-- --------------------------------------------------------------------
@@ -163,7 +154,7 @@
                         <div class="col-md-3 col-6 gallery-item p-1" id="design-item">
                             <a class="card p-2 bg-faded d-block text-center cardlink" href="">
                                 <img class="image img-fluid gallery-img" src=""><br>
-                                <span class="btn btn-primary d-block mt-2 id"></span>
+                                <span class="btn btn-primary d-block mt-2 subid"></span>
                             </a>
                         </div>
                     </div>
@@ -196,8 +187,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
 
     <!-- Charadex Script -->
+    <script src="styles/config.js"></script>
     <script src="styles/charadex.js"></script>
-    <script>frontPage(yourOptions);</script>
+    <script>frontPage(options.index);</script>
 
 
 </body>

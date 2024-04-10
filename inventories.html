@@ -10,12 +10,12 @@
     <!-- ----------------------------------------------------------------- -->
     <!-- About Your Site                                                   -->
     <!-- ----------------------------------------------------------------- -->
-    <link rel="shortcut icon" type="image/png" href="favicon.png" />
+    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
     <title>Charadex</title>
     <meta property="title" content="Charadex" />
     <meta property="type" content="website" />
     <meta property="url" content="https://www.charadex.com/" />
-    <meta property="image" content="meta.png" />
+    <meta property="image" content="assets/meta.png" />
     <meta name="description" content="A tool for organizing small ARPGs and species.">
 
     <!-- No AI scraping directives -->
@@ -50,26 +50,6 @@
 </head>
 
 <body>
-
-    <script>
-        /* ------------------------------------------------------------------- */
-        /* Options
-        /* You can remove the items you're not using
-        /* ------------------------------------------------------------------- */
-        let yourOptions = {
-
-            // Sheet Information
-            sheetID: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
-            sheetPage: "inventory",
-
-            // Amount of items shown on the page. Default is 12.
-            itemAmount: 24,
-
-            // Info you'd like people to be able to search though
-            searchFilterParams: ['Username'],
-
-        };
-    </script>
 
 
     <!-- --------------------------------------------------------------------
@@ -218,8 +198,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
 
     <!-- Charadex Script -->
+    <script src="styles/config.js"></script>
     <script src="styles/charadex.js"></script>
-    <script>inventories(yourOptions);</script>
+    <script>charadexLarge(options.inventories);</script>
 
 
 </body>
