@@ -623,5 +623,17 @@ p:last-child {
     color: var(--cd-primary-text-color);
     background-color: var(--cd-primary-color);
     border-radius: var(--cd-border-radius);
+    font-family: var(--cd-header-font-family);
+    display: flex;
+    padding: 1.5rem;
     min-height: 250px;
+    font-weight: 800;
+    font-size: 2.5rem;
+}
+
+@media (min-width: 768px) {
+    .hero-title {
+        letter-spacing: 2px;
+        font-size: 5rem;
+    }
 }
