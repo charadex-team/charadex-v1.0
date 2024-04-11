@@ -70,8 +70,8 @@ let optionSorter = (options) => {
 
     }
 
+    // Merge options
     let mergedOptions = {...userOptions, ...defaultOptions};
-    console.log(mergedOptions);
 
     return mergedOptions;
 
@@ -99,18 +99,53 @@ let addOptions = (arr, filter) => {
     });
 };
 
-let sheetPage = (id, pageName) => {
-    return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
-};
-
 let loadPage = () => {
     $('#loading').hide();
     $('.softload').addClass('active');
 }
 
-let urlParamFix = (key, folderCol, params = urlParams) => {
-    return url.search.includes(folderCol) ? '?' + folderCol + '=' + params.get(folderCol) + `&${key}=` : `?${key}=`;
+let urlParamFix = (key, folder, params = urlParams) => {
+    return url.search.includes(folder) ? '?' + folder + '=' + params.get(folder) + `&${key}=` : `?${key}=`;
 };
+
+let sheetPage = (id, pageName) => {
+    return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
+};
+
+let fetchSheet = async (page, sheet = sheetID) => {
+    const JSON = await fetch(sheetPage(sheet, page)).then(i => i.text());
+    return scrubData(JSON);
+}
+
+
+/* ================================================================ */
+/* Get a card's log
+/* ================================================================ */
+let getLog = (log, item, key = 'id') => {
+
+    let logArr = [];
+    log.forEach((i) => {
+        if (i[key] === item[key]) {
+            let newLog = {
+                timestamp: i.timestamp,
+                reason: i.reason,
+            };
+            logArr.push(newLog);
+        };
+    });
+
+    // Create Rows
+    let rows = [];
+    logArr.forEach((i) => {
+        let HTML = $("#log-entry").clone();
+        HTML.find(".timestamp").html(i.timestamp);
+        HTML.find(".reason").html(i.reason);
+        rows.push(HTML);
+    });
+
+    $("#log-table").html(rows);
+
+}
 
 
 /* ================================================================ */
@@ -199,7 +234,7 @@ let charadexFilterSelect = (info, arr, key) => {
 /* ================================================================ */
 /* Faux Folder Function
 /* ================================================================ */
-let fauxFolderButtons = (array, fauxFolder, params) => {
+let fauxFolderButtons = (array, fauxFolder, params = urlParams) => {
 
     if (array[0].hasOwnProperty(fauxFolder)) {
 
@@ -284,11 +319,8 @@ const charadexLarge = async (options) => {
     // Sort through options
     const charadexInfo = optionSorter(options);
 
-    // Fetch sheet data to use
-    const JSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
-
-    // Clean up sheet data so we can use it
-    let sheetArray = scrubData(JSON);
+    // Grab the sheet
+    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
     // Grab all our url info
     let cardKey = Object.keys(sheetArray[0])[0];
@@ -296,7 +328,7 @@ const charadexLarge = async (options) => {
 
     // Create faux folders
     // Filter through array based on folders
-    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn, urlParams);
+    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
 
     // Reverse based on preference
     charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
@@ -327,33 +359,30 @@ const charadexLarge = async (options) => {
 
 
         // Create the Gallery
-        (() => {
 
-            let galleryOptions = {
-                item: 'charadex-entries',
-                valueNames: sheetArrayKeys(sheetArray),
-                searchColumns: charadexInfo.searchFilterParams,
-                page: charadexInfo.itemAmount,
-                pagination: [{
-                    innerWindow: 1,
-                    left: 1,
-                    right: 1,
-                    item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                    paginationClass: 'pagination-top',
-                }],
-            };
+        let galleryOptions = {
+            item: 'charadex-entries',
+            valueNames: sheetArrayKeys(sheetArray),
+            searchColumns: charadexInfo.searchFilterParams,
+            page: charadexInfo.itemAmount,
+            pagination: [{
+                innerWindow: 1,
+                left: 1,
+                right: 1,
+                item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                paginationClass: 'pagination-top',
+            }],
+        };
 
-            // Render Gallery
-            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+        // Render Gallery
+        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-            // Make filters workie
-            charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
-            charadexSearch(charadex, charadexInfo.searchFilterParams);
+        // Make filters workie
+        charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
+        charadexSearch(charadex, charadexInfo.searchFilterParams);
 
-            // Show pagination
-            showPagination(sheetArray, charadexInfo.itemAmount);
-
-        })();
+        // Show pagination
+        showPagination(sheetArray, charadexInfo.itemAmount);
 
     }
 
@@ -368,24 +397,17 @@ const charadexSmall = async (options) => {
     // Sort through options
     const charadexInfo = optionSorter(options);
 
-    // Fetch sheet data to use
-    const JSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
-
-    // Clean up sheet data so we can use it
-    let sheetArray = scrubData(JSON);
+    // Grab the sheet
+    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
     // Create the Gallery
-    (() => {
+    let galleryOptions = {
+        item: 'charadex-entries',
+        valueNames: sheetArrayKeys(sheetArray),
+    };
 
-        let galleryOptions = {
-            item: 'charadex-entries',
-            valueNames: sheetArrayKeys(sheetArray),
-        };
-
-        // Render Gallery
-        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
-
-    })();
+    // Render Gallery
+    let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
 };
 
@@ -398,11 +420,8 @@ const masterlist = async (options) => {
     // Sort through options
     const charadexInfo = optionSorter(options);
 
-    // Fetch sheet data to use
-    const JSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
-
-    // Clean up sheet data so we can use it
-    let sheetArray = scrubData(JSON);
+    // Grab the sheet
+    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
     // Grab all our url info
     let cardKey = Object.keys(sheetArray[0])[3];
@@ -412,7 +431,7 @@ const masterlist = async (options) => {
 
     // Create faux folders
     // Filter through array based on folders
-    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn, urlParams);
+    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
 
     // Reverse based on preference
     charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
@@ -426,10 +445,15 @@ const masterlist = async (options) => {
     // Decide if the url points to profile or entire gallery
     if (urlParams.has(cardKey) || urlParams.has(cardKeyAlt)) {
 
+        // Filter out the right card
         let currCardKey = urlParams.has(cardKey) ? cardKey : cardKeyAlt;
+        let singleCard = sheetArray.filter((i) => i[currCardKey].includes(urlParams.get(currCardKey)))[0];
 
-        // Render the prev/next links on profiles
-        prevNextLinks(sheetArray, baseURL, preParam, urlParams, currCardKey, cardKey);
+        // Grab the log sheet
+        let logArray = await fetchSheet(charadexInfo.LogSheetPage);
+
+        // Render Log
+        getLog(logArray, singleCard);
 
         // List.js options
         let itemOptions = {
@@ -437,8 +461,8 @@ const masterlist = async (options) => {
             item: 'charadex-card',
         };
 
-        // Filter out the right card
-        let singleCard = sheetArray.filter((i) => i[currCardKey].includes(urlParams.get(currCardKey)))[0];
+        // Render the prev/next links on profiles
+        prevNextLinks(sheetArray, baseURL, preParam, urlParams, currCardKey, cardKey);
 
         // Render card
         let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
@@ -485,11 +509,8 @@ const inventories = async (options) => {
     // Sort through options
     const charadexInfo = optionSorter(options);
 
-    // Fetch sheet data to use
-    const userJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.sheetPage)).then(i => i.text());
-
-    // Clean up sheet data so we can use it
-    let sheetArray = scrubData(userJSON);
+    // Grab the sheet
+    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
     // Grab all our url info
     let cardKey = Object.keys(sheetArray[0])[0];
@@ -504,9 +525,8 @@ const inventories = async (options) => {
     // Decide if the url points to profile or entire gallery
     if (urlParams.has(cardKey)) {
 
-        // If it is a single item, fetch the items page too
-        const itemJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.itemSheetPage)).then(i => i.text());
-        let itemSheetArr = scrubData(itemJSON);
+        // Fetch item info from the item sheet
+        let itemSheetArr = await fetchSheet(charadexInfo.itemSheetPage);
         let itemCardKey = Object.keys(itemSheetArr[0])[0];
 
         // List.js options
@@ -624,8 +644,7 @@ const frontPage = (options) => {
             if ( charadexInfo.numOfPrompts != 0) {
 
                 // Grab dah sheet
-                const eventsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.promptSheetPage)).then(i => i.text());
-                let events = scrubData(eventsJSON);
+                let events = await fetchSheet(charadexInfo.promptSheetPage);
                 let cardKey = Object.keys(events[0])[0];
     
                 // Sort by End Date
@@ -662,8 +681,7 @@ const frontPage = (options) => {
             if (charadexInfo.numOfStaff != 0) {
 
                 // Grab dah sheet
-                const modsJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.staffSheetPage)).then(i => i.text());
-                let mods = scrubData(modsJSON);
+                let mods = await fetchSheet(charadexInfo.staffSheetPage);
 
                 // Show x Amount on Index
                 let indexMods = mods.slice(0, charadexInfo.numOfStaff);
@@ -689,8 +707,7 @@ const frontPage = (options) => {
             if (charadexInfo.numOfDesigns != 0) {
 
                 // Grab dah sheet
-                const designJSON = await fetch(sheetPage(charadexInfo.sheetID, charadexInfo.masterlistSheetPage)).then(i => i.text());
-                let designs = scrubData(designJSON);
+                let designs = await fetchSheet(charadexInfo.masterlistSheetPage);
 
                 // Filter out any MYO slots, reverse and pull the first 4
                 let selectDesigns = designs.filter((i) => { return i.designtype != 'MYO Slot' }).reverse().slice(0, charadexInfo.numOfDesigns);

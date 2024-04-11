@@ -11,7 +11,9 @@ let sheetID = "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak";
 let sheetPages = {
 
     masterlist: "masterlist",
+    masterlistLog: "masterlist log",
     inventory: "inventory",
+    inventoryLog: "inventory log",
     items: "items",
     traits: "traits",
     prompts: "prompts",
@@ -48,6 +50,7 @@ let options = {
     masterlist: {
 
         sheetPage: sheetPages.masterlist,
+        LogSheetPage: sheetPages.masterlistLog,
 
         itemAmount: 12,
         itemOrder: "asc",
