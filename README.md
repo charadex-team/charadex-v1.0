@@ -13,7 +13,7 @@ If you're interested in using this tool, please refer to the links provided belo
 **Download**
 
 - [Charadex](https://github.com/charadex-team/charadex-v1.0/releases/latest)
-- [Google Sheet]()
+- [Google Sheet](https://docs.google.com/spreadsheets/d/1ZtejMZmVxjQEpuSOcWcVbWbb8Lcj1zLRKJsjHL2G6JY/copy)
 
 **Setting Up**
 
@@ -21,7 +21,6 @@ If you're interested in using this tool, please refer to the links provided belo
 - [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/Hosting)
 - [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Sheet-Set-Up)
 - [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Site-Set-Up)
-- [Transfer from v1.4.0](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Transfer)
 
 **Other Information**
 
@@ -33,3 +32,4 @@ If you're interested in using this tool, please refer to the links provided belo
 
 - [Discord Server](https://discord.gg/3ghSjBug6a)
 - [Support Charadex](https://ko-fi.com/charadex)
+- [Example Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/edit?usp=sharing)
