@@ -12,24 +12,37 @@ If you're interested in using this tool, please refer to the links provided belo
 
 &nbsp;
 
+
 # Navigation
 
-**Setting Up**
-
-- [Download](https://github.com/charadex-team/charadex-v1.0/releases/latest)
 - [Wiki](https://github.com/charadex-team/charadex-v1.0/wiki)
-- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/getting-started)
-- [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/hosting)
-- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/sheet-set-up)
-- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/site-set-up)
+- [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/Hosting)
 
-**Other Information**
+## v1.5.0
+
+- [Download Sheet](https://docs.google.com/spreadsheets/d/1ZtejMZmVxjQEpuSOcWcVbWbb8Lcj1zLRKJsjHL2G6JY/copy)
+- [Download Site](https://github.com/charadex-team/charadex-v1.0/releases/latest)
+
+- [Sheet Example](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/edit?usp=sharing)
+- [Live Example](https://charadex-team.github.io/charadex-v1.0/)
+
+- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Getting-Started)
+- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Sheet-Set-Up)
+- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Site-Set-Up)
+
+## v1.4.0
+
+- [Download Sheet](https://docs.google.com/spreadsheets/d/1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc/copy)
+- [Download Site](https://github.com/charadex-team/charadex-v1.0/releases/tag/v1.4)
+
+- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Getting-Started)
+- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Sheet-Set-up)
+- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Site-Set-Up)
+
+## Other
 
 - [FAQ](https://github.com/charadex-team/charadex-v1.0/wiki#faq)
 - [Credits](https://github.com/charadex-team/charadex-v1.0/wiki#credits)
 - [License](https://github.com/charadex-team/charadex-v1.0/wiki#license)
-
-**Extra**
-
 - [Discord Server](https://discord.gg/3ghSjBug6a)
 - [Ko-Fi](https://ko-fi.com/charadex)
