@@ -10,8 +10,9 @@ let urlParams = new URLSearchParams(window.location.search);
 /* ==================================================================== */
 /* Load Header and Footer
 ======================================================================= */
-$.get(folderURL + '/includes/header.html', function (data) { $('#header').replaceWith(data); });
-$.get(folderURL + '/includes/footer.html', function (data) { $('#footer').replaceWith(data); });
+$(function () {
+    $(".load-html").each(function () {$(this).load(this.dataset.source)});
+});
 
 
 /* ==================================================================== */
@@ -506,7 +507,7 @@ const masterlist = async (options) => {
 /* ==================================================================== */
 /* Inventories
 ======================================================================= */
-const inventories = async (options) => {
+const inventory = async (options) => {
 
     // Sort through options
     const charadexInfo = optionSorter(options);
