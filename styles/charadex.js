@@ -4,6 +4,7 @@
 let url = new URL(window.location.href);
 let baseURL = window.location.origin + window.location.pathname;
 let folderURL = window.location.origin + '/' + window.location.pathname.replace(/\/[^\/]+$/, "");
+let urlParams = new URLSearchParams(window.location.search);
 
 
 /* ==================================================================== */
@@ -107,6 +108,10 @@ let loadPage = () => {
     $('.softload').addClass('active');
 }
 
+let urlParamFix = (key, folderCol, params = urlParams) => {
+    return url.search.includes(folderCol) ? '?' + folderCol + '=' + params.get(folderCol) + `&${key}=` : `?${key}=`;
+};
+
 
 /* ================================================================ */
 /* Get Keys
@@ -115,6 +120,7 @@ let loadPage = () => {
 let sheetArrayKeys = (arr) => {
     let itemArray = Object.keys(arr[0]);
     if (itemArray.indexOf('cardlink')) itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
+    if (itemArray.indexOf('cardlinkalt')) itemArray[itemArray.indexOf('cardlinkalt')] = { name: 'cardlinkalt', attr: 'href' };
     if (itemArray.indexOf('link')) itemArray[itemArray.indexOf('link')] = { name: 'link', attr: 'href' };
     if (itemArray.indexOf('image')) itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
     return itemArray;
@@ -163,10 +169,10 @@ let charadexSearch = (info, searchArr) => {
 /* ================================================================ */
 /* Custom Filter
 /* ================================================================ */
-let charadexFilterSelect = (info, arr, filterKey) => {
-    if (filterKey) {
+let charadexFilterSelect = (info, arr, key) => {
+    if (key) {
 
-        const filterArr = [...new Set(arr.map(i => i[filterKey]))];
+        const filterArr = [...new Set(arr.map(i => i[key]))];
 
         if (filterArr.length > 2) {
 
@@ -175,7 +181,7 @@ let charadexFilterSelect = (info, arr, filterKey) => {
             $("#filter").on('change', () => {
                 let selection = $("#filter option:selected").text().toLowerCase();
                 if (selection && !selection.includes('all')) {
-                    info.filter(function (i) { return i.values()[filterKey].toLowerCase() == selection; });
+                    info.filter(function (i) { return i.values()[key].toLowerCase() == selection; });
                 } else {
                     info.filter();
                 }
@@ -193,15 +199,15 @@ let charadexFilterSelect = (info, arr, filterKey) => {
 /* ================================================================ */
 /* Faux Folder Function
 /* ================================================================ */
-let fauxFolderButtons = (array, fauxFolderColumn, params) => {
+let fauxFolderButtons = (array, fauxFolder, params) => {
 
-    if (array[0].hasOwnProperty(fauxFolderColumn)) {
+    if (array[0].hasOwnProperty(fauxFolder)) {
 
         // Creates Param Object Array
         let urlParamArray = [];
-        const uniqueArray = [...new Set(array.map(i => i[fauxFolderColumn]))].filter(n => n);
+        const uniqueArray = [...new Set(array.map(i => i[fauxFolder]))].filter(n => n);
         uniqueArray.forEach((i) => {
-            urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolderColumn + '=' + i.toLowerCase()));
+            urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolder + '=' + i.toLowerCase()));
         });
 
         if (urlParamArray.length > 1) {
@@ -222,8 +228,8 @@ let fauxFolderButtons = (array, fauxFolderColumn, params) => {
     }
 
     // Filters out information based on URL parameters
-    if (params.has(fauxFolderColumn) && fauxFolderColumn) {
-        return array.filter((i) => i[fauxFolderColumn].toLowerCase() === params.get(fauxFolderColumn).toLowerCase());
+    if (params.has(fauxFolder) && fauxFolder) {
+        return array.filter((i) => i[fauxFolder].toLowerCase() === params.get(fauxFolder).toLowerCase());
     } else {
         return array;
     }
@@ -236,25 +242,28 @@ let fauxFolderButtons = (array, fauxFolderColumn, params) => {
 /* ================================================================ */
 /* Prev and Next Links
 /* ================================================================ */
-let prevNextLinks = (array, url, params, currParam, key) => {
+let prevNextLinks = (array, url, params, currParam, key, altkey = false) => {
     if ($("#entryPrev").length != 0) {
 
-        let index = array.map(function (i) { return i[key]; }).indexOf(currParam.get(key));
+        let index = array.map(function (i) {return i[key];}).indexOf(currParam.get(key));
         let leftItem = array[index - 1];
         let rightItem = array[index + 1];
 
+        // Basically a special declaration for the masterlist
+        let chooseKey = altkey ? altkey : key;
+
         // Prev
         if (leftItem) {
-            $("#entryPrev").attr("href", url + params + leftItem[key]);
-            $("#entryPrev span").text(leftItem[key]);
+            $("#entryPrev").attr("href", url + params + leftItem[chooseKey]);
+            $("#entryPrev span").text(leftItem[chooseKey]);
         } else {
             $("#entryPrev i").remove();
         }
 
         // Next
         if (rightItem) {
-            $("#entryNext").attr("href", url + params + rightItem[key]);
-            $("#entryNext span").text(rightItem[key]);
+            $("#entryNext").attr("href", url + params + rightItem[chooseKey]);
+            $("#entryNext span").text(rightItem[chooseKey]);
         } else {
             $("#entryNext i").remove();
         }
@@ -282,9 +291,8 @@ const charadexLarge = async (options) => {
     let sheetArray = scrubData(JSON);
 
     // Grab all our url info
-    const urlParams = new URLSearchParams(window.location.search);
     let cardKey = Object.keys(sheetArray[0])[0];
-    let preParam = url.search.includes(charadexInfo.fauxFolderColumn) ? '?' + charadexInfo.fauxFolderColumn + '=' + urlParams.get(charadexInfo.fauxFolderColumn) + `&${cardKey}=` : `?${cardKey}=`;
+    let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
 
     // Create faux folders
     // Filter through array based on folders
@@ -397,9 +405,10 @@ const masterlist = async (options) => {
     let sheetArray = scrubData(JSON);
 
     // Grab all our url info
-    const urlParams = new URLSearchParams(window.location.search);
     let cardKey = Object.keys(sheetArray[0])[3];
-    let preParam = url.search.includes(charadexInfo.fauxFolderColumn) ? '?' + charadexInfo.fauxFolderColumn + '=' + urlParams.get(charadexInfo.fauxFolderColumn) + `&${cardKey}=` : `?${cardKey}=`;
+    let cardKeyAlt = Object.keys(sheetArray[0])[0];
+
+    let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
 
     // Create faux folders
     // Filter through array based on folders
@@ -409,13 +418,18 @@ const masterlist = async (options) => {
     charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
 
     // Add card links to the remaining array
-    for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
+    for (var i in sheetArray) { 
+        sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; 
+        sheetArray[i].cardlinkalt = baseURL + urlParamFix(cardKeyAlt, charadexInfo.fauxFolderColumn) + sheetArray[i][Object.keys(sheetArray[0])[0]]; 
+    }
 
     // Decide if the url points to profile or entire gallery
-    if (urlParams.has(cardKey)) {
+    if (urlParams.has(cardKey) || urlParams.has(cardKeyAlt)) {
+
+        let currCardKey = urlParams.has(cardKey) ? cardKey : cardKeyAlt;
 
         // Render the prev/next links on profiles
-        prevNextLinks(sheetArray, baseURL, preParam, urlParams, cardKey);
+        prevNextLinks(sheetArray, baseURL, preParam, urlParams, currCardKey, cardKey);
 
         // List.js options
         let itemOptions = {
@@ -424,7 +438,7 @@ const masterlist = async (options) => {
         };
 
         // Filter out the right card
-        let singleCard = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
+        let singleCard = sheetArray.filter((i) => i[currCardKey].includes(urlParams.get(currCardKey)))[0];
 
         // Render card
         let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
@@ -432,35 +446,31 @@ const masterlist = async (options) => {
 
     } else {
 
+        // Show pagination
+        showPagination(sheetArray, charadexInfo.itemAmount);
 
         // Create the Gallery
-        (() => {
+        let galleryOptions = {
+            item: 'charadex-entries',
+            valueNames: sheetArrayKeys(sheetArray),
+            searchColumns: charadexInfo.searchFilterParams,
+            page: charadexInfo.itemAmount,
+            pagination: [{
+                innerWindow: 1,
+                left: 1,
+                right: 1,
+                item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                paginationClass: 'pagination-top',
+            }],
+        };
 
-            let galleryOptions = {
-                item: 'charadex-entries',
-                valueNames: sheetArrayKeys(sheetArray),
-                searchColumns: charadexInfo.searchFilterParams,
-                page: charadexInfo.itemAmount,
-                pagination: [{
-                    innerWindow: 1,
-                    left: 1,
-                    right: 1,
-                    item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                    paginationClass: 'pagination-top',
-                }],
-            };
+        // Render Gallery
+        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-            // Render Gallery
-            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+        // Make filters workie
+        charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
+        charadexSearch(charadex, charadexInfo.searchFilterParams);
 
-            // Make filters workie
-            charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
-            charadexSearch(charadex, charadexInfo.searchFilterParams);
-
-            // Show pagination
-            showPagination(sheetArray, charadexInfo.itemAmount);
-
-        })();
 
     }
 
@@ -482,7 +492,6 @@ const inventories = async (options) => {
     let sheetArray = scrubData(userJSON);
 
     // Grab all our url info
-    const urlParams = new URLSearchParams(window.location.search);
     let cardKey = Object.keys(sheetArray[0])[0];
     let preParam = `?${cardKey}=`;
 
@@ -575,29 +584,26 @@ const inventories = async (options) => {
         showPagination(sheetArray, charadexInfo.itemAmount);
 
         // Create the Gallery
-        (() => {
+        let galleryOptions = {
+            item: 'charadex-entries',
+            valueNames: sheetArrayKeys(sheetArray),
+            searchColumns: [cardKey],
+            page: charadexInfo.itemAmount,
+            pagination: [{
+                innerWindow: 1,
+                left: 1,
+                right: 1,
+                item: `<li class='page-item'><a class='page page-link'></a></li>`,
+                paginationClass: 'pagination-top',
+            }],
+        };
 
-            let galleryOptions = {
-                item: 'charadex-entries',
-                valueNames: sheetArrayKeys(sheetArray),
-                searchColumns: [cardKey],
-                page: charadexInfo.itemAmount,
-                pagination: [{
-                    innerWindow: 1,
-                    left: 1,
-                    right: 1,
-                    item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                    paginationClass: 'pagination-top',
-                }],
-            };
+        // Render Gallery
+        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-            // Render Gallery
-            let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+        // Make filters workie
+        charadexSearch(charadex, [cardKey]);
 
-            // Make filters workie
-            charadexSearch(charadex, [cardKey]);
-
-        })();
 
     }
 
