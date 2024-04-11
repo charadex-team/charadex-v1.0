@@ -81,6 +81,15 @@ let optionSorter = (options) => {
 /* ================================================================ */
 /* QOL Funcs
 /* ================================================================ */
+let sheetPage = (id, pageName) => {
+    return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
+};
+
+let fetchSheet = async (page, sheet = sheetID) => {
+    const JSON = await fetch(sheetPage(sheet, page)).then(i => i.text());
+    return scrubData(JSON);
+}
+
 let keyCreator = (key) => {
     return key.toLowerCase().replace(/\s/g, "");
 };
@@ -105,48 +114,41 @@ let loadPage = () => {
 }
 
 let urlParamFix = (key, folder, params = urlParams) => {
-    return url.search.includes(folder) ? '?' + folder + '=' + params.get(folder) + `&${key}=` : `?${key}=`;
+    return '?' + (url.search.includes(folder) ? folder + '=' + params.get(folder) + '&' : '') + `${key}=`;
 };
-
-let sheetPage = (id, pageName) => {
-    return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
-};
-
-let fetchSheet = async (page, sheet = sheetID) => {
-    const JSON = await fetch(sheetPage(sheet, page)).then(i => i.text());
-    return scrubData(JSON);
-}
 
 
 /* ================================================================ */
 /* Get a card's log
 /* ================================================================ */
 let getLog = (log, item, key = 'id') => {
+    if ($("#log-table").length != 0) {
 
-    let logArr = [];
-    log.forEach((i) => {
+        let logArr = [];
+        log.forEach((i) => {
 
-        console.log(i[key]);
-        if (i[key].toLowerCase() === item[key].toLowerCase()) {
-            let newLog = {
-                timestamp: i.timestamp,
-                reason: i.reason,
+            console.log(i[key]);
+            if (i[key].toLowerCase() === item[key].toLowerCase()) {
+                let newLog = {
+                    timestamp: i.timestamp,
+                    reason: i.reason,
+                };
+                logArr.push(newLog);
             };
-            logArr.push(newLog);
-        };
-    });
+        });
 
-    // Create Rows
-    let rows = [];
-    logArr.forEach((i) => {
-        let HTML = $("#log-entry").clone();
-        HTML.find(".timestamp").html(i.timestamp);
-        HTML.find(".reason").html(i.reason);
-        rows.push(HTML);
-    });
+        // Create Rows
+        let rows = [];
+        logArr.forEach((i) => {
+            let HTML = $("#log-entry").clone();
+            HTML.find(".timestamp").html(i.timestamp);
+            HTML.find(".reason").html(i.reason);
+            rows.push(HTML);
+        });
 
-    $("#log-table").html(rows);
+        $("#log-table").html(rows);
 
+    }
 }
 
 
