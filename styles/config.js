@@ -50,7 +50,7 @@ let options = {
     masterlist: {
 
         sheetPage: sheetPages.masterlist,
-        LogSheetPage: sheetPages.masterlistLog,
+        logSheetPage: sheetPages.masterlistLog,
 
         itemAmount: 12,
         itemOrder: "asc",
@@ -84,6 +84,7 @@ let options = {
 
         sheetPage: sheetPages.inventory,
         itemSheetPage: sheetPages.items,
+        logSheetPage: sheetPages.inventoryLog,
     
         itemAmount: 24,
         sortTypes: ['Currency', 'MYO Slot', 'Pet', 'Trait', 'Misc'],

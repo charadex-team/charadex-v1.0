@@ -125,7 +125,9 @@ let getLog = (log, item, key = 'id') => {
 
     let logArr = [];
     log.forEach((i) => {
-        if (i[key] === item[key]) {
+
+        console.log(i[key]);
+        if (i[key].toLowerCase() === item[key].toLowerCase()) {
             let newLog = {
                 timestamp: i.timestamp,
                 reason: i.reason,
@@ -449,10 +451,8 @@ const masterlist = async (options) => {
         let currCardKey = urlParams.has(cardKey) ? cardKey : cardKeyAlt;
         let singleCard = sheetArray.filter((i) => i[currCardKey].includes(urlParams.get(currCardKey)))[0];
 
-        // Grab the log sheet
-        let logArray = await fetchSheet(charadexInfo.LogSheetPage);
-
-        // Render Log
+        // Grab the log sheet and render log
+        let logArray = await fetchSheet(charadexInfo.logSheetPage);
         getLog(logArray, singleCard);
 
         // List.js options
@@ -536,20 +536,20 @@ const inventories = async (options) => {
         };
 
         // Filter out the right card
-        let singleArr = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
+        let singleCard = sheetArray.filter((i) => i[cardKey].includes(urlParams.get(cardKey)))[0];
 
         // Merge the user's inventory with the item sheet
         // Also remove any items they dont have atm
         let inventoryItemArr = [];
         itemSheetArr.forEach((i) => {
-            for (var c in singleArr) {
-                if (c === keyCreator(i.item) && ((singleArr[keyCreator(i.item)] !== "0" && singleArr[keyCreator(i.item)] !== ""))) {
+            for (var c in singleCard) {
+                if (c === keyCreator(i.item) && ((singleCard[keyCreator(i.item)] !== "0" && singleCard[keyCreator(i.item)] !== ""))) {
                     let inventoryItems = {
                         type: i.type,
                         item: i.item,
                         image: i.image,
                         itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i.item,
-                        amount: singleArr[keyCreator(i.item)],
+                        amount: singleCard[keyCreator(i.item)],
                     };
                     inventoryItemArr.push(inventoryItems);
                 };
@@ -594,8 +594,12 @@ const inventories = async (options) => {
         // Make items show up
         $("#item-list").html(rows);
 
+        // Grab the log sheet and render log
+        let logArray = await fetchSheet(charadexInfo.logSheetPage);
+        getLog(logArray, singleCard, "username");
+
         // Render card
-        let charadexItem = new List("charadex-gallery", itemOptions, singleArr);
+        let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
 
 
     } else {
