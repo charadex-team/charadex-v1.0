@@ -41,7 +41,7 @@
   --ml-card-header-bg:       #f5f5f5;
 
   /* Main Fonts */
-  --ml-body-font:            'Monstserrat', sans-serif;
+  --ml-body-font:            'Montserrat', sans-serif;
   --ml-header-font:          'Comfortaa', sans-serif;
 }
 
@@ -62,6 +62,37 @@ body {
   background-position: center;
   background-size: cover;
 
+}
+
+
+/* Page Load Styles
+/* ========================================================== */
+
+.hidden {
+  opacity: 0;
+}
+
+.visible {
+  opacity: 1;
+  transition: opacity 1.5s ease-out;
+}
+
+@keyframes spinner {
+  to {transform: rotate(360deg);}
+}
+ 
+.spinner:before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 50px);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid var(--ml-navbar-bg);
+  border-top-color: var(--ml-navbar-text-hover);
+  animation: spinner 1s linear infinite;
 }
 
 
