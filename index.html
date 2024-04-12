@@ -1,124 +1,355 @@
 <!DOCTYPE html>
-<html lang = "eng">
-  <head>
-    
-    <!-- Meta Data -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en">
+<head>
 
-    <!-- Website's icon in the browser -->
-    <link rel="shortcut icon" type="image/png" href=""/>
-
-    <!-- Title of your site -->
-    <title>Charadex</title>
-
-    <!-- Description of your site -->
-    <meta name="description" content="An automated masterlist for your species!">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- Styles ------------------------------------------ -->
-    
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
-    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <!-- ----------------------------------------------------------------- -->
+  <!-- About Your Site                                                   -->
+  <!-- ----------------------------------------------------------------- -->
 
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+  <!-- Website's icon in the browser -->
+  <link rel="shortcut icon" type="image/png" href=""/>
+
+  <!-- Title of your site -->
+  <title>Charadex</title>
+
+  <!-- Description of your site -->
+  <meta name="description" content="An automated masterlist for your species!">
 
 
-    <!-- Optional Styles ---------------------------------- -->
-    <!-- You can safely remove these if BS styles are good enough for you! -->
-    
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="styles/masterlist.css">
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Styles                                                            -->
+  <!-- ----------------------------------------------------------------- -->
+  
+  <!-- Bootstrap CSS -->
+  <!-- Using Bootstrap 4.5 because its closest to Toyhou.se's current version -->
+  <!-- https://getbootstrap.com/docs/4.5/getting-started/introduction/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <!-- https://icons.getbootstrap.com/#icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
 
-  </head>
-  <body>
-    
-    <div class="sticky-top">
 
-      <!-- Navbar
-           (This is safe to remove if you're not a fan!) 
-      ------------------------------------------------------- -->
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container">
-          <a class="navbar-brand" href="#">Charadex</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul class="navbar-nav">
-              <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
-                  Dropdown Link
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-            </ul>
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Optional Styles                                                   -->
+  <!-- ----------------------------------------------------------------- -->
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="styles/charadex.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+
+
+</head>
+<body>
+
+  <script>
+    /* ------------------------------------------------------------------- */
+    /* Options
+    /* You can remove all of these
+    /* ------------------------------------------------------------------- */
+    let yourOptions = {
+
+    // Sheet Information
+    sheetID: "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc",
+    sheetPage: "Public Masterlist",
+
+    // Amount of items shown on the page. Default is 12.
+    itemAmount: 12,
+
+    // Ascending  (1 2 3) || asc
+    // Descending (3 2 1) || desc
+    itemOrder: "desc",
+
+    // If you're hosting images to your site, please fill this out with
+    // the path to your folder. Note that the 'Images' column must be
+    // removed from the Google Sheet.
+    // i.e. imgs/ml-images
+    imageFolder: "",
+
+    // Columns the search looks through by default
+    searchParams: ['id', 'owner', 'artist', 'designer'],
+
+    // Creates 1 URL parameter that will filter the list based on a
+    // column of your choosing.
+    urlFilterParam: 'species',
+
+    };
+  </script>
+
+  <!-- --------------------------------------------------------------------
+  <-- 
+  <-- Navbar 
+  <-- 
+  <-------------------------------------------------------------------- -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="#"><i class="bi bi-box2-heart"></i> Charadex</a>
+
+      <!-- Toggle -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#charadexnav">
+        <i class="bi bi-list"></i>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="charadexnav">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown">
+              Dropdown
+            </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Link</a>
+              <a class="dropdown-item" href="#">Link</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Link</a>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+
+    </div>
+  </nav>
+
+  <div class="spinner-border m-auto" id="loading"></div>
+  
+  <!-- --------------------------------------------------------------------
+  <-- 
+  <-- Masterlist
+  <-- 
+  <-------------------------------------------------------------------- -->
+  <div class="container masterlist-container d-flex flex-column py-md-5 py-4">
+
+    <!-- URL Param Filter Buttons Render
+    ------------------------------------------------------------------- -->
+    <div class="card p-4 mb-4" style="display:none;" id="filter-buttons">
+      <ul class="row no-gutters list list-unstyled m-n2"></ul>
+    </div>
+
+
+    <!-- Gallery Container
+    ------------------------------------------------------------------- -->
+    <div id="charadex-gallery">
+
+
+      <!-- Filters
+      ----------------------------------------------------------------- -->
+      <div class="card p-4 mb-4 sticky-top" style="display:none;" id="charadex-filters">
+        <div class="row no-gutters m-n2">
+
+          <!-- Custom Filter -->
+          <div class="col-md-2 col-12 p-1">
+            <select class="form-control bg-faded" filter="designtype" id="filter">
+              <option>All</option>
+              <option>Official Design</option>
+              <option>Guest Design</option>
+              <option>MYO Design</option>
+            </select>
           </div>
-        </div>
-      </nav>
 
-      <!-- Pagination Navbar
-           (Do not remove this tho)
-      ------------------------------------------------------- -->
-      <div class="page-nav bg-white py-2 border-bottom">
-        <div class="container d-flex justify-content-between">
+          <!-- Search Filter -->
+          <div class="col-md-2 col-3 p-1">
+            <select class="form-control bg-faded" id="search-filter">
+              <option>All</option>
+              <option>Worth</option>
+              <option>Owner</option>
+              <option>Designer</option>
+              <option>Artist</option>
+            </select>
+          </div>
 
-          <a onclick="prevPage()" id="btn_prev" class="d-flex align-items-center text-decoration-none" style="cursor:pointer">
-            <i class="bi bi-chevron-left me-2"></i> Previous
-          </a>
+          <!-- Search Bar -->
+          <div class="col-md-3 col-9 p-1">
+            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
+          </div>
 
-          <a onclick="nextPage()" id="btn_next" class="d-flex align-items-center text-decoration-none" style="cursor:pointer">
-            Next <i class="bi bi-chevron-right ms-2"></i>
-          </a>
+          <!-- Top Pagination -->
+          <div class="col-md-5 col-12 d-flex justify-content-md-end justify-content-center p-1">
+            <div class="nav d-flex">
+              <div class="btn-prev page-item"><a class="page-link"><i class="bi bi-chevron-left"></i></a></div>
+              <ul class="pagination pagination-top justify-content-center m-0"></ul>
+              <div class="btn-next page-item"><a class="page-link"><i class="bi bi-chevron-right"></i></a></div>
+            </div>
+          </div>
 
         </div>
       </div>
+
+
+      <!-- Repeated Items Render Here
+      ----------------------------------------------------------------- -->
+      <ul class="row no-gutters list list-unstyled m-n2"></ul>
+
     </div>
 
-    <!-- Main Content
-    ------------------------------------------------------- -->
-    <div class="container py-md-4 py-2" style="min-height:calc(100vh - 98px)">
-      <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-md-3 g-2 masterlist-entries"></div>
-    </div>
+  </div>
 
-    <!-- Footer
-    ------------------------------------------------------- -->
-    <div class="footer bg-dark p-4 text-center">
 
-      <!-- Your credit here! -->
-      <a class="text-reset text-decoration-none" href="">[Species] © [Owner]</a>
+  
+  <!-- --------------------------------------------------------------------
+  <-- 
+  <-- Footer
+  <-- Please do not remove the credit - other creators might need a
+  <-- similar tool!
+  <-- 
+  <-------------------------------------------------------------------- -->
+  <div class="footer bg-dark p-md-5 p-4 text-center">
+    <p><a class="text-reset" href="">[Species] © [Owner]</a></p>
+    <p><a href="https://charadex.com">Powered by Charadex</a></p>
+  </div>
 
-      <!-- Please keep my credit in! -->
-      <div class="mt-2"> <a class="text-decoration-none" href="https://github.com/cheeriko/charadex"><i class="bi bi-github me-1"></i> charadex.io</a></div>
-    </div>
-    
-    <!-- JS Bundles
-    ------------------------------------------------------- -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.3/pagination.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
-    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    
-    <!-- Masterlist Sheet
-    ------------------------------------------------------- -->
-    <script>
-      
-      var sheetID = "1vVtBIK-ftiPTTzPnn40uLAafWJrGvqIrW1GFYo1gmrM";
-      var sheetPage = "5";
 
-    </script>
-    <script src="styles/masterlist.js"></script>
+  <!-- --------------------------------------------------------------------
+  <-- 
+  <-- Repeat Items
+  <-- Do not remove 'display:none;'
+  <-- 
+  <-------------------------------------------------------------------- -->
+  <div style="display:none;">
 
-  </body>
+
+    <!-- URL Param Filter Buttons Render
+    ------------------------------------------------------------------- -->
+    <li class="col-lg col-sm-6 p-2" id="charadex-filter-buttons">
+      <a class="btn btn-primary d-block link title" href=""></a>
+    </li>
+                
+
+    <!-- Gallery Items
+    ------------------------------------------------------------------- -->
+    <li class="col-lg-3 col-sm-6 p-2" id="charadex-entries">
+      <a class="card h-100 link" href="">
+        <h5 class="card-header text-center id"></h5>
+        <div class="card-body d-flex flex-fill">
+          <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+        </div>
+      </a>
+    </li>
+
+
+    <!-- Singular Item
+    ------------------------------------------------------------------- -->
+    <li class="col-12 p-2" id="charadex-card">
+
+      <!-- Prev & Next Topbar -->
+      <div class="card p-4 mb-4">
+        <div class="row no-gutters m-n1 text-sans-serif font-weight-bold text-uppercase">
+          <div class="col-md-4 col-12 text-center p-1 order-md-1"><a id="masterlistLink" href="">Masterlist</a></div>
+          <div class="col-md-4 col-6 p-1"><a id="entryPrev" href=""><i class="bi bi-chevron-left mr-2"></i><span></span></a></div>
+          <div class="col-md-4 col-6 text-right p-1 order-md-1"><a id="entryNext" href=""><span></span><i class="bi bi-chevron-right ml-2"></i></a></div>
+        </div>
+      </div>
+
+      <!-- Actual Card -->
+      <div class="card">
+
+        <!-- Header -->
+        <h2 class="card-header text-center p-4 id"></h2>
+
+
+        <!--Main Info -->
+        <div class="row no-gutters p-md-5 p-4">
+
+
+          <!-- Image -->
+          <div class="col-md-6 p-3">
+            <div class="mx-auto w-100 text-center" oncontextmenu="return false">
+              <img class="image img-fluid" src="">
+            </div>
+          </div>
+
+
+          <!-- Information List -->
+          <div class="col-md-6 p-3">
+            
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Owner</b>
+              <span class="owner"></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Artist</b>
+              <span class="artist"></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Designer</b>
+              <span class="designer"></span>
+            </div>
+              
+            <hr>
+  
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Worth</b>
+              <span>$<span class="worth"></span></span>
+            </div>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Status</b>
+              <span class="status"></span>
+            </div>
+              
+            <hr>
+              
+            <!-- Item -->
+            <div class="d-flex justify-content-between mb-2">
+              <b class="text-muted">Design Type</b>
+              <span class="designtype"></span>
+            </div>
+              
+            <hr>
+              
+            <!-- Item -->
+            <div class="">
+              <b class="text-muted">Notes</b>
+              <div class="pl-3">
+                <span class="notes"></span>
+              </div>
+            </div>
+
+            <!-- Add more list items above this line-->
+          </div>
+        </div>
+      </div> 
+    </li>
+
+
+  </div>
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- JS                                                                -->
+  <!-- ----------------------------------------------------------------- -->
+
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <!-- List.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
+
+  <!-- Charadex Script -->
+  <script src="styles/charadex.js"></script>
+  <script>charadex(yourOptions);</script>
+
+
+</body>
 </html>
