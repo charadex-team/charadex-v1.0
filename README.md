@@ -6,3 +6,6 @@
 - HTML for the general masterlist and cards can now be edited in the HTML page, instead of in the JS.
 - Added the ability to add more info!! Like traits and junk.
 - Died.
+
+# Update v1.3.6
+- Sylueon patched the Google Sheet parser to parse the v4 API.

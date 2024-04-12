@@ -1,5 +1,24 @@
+
+/* Sheet Options
+----------------------------------------------------------------- */
+
+// Sheet information
+let sheetID = "18SMfCx05l0E5CS9DHC2xb6cLY2eRcJ0PjWQRlYATdRE";
+let sheetPage = "Masterlist";
+
+// Number of items on the page at a time
+let numOfItems = 12;
+
+// Sort order for ascending/descending
+// asc/desc
+var order = "desc";
+
+
+/* Only edit below if you know what you're doing!
+----------------------------------------------------------------- */
+
 // Sheet URL
-let sheetUrl = "https://spreadsheets.google.com/feeds/list/" + sheetID + "/" + sheetPage + "/public/values?alt=json";
+let sheetUrl = "https://docs.google.com/spreadsheets/d/" + sheetID + "/gviz/tq?tqx=out:json&sheet=" + sheetPage;
 
 // Dah Page URL
 let pageURL = window.location.href;
@@ -12,57 +31,75 @@ let designID = pageURL.split('=')[1];
 
 // All values from the google sheet will be
 // pushed here to be called later on
+let keys = [];
 let values = [];
+let bigArr = [];
 
-// Calls JSON Data
-$.getJSON(sheetUrl, function(data) {
-  
-  // Sorts through data
-  $.each(data.feed.entry, function (index, value) {
+// Fetches the sheet and gets to work on it
+fetch(sheetUrl).then(res => res.text()).then(text => {
 
-    // Set up to create object
+  // Makes google sheet JSON a bit more readable
+  const json = JSON.parse(text.substr(47).slice(0, -2));
+
+  // Pulls out the titles from the COL row
+  let sheetKeys = {};
+  for (let i = 0; i < json.table.cols.length; i++){
+    sheetKeys = json.table.cols[i].label.replaceAll(' ', '').replaceAll('\n','').toLowerCase();    
+    keys.push(sheetKeys);
+  }
+
+  // Slams all the information into a readable Object Array
+  $.each(json.table.rows, function (index, value) {
+
     let obj = {};
-
-    for (let cell in value) {
-
-      // Removes the cells that aren't needed
-      if(
-        cell !== "gsx$trsid" && 
-        cell !== "id" && 
-        cell !== "updated" && 
-        cell !== "category" && 
-        cell !== "title" && 
-        cell !== "content" && 
-        cell !== "link"
-      ) {
-        
-        // Removes the gsx$ suffix from the cells being used
-        let parseCell = cell.replace("gsx$", "");
-
-        // Adds link into the object
-        Object.assign(obj, {link: vanillaURL + "?id=" + obj["id"]}); 
-
-        // Makes sure the values are in their right keys
-        obj[parseCell] = value[cell].$t;
-
-      }        
-    }
     
-    // Pushes new object to values variable
-    values.push(obj);
+    for (let row in value) {
 
-  });
+      obj = value[row];
+      arr = {};
 
-  // Checks if the page is trying to direct
-  // to a card
+      for (let i = 0; i < obj.length; i++){
+        if(obj[i] === null) {
+          obj[i] = {v: ""}; 
+        }if(obj[i].v === null) {
+          obj[i].v = ""; 
+        }if(obj[i].f) {
+          delete obj[i].v; 
+          arr[keys[i]] = obj[i].f;
+        }else {          
+          arr[keys[i]] = obj[i].v;  
+        }       
+
+        values.push(obj);
+      } 
+      
+      bigArr.push(arr);
+
+    }   
+
+  })
+
+  for (let i = 0; i < bigArr.length; i++) {
+
+    // Adds link into the object
+    bigArr[i].link = vanillaURL + "?id=" + bigArr[i]["id"];
+
+    // Adds TBA to items with no owners
+    if(bigArr[i].owner === "") {bigArr[i].owner = "TBA";}
+
+  }
+
+  console.log(bigArr);
+
+  // Checks if the page is trying to direct to a card
   if (pageURL.includes('?id=')) {
     
     // Grabs the values you need for the card
     // So you don't have to put them in manually
-    let itemArray = Object.keys(values[0]);
+    let itemArray = Object.keys(bigArr[0]);
     // Replaces the 'image' in the array with something
     // that'll actually make it an image
-    itemArray[2] = { name: 'image', attr: 'src' };
+    itemArray[1] = { name: 'image', attr: 'src' };
 
     // List.js options for the item
     let itemOptions = {
@@ -71,14 +108,15 @@ $.getJSON(sheetUrl, function(data) {
     };
 
     // Create List
-    let charadexItem = new List('charadex-entry', itemOptions, values);
+    let charadexItem = new List('charadex-entry', itemOptions, bigArr);
 
     // Searches for the correct item to display
-    charadexItem.search(designID);
+    charadexItem.search(designID, ['id']);
 
     // Hides the big gallery and the search
     $('#charadex-gallery').hide();
 
+    
   }else{
 
     // Hides the single entry & shows the search
@@ -95,23 +133,29 @@ $.getJSON(sheetUrl, function(data) {
         { name: 'image', attr: 'src' },
         { name: 'link', attr: 'href' }
       ],
+      searchColumns: [
+        'id',
+        'owner',
+        'artist',
+        'designer'
+      ],
       item: 'charadex-item',
       page: numOfItems,
       pagination: [{
-        innerWindow: 3,
-        left: 2,
-        right: 2,
+        innerWindow: 1,
+        left: 1,
+        right: 1,
         paginationClass: 'pagination-top',
       },{
-        innerWindow: 3,
-        left: 2,
-        right: 2,
+        innerWindow: 1,
+        left: 1,
+        right: 1,
         paginationClass: 'pagination-bottom',
       }],
     };
 
     // Create List
-    let charadex = new List('charadex-gallery', galleryOptions, values);
+    let charadex = new List('charadex-gallery', galleryOptions, bigArr);
     charadex.sort('id',{order: order });
 
     // Force search to work outside list
