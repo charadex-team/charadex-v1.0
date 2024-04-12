@@ -1,251 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang = "eng">
+  <head>
+    
+    <!-- Meta Data -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Website's icon in the browser -->
+    <link rel="shortcut icon" type="image/png" href=""/>
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- About Your Site                                                   -->
-  <!-- ----------------------------------------------------------------- -->
+    <!-- Title of your site -->
+    <title>Charadex</title>
 
-  <!-- Website's icon in the browser -->
-  <link rel="shortcut icon" type="image/png" href=""/>
+    <!-- Description of your site -->
+    <meta name="description" content="An automated masterlist for your species!">
 
-  <!-- Title of your site -->
-  <title>Charadex</title>
 
-  <!-- Description of your site -->
-  <meta name="description" content="An automated masterlist for your species!">
+    <!-- Styles ------------------------------------------ -->
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Styles                                                            -->
-  <!-- ----------------------------------------------------------------- -->
-  
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" 
-  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-  <!-- Bootstrap Icons -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Optional Styles                                                   -->
-  <!-- ----------------------------------------------------------------- -->
-  
-  <!-- Custom CSS -->
-  <link rel="stylesheet" type="text/css" href="styles/charadex.css">
+    <!-- Optional Styles ---------------------------------- -->
+    <!-- You can safely remove these if BS styles are good enough for you! -->
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="styles/masterlist.css">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
 
-</head>
-<body>
+  </head>
+  <body>
+    
+    <div class="sticky-top">
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Navbar                                                            -->
-  <!-- ----------------------------------------------------------------- -->
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container p-0">
-
-      <!-- Title -->
-      <a class="navbar-brand" href="index.html">Charadex</a>
-
-      <!-- Toggle Button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
-        <i class="bi bi-list"></i>
-      </button>
-
-      <!-- Actual Navbar -->
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-
-          <!-- Link -->
-          <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-
-          <!-- Optional Dropwdown -->
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
-              Dropdown Link
-            </a>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+      <!-- Navbar
+           (This is safe to remove if you're not a fan!) 
+      ------------------------------------------------------- -->
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="#">Charadex</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+            <ul class="navbar-nav">
+              <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown">
+                  Dropdown Link
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
             </ul>
-          </li>
+          </div>
+        </div>
+      </nav>
 
-          
-        <!-- Add more links above here -->
-        </ul>
+      <!-- Pagination Navbar
+           (Do not remove this tho)
+      ------------------------------------------------------- -->
+      <div class="page-nav bg-white py-2 border-bottom">
+        <div class="container d-flex justify-content-between">
 
-        <!-- Search -->
-        <form class="d-flex">
-          <input class="form-control me-2 search" style="display:none;" type="search" placeholder="Search" id="search" aria-label="Search">
-        </form>
+          <a onclick="prevPage()" id="btn_prev" class="d-flex align-items-center text-decoration-none" style="cursor:pointer">
+            <i class="bi bi-chevron-left me-2"></i> Previous
+          </a>
+
+          <a onclick="nextPage()" id="btn_next" class="d-flex align-items-center text-decoration-none" style="cursor:pointer">
+            Next <i class="bi bi-chevron-right ms-2"></i>
+          </a>
+
+        </div>
       </div>
     </div>
-  </nav>
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Masterlist                                                        -->
-  <!-- ----------------------------------------------------------------- -->
-
-  <div class="container" id="charadex-gallery">
-    <div class="py-4" style="min-height:calc(100vh - 56px)">
-
-      <!-- Top Pagination -->
-      <ul class="pagination pagination-top justify-content-center"></ul>
-
-      <!-- Masterlist Container | Itmes from 'Repeated Items' will render here -->
-      <ul class="row g-md-4 g-3 list list-unstyled"></ul>
-
-      <!-- Bottom Pagination -->
-      <ul class="pagination pagination-bottom justify-content-center"></ul>
+    <!-- Main Content
+    ------------------------------------------------------- -->
+    <div class="container py-md-4 py-2" style="min-height:calc(100vh - 98px)">
+      <div class="row row-cols-xl-4 row-cols-lg-3 row-cols-sm-2 row-cols-1 g-md-3 g-2 masterlist-entries"></div>
     </div>
-  </div>
 
-  
-  <!-- Repeated Item 
-  ---------------------------------------------------------------------- -->
-  <div style="display:none;"> <!-- Do not remove display: none -->
-                
-    <!-- Container -->
-    <li class="col-xl-3 col-lg-4 col-sm-6" id="charadex-item">
-                
-      <!-- Card -->
-      <a href="" class="card d-flex flex-column h-100 overflow-hidden link">
-                
-        <!-- ID -->
-        <h5 class="card-header text-center id"></h5>
-                
-        <!-- Image Container -->
-        <div class="flex-fill d-flex justify-content-center align-items-center p-3" oncontextmenu="return false">
-                
-          <!-- Image -->
-          <img class="image img-fluid" style="max-height:200px;" src="">
-        </div>
-      </a>
-    </li>
-  </div>
+    <!-- Footer
+    ------------------------------------------------------- -->
+    <div class="footer bg-dark p-4 text-center">
 
+      <!-- Your credit here! -->
+      <a class="text-reset text-decoration-none" href="">[Species] © [Owner]</a>
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Item                                                              -->
-  <!-- ----------------------------------------------------------------- -->
-
-  <div class="container" id="charadex-entry">
-    <div class="d-flex justify-content-center align-items-center py-md-4 py-2" style="min-height:calc(100vh - 160px)">
-
-      <!-- Card -->
-      <ul class="list list-unstyled w-100" style="max-width: 700px;">
-        
-        <!-- Card Guts -->
-        <div style="display:none;"> <!-- Do not remove display: none -->
-          <div class="card overflow-hidden" id="charadex-card">
-
-            <!-- Header -->
-            <h2 class="card-header text-center id"></h2>
-
-            <!-- Image -->
-            <div class="mx-auto w-100 text-center" style="max-width:350px;" oncontextmenu="return false">
-              <img class="image img-fluid" src="">
-            </div>
-            <hr>
-
-            <!-- All Other Info -->
-            <div class="row no-gutters py-4 px-5">
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Owner</b> <span class="owner"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Artist</b> <span class="artist"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Designer</b> <span class="designer"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Worth</b> <span class="worth"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Status</b> <span class="status"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Cooldown</b> <span class="cooldown"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-md-6 d-flex justify-content-between p-2">
-                <b>Design Type</b> <span class="designtype"></span>
-              </div>
-                
-
-              <!-- Item -->
-              <div class="col-12 p-2">
-                <b>Notes</b>
-                <div class="ps-3"> <span class="notes"></span></div>
-              </div>
-
-
-              <!-- Add more above this line -->
-            </div> 
-          </div>  
-        </div>  
-      </ul>
+      <!-- Please keep my credit in! -->
+      <div class="mt-2"> <a class="text-decoration-none" href="https://github.com/cheeriko/charadex"><i class="bi bi-github me-1"></i> charadex.io</a></div>
     </div>
-  </div>
+    
+    <!-- JS Bundles
+    ------------------------------------------------------- -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.3/pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    
+    <!-- Masterlist Sheet
+    ------------------------------------------------------- -->
+    <script>
+      
+      var sheetID = "1vVtBIK-ftiPTTzPnn40uLAafWJrGvqIrW1GFYo1gmrM";
+      var sheetPage = "5";
 
+    </script>
+    <script src="styles/masterlist.js"></script>
 
-  <!-- ----------------------------------------------------------------- -->
-  <!-- Footer                                                            -->
-  <!-- ----------------------------------------------------------------- -->
-
-  <div class="footer bg-dark p-4 text-center">
-
-    <!-- Your credit here! -->
-    <a class="text-reset text-decoration-none" href="">[Species] © [Owner]</a>
-
-    <!-- Please keep my credit in! -->
-    <div class="mt-2"> <a class="text-decoration-none" href="https://charadex.com">Powered by Charadex</a></div>
-  </div>
-
-
-  <!-- ----------------------------------------------------------------- -->
-  <!-- JS                                                                -->
-  <!-- ----------------------------------------------------------------- -->
-
-  <!-- JQuery -->
-  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-
-  <!-- List.js -->
-  <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
-
-  <!-- Bootstrap -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
-  <!-- Charadex Script -->
-  <script src="styles/charadex.js"></script>
-
-</body>
+  </body>
 </html>

@@ -7,43 +7,42 @@
   the variables below should be all you need to edit!
 
 */
-:root {
+ :root {
 
   /* Primary Color */
-  --ml-primary:                 #F2A68D;
-  --ml-primary-hover:           #d6866b;
+  --ml-primary:              #F2A68D;
+  --ml-primary-hover:        #d6866b;
 
-  /* Main Page Styles */
-  --ml-body-bg:                 #F9F4F0;
-  --ml-body-text:               #000;
-  --ml-body-image:              url();
-  --ml-borders:                 #D5D0CC;
-  --ml-border-radius:           1rem;
+   /* Main Page Styles */
+  --ml-body-bg:              #F9F4F0;
+  --ml-body-text:            #000;
+  --ml-body-image:           url();
+  --ml-borders:              #D5D0CC;
+  --ml-border-radius:        1rem;
 
   /* Navbar */
-  --ml-navbar-bg:               #000;
-  --ml-navbar-text:             rgba(255,255,255,.8);
-  --ml-navbar-text-hover:       var(--ml-primary);
+  --ml-navbar-bg:            #000;
+  --ml-navbar-text:          rgba(255,255,255,.8);
+  --ml-navbar-text-hover:    var(--ml-primary);
 
   /* Navbar Dropdown */
-  --ml-navbar-dd-bg-hover:      rgba(255,255,255,.1);
-  --ml-navbar-dd-divider:       rgba(255,255,255,.125);
+  --ml-navbar-dd-bg-hover:   rgba(255,255,255,.1);
+  --ml-navbar-dd-divider:    rgba(255,255,255,.125);
 
-  /* Pagination */
-  --ml-page-link-color:         var(--ml-body-text);
-  --ml-page-link-color-hover:   var(--ml-primary);
-  --ml-page-link-bg:            transparent;
-  --ml-page-link-bg-hover:      transparent;
-  --ml-page-link-border:        transparent;
+  /* Pagination Nav */
+  --ml-page-nav-bg:          #fff;
+  --ml-page-nav-border:      var(--ml-borders);
+  --ml-page-nav-links:       var(--ml-body-text);
+  --ml-page-nav-links-hover: var(--ml-primary);
 
   /* Cards */
-  --ml-card-bg:                 #fff;
-  --ml-card-border:             var(--ml-borders);
-  --ml-card-header-bg:          #f5f5f5;
+  --ml-card-bg:              #fff;
+  --ml-card-border:          var(--ml-borders);
+  --ml-card-header-bg:       #f5f5f5;
 
   /* Main Fonts */
-  --ml-body-font:               'Montserrat', sans-serif;
-  --ml-header-font:             'Comfortaa', sans-serif;
+  --ml-body-font:            'Monstserrat', sans-serif;
+  --ml-header-font:          'Comfortaa', sans-serif;
 }
 
 
@@ -148,28 +147,23 @@ a:hover {
 }
 
 
-/* Pagination
+/* Pagination Nav
 /* ========================================================== */
-.page-link,
-.page-item.disabled .page-link {
-  color: var(--ml-page-link-color);
-  background-color: var(--ml-page-link-bg);
-  border: 1px solid var(--ml-page-link-border);
-  padding: .25rem;
+.page-nav{
+  background-color: var(--ml-page-nav-bg) !important;
+  border-color: var(--ml-page-nav-border) !important;
 }
 
-.page-item.active .page-link,
-.page-link:hover,
-.page-link:focus,
-.page-link:active {
-  color: var(--ml-page-link-color-hover);
-  background-color: var(--ml-page-link-bg-hover);
-  border-color: var(--ml-page-link-bg-hover);
+.page-nav a{
+  color:var(--ml-page-nav-links) !important;
 }
 
-/* Tiny Tweaks */
-.page-link{cursor: pointer;user-select: none;}
-.page-link:focus{box-shadow: none !important;}
+.page-nav a:hover,
+.page-nav a:focus,
+.page-nav a:active{
+  color: var(--ml-page-nav-links-hover) !important;
+}
+
 
 /* Footer
 /* ========================================================== */
