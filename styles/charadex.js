@@ -549,7 +549,7 @@ const inventory = async (options) => {
                         type: i.type,
                         item: i.item,
                         image: i.image,
-                        itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i.item,
+                        itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i[itemCardKey],
                         amount: singleCard[keyCreator(i.item)],
                     };
                     inventoryItemArr.push(inventoryItems);
