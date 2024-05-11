@@ -102,10 +102,12 @@ let addAll = (key) => {
 
 let addOptions = (arr, filter) => {
     arr.forEach((val) => {
-        let optionHTML = document.createElement('option');
-        optionHTML.value = val.toLowerCase().replace(/\s/g, "");
-        optionHTML.textContent = val;
-        filter.append(optionHTML);
+        if (val) {
+            let optionHTML = document.createElement('option');
+            optionHTML.value = val.toLowerCase().replace(/\s/g, "");
+            optionHTML.textContent = val;
+            filter.append(optionHTML);
+        }
     });
 };
 
@@ -267,7 +269,7 @@ let fauxFolderButtons = (array, fauxFolder, params = urlParams) => {
 
     // Filters out information based on URL parameters
     if (params.has(fauxFolder) && fauxFolder) {
-        return array.filter((i) => i[fauxFolder].toLowerCase() === params.get(fauxFolder).toLowerCase());
+        return array.filter((i) => keyCreator(i[fauxFolder]) === keyCreator(params.get(fauxFolder)));
     } else {
         return array;
     }
@@ -360,6 +362,8 @@ const charadexLarge = async (options) => {
 
     } else {
 
+
+        console.log(sheetArray);
 
         // Create the Gallery
 
@@ -719,7 +723,7 @@ const frontPage = (options) => {
 
                 // Add cardlink
                 let cardKey = Object.keys(selectDesigns[0])[0];
-                for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
+                for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
 
                 // Nyoom
                 let galleryOptions = {
