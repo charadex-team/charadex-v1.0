@@ -11,7 +11,7 @@ let urlParams = new URLSearchParams(window.location.search);
 /* Load Header and Footer
 ======================================================================= */
 $(function () {
-    $(".load-html").each(function () {$(this).load(this.dataset.source)});
+  $(".load-html").each(function () { $(this).load(this.dataset.source) });
 });
 
 
@@ -20,32 +20,32 @@ $(function () {
 ======================================================================= */
 const scrubData = (sheetData) => {
 
-    cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
+  cleanJson = JSON.parse(sheetData.substring(47).slice(0, -2));
 
-    // Grab column headers
-    const col = [];
-    if (cleanJson.table.cols[0].label) {
-        cleanJson.table.cols.forEach((headers) => {
-            if (headers.label) {
-                col.push(headers.label.toLowerCase().replace(/\s/g, ""));
-            }
-        });
-    }
-
-    // Scrubs columns and puts them in a readable object
-    const scrubbedData = [];
-    cleanJson.table.rows.forEach((info, num) => {
-        const row = {};
-        const isBoolean = val => 'boolean' === typeof val;
-        col.forEach((ele, ind) => {
-            row[ele] = info.c[ind] != null ? info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
-        });
-        scrubbedData.push(row);
+  // Grab column headers
+  const col = [];
+  if (cleanJson.table.cols[0].label) {
+    cleanJson.table.cols.forEach((headers) => {
+      if (headers.label) {
+        col.push(headers.label.toLowerCase().replace(/\s/g, ""));
+      }
     });
+  }
 
-    let publicData = scrubbedData.filter((i) => { return i['hide'] !== true; });
+  // Scrubs columns and puts them in a readable object
+  const scrubbedData = [];
+  cleanJson.table.rows.forEach((info, num) => {
+    const row = {};
+    const isBoolean = val => 'boolean' === typeof val;
+    col.forEach((ele, ind) => {
+      row[ele] = info.c[ind] != null ? info.c[ind].f != null && !isBoolean(info.c[ind].v) ? info.c[ind].f : info.c[ind].v != null ? info.c[ind].v : "" : "";
+    });
+    scrubbedData.push(row);
+  });
 
-    return publicData;
+  let publicData = scrubbedData.filter((i) => { return i['hide'] !== true; });
+
+  return publicData;
 
 }
 
@@ -55,26 +55,26 @@ const scrubData = (sheetData) => {
 /* ================================================================ */
 let optionSorter = (options) => {
 
-    // Clean up the sheetID - in case they used a link instead
-    let scrubbedSheetId = sheetID ? sheetID.includes('/d/') ? sheetID.split('/d/')[1].split('/edit')[0] : sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc";
+  // Clean up the sheetID - in case they used a link instead
+  let scrubbedSheetId = sheetID ? sheetID.includes('/d/') ? sheetID.split('/d/')[1].split('/edit')[0] : sheetID : "1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc";
 
-    // Call all options, make defaults of our own
-    let userOptions = options;
-    let defaultOptions = {
+  // Call all options, make defaults of our own
+  let userOptions = options;
+  let defaultOptions = {
 
-        sheetID: scrubbedSheetId,
-        sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "masterlist",
+    sheetID: scrubbedSheetId,
+    sheetPage: userOptions.sheetPage ? userOptions.sheetPage : "masterlist",
 
-        fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
-        filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
-        searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
+    fauxFolderColumn: userOptions.fauxFolderColumn ? keyCreator(userOptions.fauxFolderColumn) : false,
+    filterColumn: userOptions.filterColumn ? keyCreator(userOptions.filterColumn) : false,
+    searchFilterParams: userOptions.searchFilterParams ? addAll(userOptions.searchFilterParams) : false,
 
-    }
+  }
 
-    // Merge options
-    let mergedOptions = {...userOptions, ...defaultOptions};
+  // Merge options
+  let mergedOptions = { ...userOptions, ...defaultOptions };
 
-    return mergedOptions;
+  return mergedOptions;
 
 }
 
@@ -83,41 +83,41 @@ let optionSorter = (options) => {
 /* QOL Funcs
 /* ================================================================ */
 let sheetPage = (id, pageName) => {
-    return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
+  return `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${pageName}`
 };
 
 let fetchSheet = async (page, sheet = sheetID) => {
-    const JSON = await fetch(sheetPage(sheet, page)).then(i => i.text());
-    return scrubData(JSON);
+  const JSON = await fetch(sheetPage(sheet, page)).then(i => i.text());
+  return scrubData(JSON);
 }
 
 let keyCreator = (key) => {
-    return key.toLowerCase().replace(/\s/g, "");
+  return key.toLowerCase().replace(/\s/g, "");
 };
 
 let addAll = (key) => {
-    key.unshift("All")
-    return key;
+  key.unshift("All")
+  return key;
 };
 
 let addOptions = (arr, filter) => {
-    arr.forEach((val) => {
-        if (val) {
-            let optionHTML = document.createElement('option');
-            optionHTML.value = val.toLowerCase().replace(/\s/g, "");
-            optionHTML.textContent = val;
-            filter.append(optionHTML);
-        }
-    });
+  arr.forEach((val) => {
+    if (val) {
+      let optionHTML = document.createElement('option');
+      optionHTML.value = val.toLowerCase().replace(/\s/g, "");
+      optionHTML.textContent = val;
+      filter.append(optionHTML);
+    }
+  });
 };
 
 let loadPage = () => {
-    $('#loading').hide();
-    $('.softload').addClass('active');
+  $('#loading').hide();
+  $('.softload').addClass('active');
 }
 
 let urlParamFix = (key, folder, params = urlParams) => {
-    return '?' + (url.search.includes(folder) ? folder + '=' + params.get(folder) + '&' : '') + `${key}=`;
+  return '?' + (url.search.includes(folder) ? folder + '=' + params.get(folder) + '&' : '') + `${key}=`;
 };
 
 
@@ -125,31 +125,31 @@ let urlParamFix = (key, folder, params = urlParams) => {
 /* Get a card's log
 /* ================================================================ */
 let getLog = (log, item, key = 'id') => {
-    if ($("#log-table").length != 0) {
+  if ($("#log-table").length != 0) {
 
-        let logArr = [];
-        log.forEach((i) => {
-            if (i[key].toLowerCase() === item[key].toLowerCase()) {
-                let newLog = {
-                    timestamp: i.timestamp,
-                    reason: i.reason,
-                };
-                logArr.push(newLog);
-            };
-        });
+    let logArr = [];
+    log.forEach((i) => {
+      if (i[key].toLowerCase() === item[key].toLowerCase()) {
+        let newLog = {
+          timestamp: i.timestamp,
+          reason: i.reason,
+        };
+        logArr.push(newLog);
+      };
+    });
 
-        // Create Rows
-        let rows = [];
-        logArr.forEach((i) => {
-            let HTML = $("#log-entry").clone();
-            HTML.find(".timestamp").html(i.timestamp);
-            HTML.find(".reason").html(i.reason);
-            rows.push(HTML);
-        });
+    // Create Rows
+    let rows = [];
+    logArr.forEach((i) => {
+      let HTML = $("#log-entry").clone();
+      HTML.find(".timestamp").html(i.timestamp);
+      HTML.find(".reason").html(i.reason);
+      rows.push(HTML);
+    });
 
-        $("#log-table").html(rows);
+    $("#log-table").html(rows);
 
-    }
+  }
 }
 
 
@@ -158,12 +158,12 @@ let getLog = (log, item, key = 'id') => {
 /* Makes an array for List.js to use
 /* ================================================================ */
 let sheetArrayKeys = (arr) => {
-    let itemArray = Object.keys(arr[0]);
-    if (itemArray.indexOf('cardlink')) itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
-    if (itemArray.indexOf('cardlinkalt')) itemArray[itemArray.indexOf('cardlinkalt')] = { name: 'cardlinkalt', attr: 'href' };
-    if (itemArray.indexOf('link')) itemArray[itemArray.indexOf('link')] = { name: 'link', attr: 'href' };
-    if (itemArray.indexOf('image')) itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
-    return itemArray;
+  let itemArray = Object.keys(arr[0]);
+  if (itemArray.indexOf('cardlink')) itemArray[itemArray.indexOf('cardlink')] = { name: 'cardlink', attr: 'href' };
+  if (itemArray.indexOf('cardlinkalt')) itemArray[itemArray.indexOf('cardlinkalt')] = { name: 'cardlinkalt', attr: 'href' };
+  if (itemArray.indexOf('link')) itemArray[itemArray.indexOf('link')] = { name: 'link', attr: 'href' };
+  if (itemArray.indexOf('image')) itemArray[itemArray.indexOf('image')] = { name: 'image', attr: 'src' };
+  return itemArray;
 };
 
 
@@ -171,9 +171,9 @@ let sheetArrayKeys = (arr) => {
 /* Pagination
 /* ================================================================ */
 let showPagination = (arr, amt) => {
-    $('.btn-next').on('click', () => { $('.pagination .active').next().children('a')[0].click(); })
-    $('.btn-prev').on('click', () => { $('.pagination .active').prev().children('a')[0].click(); })
-    if (arr.length > amt) $('#charadex-pagination').show()
+  $('.btn-next').on('click', () => { $('.pagination .active').next().children('a')[0].click(); })
+  $('.btn-prev').on('click', () => { $('.pagination .active').prev().children('a')[0].click(); })
+  if (arr.length > amt) $('#charadex-pagination').show()
 }
 
 
@@ -182,25 +182,25 @@ let showPagination = (arr, amt) => {
 /* ================================================================ */
 let charadexSearch = (info, searchArr) => {
 
-    if (searchArr && searchArr.length > 2) {
-        addOptions(searchArr, $('#search-filter'));
-        $('#search-filter').parent().show();
-        $('#search').addClass('filtered');
+  if (searchArr && searchArr.length > 2) {
+    addOptions(searchArr, $('#search-filter'));
+    $('#search-filter').parent().show();
+    $('#search').addClass('filtered');
+  }
+
+  let arr = searchArr.map(function (v) { return v.toLowerCase().replace(/\s/g, ""); });
+
+  $('#search').on('keyup', () => {
+    let selection = $("#search-filter option:selected").val();
+    let searchString = $('#search').val();
+    if (selection && selection != 'all') {
+      info.search(searchString, [selection]);
+    } else {
+      info.search(searchString, arr);
     }
+  });
 
-    let arr = searchArr.map(function (v) { return v.toLowerCase().replace(/\s/g, ""); });
-
-    $('#search').on('keyup', () => {
-        let selection = $("#search-filter option:selected").val();
-        let searchString = $('#search').val();
-        if (selection && selection != 'all') {
-            info.search(searchString, [selection]);
-        } else {
-            info.search(searchString, arr);
-        }
-    });
-
-    $('#charadex-filters').show();
+  $('#charadex-filters').show();
 
 };
 
@@ -210,28 +210,28 @@ let charadexSearch = (info, searchArr) => {
 /* Custom Filter
 /* ================================================================ */
 let charadexFilterSelect = (info, arr, key) => {
-    if (key) {
+  if (key) {
 
-        const filterArr = [...new Set(arr.map(i => i[key]))];
+    const filterArr = [...new Set(arr.map(i => i[key]))];
 
-        if (filterArr.length > 2) {
+    if (filterArr.length > 2) {
 
-            addOptions(addAll(filterArr), $('#filter'));
+      addOptions(addAll(filterArr), $('#filter'));
 
-            $("#filter").on('change', () => {
-                let selection = $("#filter option:selected").text().toLowerCase();
-                if (selection && !selection.includes('all')) {
-                    info.filter(function (i) { return i.values()[key].toLowerCase() == selection; });
-                } else {
-                    info.filter();
-                }
-            });
-
-            $('#filter').parent().show();
-            $('#charadex-filters').show();
-
+      $("#filter").on('change', () => {
+        let selection = $("#filter option:selected").text().toLowerCase();
+        if (selection && !selection.includes('all')) {
+          info.filter(function (i) { return i.values()[key].toLowerCase() == selection; });
+        } else {
+          info.filter();
         }
+      });
+
+      $('#filter').parent().show();
+      $('#charadex-filters').show();
+
     }
+  }
 };
 
 
@@ -241,38 +241,38 @@ let charadexFilterSelect = (info, arr, key) => {
 /* ================================================================ */
 let fauxFolderButtons = (array, fauxFolder, params = urlParams) => {
 
-    if (array[0].hasOwnProperty(fauxFolder)) {
+  if (array[0].hasOwnProperty(fauxFolder)) {
 
-        // Creates Param Object Array
-        let urlParamArray = [];
-        const uniqueArray = [...new Set(array.map(i => i[fauxFolder]))].filter(n => n);
-        uniqueArray.forEach((i) => {
-            urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolder + '=' + i.toLowerCase()));
-        });
+    // Creates Param Object Array
+    let urlParamArray = [];
+    const uniqueArray = [...new Set(array.map(i => i[fauxFolder]))].filter(n => n);
+    uniqueArray.forEach((i) => {
+      urlParamArray.push($('#charadex-filter-buttons a').clone().text(i).attr("href", baseURL + '?' + fauxFolder + '=' + i.toLowerCase()));
+    });
 
-        if (urlParamArray.length > 1) {
+    if (urlParamArray.length > 1) {
 
-            // Adds All button
-            urlParamArray.unshift($('#charadex-filter-buttons a').text('All').attr("href", baseURL));
+      // Adds All button
+      urlParamArray.unshift($('#charadex-filter-buttons a').text('All').attr("href", baseURL));
 
-            // Smacks the links in your flex column
-            let btnCols = [];
-            for (var i in urlParamArray) { btnCols.push($('#charadex-filter-buttons').html(urlParamArray[i]).clone()); }
-            $('#filter-buttons .row').append(btnCols);
+      // Smacks the links in your flex column
+      let btnCols = [];
+      for (var i in urlParamArray) { btnCols.push($('#charadex-filter-buttons').html(urlParamArray[i]).clone()); }
+      $('#filter-buttons .row').append(btnCols);
 
-            // Show Buttons
-            $('#filter-buttons').show();
-
-        }
+      // Show Buttons
+      $('#filter-buttons').show();
 
     }
 
-    // Filters out information based on URL parameters
-    if (params.has(fauxFolder) && fauxFolder) {
-        return array.filter((i) => keyCreator(i[fauxFolder]) === keyCreator(params.get(fauxFolder)));
-    } else {
-        return array;
-    }
+  }
+
+  // Filters out information based on URL parameters
+  if (params.has(fauxFolder) && fauxFolder) {
+    return array.filter((i) => keyCreator(i[fauxFolder]) === keyCreator(params.get(fauxFolder)));
+  } else {
+    return array;
+  }
 
 };
 
@@ -283,36 +283,36 @@ let fauxFolderButtons = (array, fauxFolder, params = urlParams) => {
 /* Prev and Next Links
 /* ================================================================ */
 let prevNextLinks = (array, url, params, currParam, key, altkey = false) => {
-    if ($("#entryPrev").length != 0) {
+  if ($("#entryPrev").length != 0) {
 
-        let index = array.map(function (i) {return i[key];}).indexOf(currParam.get(key));
-        let leftItem = array[index - 1];
-        let rightItem = array[index + 1];
+    let index = array.map(function (i) { return i[key]; }).indexOf(currParam.get(key));
+    let leftItem = array[index - 1];
+    let rightItem = array[index + 1];
 
-        // Basically a special declaration for the masterlist
-        let chooseKey = altkey ? altkey : key;
+    // Basically a special declaration for the masterlist
+    let chooseKey = altkey ? altkey : key;
 
-        // Prev
-        if (leftItem) {
-            $("#entryPrev").attr("href", url + params + leftItem[chooseKey]);
-            $("#entryPrev span").text(leftItem[chooseKey]);
-        } else {
-            $("#entryPrev i").remove();
-        }
-
-        // Next
-        if (rightItem) {
-            $("#entryNext").attr("href", url + params + rightItem[chooseKey]);
-            $("#entryNext span").text(rightItem[chooseKey]);
-        } else {
-            $("#entryNext i").remove();
-        }
-
-        // Back to masterlist (keeps species parameter)
-        $("#masterlistLink").attr("href", url);
-        $('#prevNext').show();
-
+    // Prev
+    if (leftItem) {
+      $("#entryPrev").attr("href", url + params + leftItem[chooseKey]);
+      $("#entryPrev span").text(leftItem[chooseKey]);
+    } else {
+      $("#entryPrev i").remove();
     }
+
+    // Next
+    if (rightItem) {
+      $("#entryNext").attr("href", url + params + rightItem[chooseKey]);
+      $("#entryNext span").text(rightItem[chooseKey]);
+    } else {
+      $("#entryNext i").remove();
+    }
+
+    // Back to masterlist (keeps species parameter)
+    $("#masterlistLink").attr("href", url);
+    $('#prevNext').show();
+
+  }
 };
 
 
@@ -321,77 +321,77 @@ let prevNextLinks = (array, url, params, currParam, key, altkey = false) => {
 ======================================================================= */
 const charadexLarge = async (options) => {
 
-    // Sort through options
-    const charadexInfo = optionSorter(options);
+  // Sort through options
+  const charadexInfo = optionSorter(options);
 
-    // Grab the sheet
-    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
+  // Grab the sheet
+  let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
-    // Grab all our url info
-    let cardKey = Object.keys(sheetArray[0])[0];
-    let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
+  // Grab all our url info
+  let cardKey = Object.keys(sheetArray[0])[0];
+  let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
 
-    // Create faux folders
-    // Filter through array based on folders
-    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
+  // Create faux folders
+  // Filter through array based on folders
+  if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
 
-    // Reverse based on preference
-    charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
+  // Reverse based on preference
+  charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
 
-    // Add card links to the remaining array
-    for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
+  // Add card links to the remaining array
+  for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
 
-    // Decide if the url points to profile or entire gallery
-    if (urlParams.has(cardKey)) {
+  // Decide if the url points to profile or entire gallery
+  if (urlParams.has(cardKey)) {
 
-        // Render the prev/next links on profiles
-        prevNextLinks(sheetArray, baseURL, preParam, urlParams, cardKey);
+    // Render the prev/next links on profiles
+    prevNextLinks(sheetArray, baseURL, preParam, urlParams, cardKey);
 
-        // List.js options
-        let itemOptions = {
-            valueNames: sheetArrayKeys(sheetArray),
-            item: 'charadex-card',
-        };
+    // List.js options
+    let itemOptions = {
+      valueNames: sheetArrayKeys(sheetArray),
+      item: 'charadex-card',
+    };
 
-        // Filter out the right card
-        let singleCard = sheetArray.filter((i) => (i[cardKey] === urlParams.get(cardKey)))[0];
+    // Filter out the right card
+    let singleCard = sheetArray.filter((i) => (i[cardKey] === urlParams.get(cardKey)))[0];
 
-        // Render card
-        let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
-
-
-    } else {
+    // Render card
+    let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
 
 
-        console.log(sheetArray);
+  } else {
 
-        // Create the Gallery
 
-        let galleryOptions = {
-            item: 'charadex-entries',
-            valueNames: sheetArrayKeys(sheetArray),
-            searchColumns: charadexInfo.searchFilterParams,
-            page: charadexInfo.itemAmount,
-            pagination: [{
-                innerWindow: 1,
-                left: 1,
-                right: 1,
-                item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                paginationClass: 'pagination-top',
-            }],
-        };
+    console.log(sheetArray);
 
-        // Render Gallery
-        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+    // Create the Gallery
 
-        // Make filters workie
-        charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
-        charadexSearch(charadex, charadexInfo.searchFilterParams);
+    let galleryOptions = {
+      item: 'charadex-entries',
+      valueNames: sheetArrayKeys(sheetArray),
+      searchColumns: charadexInfo.searchFilterParams,
+      page: charadexInfo.itemAmount,
+      pagination: [{
+        innerWindow: 1,
+        left: 1,
+        right: 1,
+        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+        paginationClass: 'pagination-top',
+      }],
+    };
 
-        // Show pagination
-        showPagination(sheetArray, charadexInfo.itemAmount);
+    // Render Gallery
+    let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-    }
+    // Make filters workie
+    charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
+    charadexSearch(charadex, charadexInfo.searchFilterParams);
+
+    // Show pagination
+    showPagination(sheetArray, charadexInfo.itemAmount);
+
+  }
 
 };
 
@@ -401,20 +401,20 @@ const charadexLarge = async (options) => {
 ======================================================================= */
 const charadexSmall = async (options) => {
 
-    // Sort through options
-    const charadexInfo = optionSorter(options);
+  // Sort through options
+  const charadexInfo = optionSorter(options);
 
-    // Grab the sheet
-    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
+  // Grab the sheet
+  let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
-    // Create the Gallery
-    let galleryOptions = {
-        item: 'charadex-entries',
-        valueNames: sheetArrayKeys(sheetArray),
-    };
+  // Create the Gallery
+  let galleryOptions = {
+    item: 'charadex-entries',
+    valueNames: sheetArrayKeys(sheetArray),
+  };
 
-    // Render Gallery
-    let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+  // Render Gallery
+  let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
 };
 
@@ -424,84 +424,84 @@ const charadexSmall = async (options) => {
 ======================================================================= */
 const masterlist = async (options) => {
 
-    // Sort through options
-    const charadexInfo = optionSorter(options);
+  // Sort through options
+  const charadexInfo = optionSorter(options);
 
-    // Grab the sheet
-    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
+  // Grab the sheet
+  let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
-    // Grab all our url info
-    let cardKey = Object.keys(sheetArray[0])[3];
-    let cardKeyAlt = Object.keys(sheetArray[0])[0];
+  // Grab all our url info
+  let cardKey = Object.keys(sheetArray[0])[3];
+  let cardKeyAlt = Object.keys(sheetArray[0])[0];
 
-    let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
+  let preParam = urlParamFix(cardKey, charadexInfo.fauxFolderColumn);
 
-    // Create faux folders
-    // Filter through array based on folders
-    if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
+  // Create faux folders
+  // Filter through array based on folders
+  if (charadexInfo.fauxFolderColumn) sheetArray = fauxFolderButtons(sheetArray, charadexInfo.fauxFolderColumn);
 
-    // Reverse based on preference
-    charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
+  // Reverse based on preference
+  charadexInfo.itemOrder == 'asc' ? sheetArray.reverse() : '';
 
-    // Add card links to the remaining array
-    for (var i in sheetArray) { 
-        sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; 
-        sheetArray[i].cardlinkalt = baseURL + urlParamFix(cardKeyAlt, charadexInfo.fauxFolderColumn) + sheetArray[i][Object.keys(sheetArray[0])[0]]; 
-    }
+  // Add card links to the remaining array
+  for (var i in sheetArray) {
+    sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey];
+    sheetArray[i].cardlinkalt = baseURL + urlParamFix(cardKeyAlt, charadexInfo.fauxFolderColumn) + sheetArray[i][Object.keys(sheetArray[0])[0]];
+  }
 
-    // Decide if the url points to profile or entire gallery
-    if (urlParams.has(cardKey) || urlParams.has(cardKeyAlt)) {
+  // Decide if the url points to profile or entire gallery
+  if (urlParams.has(cardKey) || urlParams.has(cardKeyAlt)) {
 
-        // Filter out the right card
-        let currCardKey = urlParams.has(cardKey) ? cardKey : cardKeyAlt;
-        let singleCard = sheetArray.filter((i) => (i[currCardKey] === urlParams.get(currCardKey)))[0];
+    // Filter out the right card
+    let currCardKey = urlParams.has(cardKey) ? cardKey : cardKeyAlt;
+    let singleCard = sheetArray.filter((i) => (i[currCardKey] === urlParams.get(currCardKey)))[0];
 
-        // Grab the log sheet and render log
-        let logArray = await fetchSheet(charadexInfo.logSheetPage);
-        getLog(logArray, singleCard);
+    // Grab the log sheet and render log
+    let logArray = await fetchSheet(charadexInfo.logSheetPage);
+    getLog(logArray, singleCard);
 
-        // List.js options
-        let itemOptions = {
-            valueNames: sheetArrayKeys(sheetArray),
-            item: 'charadex-card',
-        };
+    // List.js options
+    let itemOptions = {
+      valueNames: sheetArrayKeys(sheetArray),
+      item: 'charadex-card',
+    };
 
-        // Render the prev/next links on profiles
-        prevNextLinks(sheetArray, baseURL, preParam, urlParams, currCardKey, cardKey);
+    // Render the prev/next links on profiles
+    prevNextLinks(sheetArray, baseURL, preParam, urlParams, currCardKey, cardKey);
 
-        // Render card
-        let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
-
-
-    } else {
-
-        // Show pagination
-        showPagination(sheetArray, charadexInfo.itemAmount);
-
-        // Create the Gallery
-        let galleryOptions = {
-            item: 'charadex-entries',
-            valueNames: sheetArrayKeys(sheetArray),
-            searchColumns: charadexInfo.searchFilterParams,
-            page: charadexInfo.itemAmount,
-            pagination: [{
-                innerWindow: 1,
-                left: 1,
-                right: 1,
-                item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                paginationClass: 'pagination-top',
-            }],
-        };
-
-        // Render Gallery
-        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
-
-        // Make filters workie
-        charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
-        charadexSearch(charadex, charadexInfo.searchFilterParams);
+    // Render card
+    let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
 
 
-    }
+  } else {
+
+    // Show pagination
+    showPagination(sheetArray, charadexInfo.itemAmount);
+
+    // Create the Gallery
+    let galleryOptions = {
+      item: 'charadex-entries',
+      valueNames: sheetArrayKeys(sheetArray),
+      searchColumns: charadexInfo.searchFilterParams,
+      page: charadexInfo.itemAmount,
+      pagination: [{
+        innerWindow: 1,
+        left: 1,
+        right: 1,
+        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+        paginationClass: 'pagination-top',
+      }],
+    };
+
+    // Render Gallery
+    let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+
+    // Make filters workie
+    charadexFilterSelect(charadex, sheetArray, charadexInfo.filterColumn);
+    charadexSearch(charadex, charadexInfo.searchFilterParams);
+
+
+  }
 
 };
 
@@ -511,130 +511,130 @@ const masterlist = async (options) => {
 ======================================================================= */
 const inventory = async (options) => {
 
-    // Sort through options
-    const charadexInfo = optionSorter(options);
+  // Sort through options
+  const charadexInfo = optionSorter(options);
 
-    // Grab the sheet
-    let sheetArray = await fetchSheet(charadexInfo.sheetPage);
+  // Grab the sheet
+  let sheetArray = await fetchSheet(charadexInfo.sheetPage);
 
-    // Grab all our url info
-    let cardKey = Object.keys(sheetArray[0])[0];
-    let preParam = `?${cardKey}=`;
+  // Grab all our url info
+  let cardKey = Object.keys(sheetArray[0])[0];
+  let preParam = `?${cardKey}=`;
 
-    // Put in alphabetical order
-    sheetArray.sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()));
+  // Put in alphabetical order
+  sheetArray.sort((a, b) => a.username.toLowerCase().localeCompare(b.username.toLowerCase()));
 
-    // Add card links to the remaining array
-    for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
+  // Add card links to the remaining array
+  for (var i in sheetArray) { sheetArray[i].cardlink = baseURL + preParam + sheetArray[i][cardKey]; }
 
-    // Decide if the url points to profile or entire gallery
-    if (urlParams.has(cardKey)) {
+  // Decide if the url points to profile or entire gallery
+  if (urlParams.has(cardKey)) {
 
-        // Fetch item info from the item sheet
-        let itemSheetArr = await fetchSheet(charadexInfo.itemSheetPage);
-        let itemCardKey = Object.keys(itemSheetArr[0])[0];
+    // Fetch item info from the item sheet
+    let itemSheetArr = await fetchSheet(charadexInfo.itemSheetPage);
+    let itemCardKey = Object.keys(itemSheetArr[0])[0];
 
-        // List.js options
-        let itemOptions = {
-            valueNames: sheetArrayKeys(sheetArray),
-            item: 'charadex-card',
+    // List.js options
+    let itemOptions = {
+      valueNames: sheetArrayKeys(sheetArray),
+      item: 'charadex-card',
+    };
+
+    // Filter out the right card
+    let singleCard = sheetArray.filter((i) => (i[cardKey] === urlParams.get(cardKey)))[0];
+
+    // Merge the user's inventory with the item sheet
+    // Also remove any items they dont have atm
+    let inventoryItemArr = [];
+    itemSheetArr.forEach((i) => {
+      for (var c in singleCard) {
+        if (c === keyCreator(i.item) && ((singleCard[keyCreator(i.item)] !== "0" && singleCard[keyCreator(i.item)] !== ""))) {
+          let inventoryItems = {
+            type: i.type,
+            item: i.item,
+            image: i.image,
+            itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i[itemCardKey],
+            amount: singleCard[keyCreator(i.item)],
+          };
+          inventoryItemArr.push(inventoryItems);
         };
+      }
+    });
 
-        // Filter out the right card
-        let singleCard = sheetArray.filter((i) => (i[cardKey] === urlParams.get(cardKey)))[0];
+    // Sort items by type if applicable
+    if (charadexInfo.sortTypes) {
+      inventoryItemArr.sort(function (a, b) {
+        return charadexInfo.sortTypes.indexOf(a.type) - charadexInfo.sortTypes.indexOf(b.type);
+      });
+    };
 
-        // Merge the user's inventory with the item sheet
-        // Also remove any items they dont have atm
-        let inventoryItemArr = [];
-        itemSheetArr.forEach((i) => {
-            for (var c in singleCard) {
-                if (c === keyCreator(i.item) && ((singleCard[keyCreator(i.item)] !== "0" && singleCard[keyCreator(i.item)] !== ""))) {
-                    let inventoryItems = {
-                        type: i.type,
-                        item: i.item,
-                        image: i.image,
-                        itemlink: folderURL + "/items.html?" + itemCardKey + "=" + i[itemCardKey],
-                        amount: singleCard[keyCreator(i.item)],
-                    };
-                    inventoryItemArr.push(inventoryItems);
-                };
-            }
-        });
+    // Group by the item type
+    let orderItems = Object.groupBy(inventoryItemArr, ({ type }) => type);
 
-        // Sort items by type if applicable
-        if (charadexInfo.sortTypes) {
-            inventoryItemArr.sort(function (a, b) {
-                return charadexInfo.sortTypes.indexOf(a.type) - charadexInfo.sortTypes.indexOf(b.type);
-            });
-        };
+    // Create Rows
+    let rows = [];
+    for (var i in orderItems) {
 
-        // Group by the item type
-        let orderItems = Object.groupBy(inventoryItemArr, ({ type }) => type);
+      // Get the headers and cols
+      let cols = [];
+      orderItems[i].forEach((v) => {
+        let HTML = $("#item-list-col").clone();
+        HTML.find(".item-img").attr('src', v.image);
+        HTML.find(".itemlink").attr('href', v.itemlink);
+        HTML.find(".item").html(v.item);
+        HTML.find(".amount").html(v.amount);
+        cols.push(HTML);
+      });
 
-        // Create Rows
-        let rows = [];
-        for (var i in orderItems) {
+      // Smack everything together
+      let rowHTML = $("#item-list-section").clone().html([
+        $("#item-list-header").clone().html(i),
+        $("#item-list-row").clone().html(cols)
+      ]);
 
-            // Get the headers and cols
-            let cols = [];
-            orderItems[i].forEach((v) => {
-                let HTML = $("#item-list-col").clone();
-                HTML.find(".item-img").attr('src', v.image);
-                HTML.find(".itemlink").attr('href', v.itemlink);
-                HTML.find(".item").html(v.item);
-                HTML.find(".amount").html(v.amount);
-                cols.push(HTML);
-            });
+      rows.push(rowHTML);
 
-            // Smack everything together
-            let rowHTML = $("#item-list-section").clone().html([
-                $("#item-list-header").clone().html(i),
-                $("#item-list-row").clone().html(cols)
-            ]);
+    };
 
-            rows.push(rowHTML);
+    // Make items show up
+    $("#item-list").html(rows);
 
-        };
+    // Grab the log sheet and render log
+    let logArray = await fetchSheet(charadexInfo.logSheetPage);
+    getLog(logArray, singleCard, "username");
 
-        // Make items show up
-        $("#item-list").html(rows);
-
-        // Grab the log sheet and render log
-        let logArray = await fetchSheet(charadexInfo.logSheetPage);
-        getLog(logArray, singleCard, "username");
-
-        // Render card
-        let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
+    // Render card
+    let charadexItem = new List("charadex-gallery", itemOptions, singleCard);
 
 
-    } else {
+  } else {
 
-        // Show pagination
-        showPagination(sheetArray, charadexInfo.itemAmount);
+    // Show pagination
+    showPagination(sheetArray, charadexInfo.itemAmount);
 
-        // Create the Gallery
-        let galleryOptions = {
-            item: 'charadex-entries',
-            valueNames: sheetArrayKeys(sheetArray),
-            searchColumns: [cardKey],
-            page: charadexInfo.itemAmount,
-            pagination: [{
-                innerWindow: 1,
-                left: 1,
-                right: 1,
-                item: `<li class='page-item'><a class='page page-link'></a></li>`,
-                paginationClass: 'pagination-top',
-            }],
-        };
+    // Create the Gallery
+    let galleryOptions = {
+      item: 'charadex-entries',
+      valueNames: sheetArrayKeys(sheetArray),
+      searchColumns: [cardKey],
+      page: charadexInfo.itemAmount,
+      pagination: [{
+        innerWindow: 1,
+        left: 1,
+        right: 1,
+        item: `<li class='page-item'><a class='page page-link'></a></li>`,
+        paginationClass: 'pagination-top',
+      }],
+    };
 
-        // Render Gallery
-        let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
+    // Render Gallery
+    let charadex = new List('charadex-gallery', galleryOptions, sheetArray);
 
-        // Make filters workie
-        charadexSearch(charadex, [cardKey]);
+    // Make filters workie
+    charadexSearch(charadex, [cardKey]);
 
 
-    }
+  }
 
 };
 
@@ -645,105 +645,105 @@ const inventory = async (options) => {
 ======================================================================= */
 const frontPage = (options) => {
 
-    const charadexInfo = optionSorter(options);
+  const charadexInfo = optionSorter(options);
 
-    // Events
-    let addEvents = async () => {
-        if ($("#prompt-gallery").length != 0) {
-            if ( charadexInfo.numOfPrompts != 0) {
+  // Events
+  let addEvents = async () => {
+    if ($("#prompt-gallery").length != 0) {
+      if (charadexInfo.numOfPrompts != 0) {
 
-                // Grab dah sheet
-                let events = await fetchSheet(charadexInfo.promptSheetPage);
-                let cardKey = Object.keys(events[0])[0];
-    
-                // Sort by End Date
-                let newestEvents = events.sort(function (a, b) {
-                    var c = new Date(a.enddate);
-                    var d = new Date(b.enddate);
-                    return d - c;
-                });
-    
-                // Show x Amount on Index
-                let indexEvents = newestEvents.slice(0, charadexInfo.numOfPrompts);
-    
-                // Add card link
-                for (var i in indexEvents) { indexEvents[i].cardlink = folderURL + "prompts.html?" + cardKey + "=" + indexEvents[i][cardKey]; }
-    
-                // Nyoom
-                let galleryOptions = {
-                    item: 'prompt-item',
-                    valueNames: sheetArrayKeys(indexEvents),
-                };
-    
-                // Render Gallery
-                let charadex = new List('prompt-gallery', galleryOptions, indexEvents);
-    
-            } else {
-                $("#prompt-gallery").hide();
-            }
-        }
-    }; addEvents();
+        // Grab dah sheet
+        let events = await fetchSheet(charadexInfo.promptSheetPage);
+        let cardKey = Object.keys(events[0])[0];
 
-    // Staff
-    let addStaff = async () => {
-        if ($("#staff-gallery").length != 0) {
-            if (charadexInfo.numOfStaff != 0) {
+        // Sort by End Date
+        let newestEvents = events.sort(function (a, b) {
+          var c = new Date(a.enddate);
+          var d = new Date(b.enddate);
+          return d - c;
+        });
 
-                // Grab dah sheet
-                let mods = await fetchSheet(charadexInfo.staffSheetPage);
+        // Show x Amount on Index
+        let indexEvents = newestEvents.slice(0, charadexInfo.numOfPrompts);
 
-                // Show x Amount on Index
-                let indexMods = mods.slice(0, charadexInfo.numOfStaff);
+        // Add card link
+        for (var i in indexEvents) { indexEvents[i].cardlink = folderURL + "prompts.html?" + cardKey + "=" + indexEvents[i][cardKey]; }
 
-                // Nyoom
-                let galleryOptions = {
-                    item: 'staff-item',
-                    valueNames: sheetArrayKeys(indexMods),
-                };
+        // Nyoom
+        let galleryOptions = {
+          item: 'prompt-item',
+          valueNames: sheetArrayKeys(indexEvents),
+        };
 
-                // Render Gallery
-                let charadex = new List('staff-gallery', galleryOptions, indexMods);
+        // Render Gallery
+        let charadex = new List('prompt-gallery', galleryOptions, indexEvents);
 
-            } else {
-                $("#staff-gallery").hide();
-            }
-        }
-    }; addStaff();
+      } else {
+        $("#prompt-gallery").hide();
+      }
+    }
+  }; addEvents();
 
-    // Designs
-    let addDesigns = async () => {
-        if ($("#design-gallery").length != 0) {
-            if (charadexInfo.numOfDesigns != 0) {
+  // Staff
+  let addStaff = async () => {
+    if ($("#staff-gallery").length != 0) {
+      if (charadexInfo.numOfStaff != 0) {
 
-                // Grab dah sheet
-                let designs = await fetchSheet(charadexInfo.masterlistSheetPage);
+        // Grab dah sheet
+        let mods = await fetchSheet(charadexInfo.staffSheetPage);
 
-                // Filter out any MYO slots, reverse and pull the first 4
-                let selectDesigns = designs.filter((i) => { return i.designtype != 'MYO Slot' }).reverse().slice(0, charadexInfo.numOfDesigns);
+        // Show x Amount on Index
+        let indexMods = mods.slice(0, charadexInfo.numOfStaff);
 
-                // Add cardlink
-                let cardKey = Object.keys(selectDesigns[0])[0];
-                for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
+        // Nyoom
+        let galleryOptions = {
+          item: 'staff-item',
+          valueNames: sheetArrayKeys(indexMods),
+        };
 
-                // Nyoom
-                let galleryOptions = {
-                    item: 'design-item',
-                    valueNames: sheetArrayKeys(selectDesigns),
-                };
+        // Render Gallery
+        let charadex = new List('staff-gallery', galleryOptions, indexMods);
 
-                // Render Gallery
-                let charadex = new List('design-gallery', galleryOptions, selectDesigns);
+      } else {
+        $("#staff-gallery").hide();
+      }
+    }
+  }; addStaff();
 
-            } else {
-                $("#design-gallery").hide();
-            }
-        }
-    }; addDesigns();
+  // Designs
+  let addDesigns = async () => {
+    if ($("#design-gallery").length != 0) {
+      if (charadexInfo.numOfDesigns != 0) {
 
-}; 
+        // Grab dah sheet
+        let designs = await fetchSheet(charadexInfo.masterlistSheetPage);
+
+        // Filter out any MYO slots, reverse and pull the first 4
+        let selectDesigns = designs.filter((i) => { return i.designtype != 'MYO Slot' }).reverse().slice(0, charadexInfo.numOfDesigns);
+
+        // Add cardlink
+        let cardKey = Object.keys(selectDesigns[0])[0];
+        for (var i in selectDesigns) { selectDesigns[i].cardlink = folderURL + "/masterlist.html?" + cardKey + "=" + selectDesigns[i][cardKey]; }
+
+        // Nyoom
+        let galleryOptions = {
+          item: 'design-item',
+          valueNames: sheetArrayKeys(selectDesigns),
+        };
+
+        // Render Gallery
+        let charadex = new List('design-gallery', galleryOptions, selectDesigns);
+
+      } else {
+        $("#design-gallery").hide();
+      }
+    }
+  }; addDesigns();
+
+};
 
 
 /* ==================================================================== */
 /* Softload pages
 ======================================================================= */
-$(window).on('pageshow',function(){loadPage()});
+$(window).on('pageshow', function () { loadPage() });
