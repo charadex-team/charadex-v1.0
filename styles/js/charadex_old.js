@@ -362,9 +362,6 @@ const charadexLarge = async (options) => {
 
   } else {
 
-
-    console.log(sheetArray);
-
     // Create the Gallery
 
     let galleryOptions = {
