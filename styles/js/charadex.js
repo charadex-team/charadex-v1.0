@@ -8,10 +8,6 @@ import { charadex } from './config.js';
 /* Tools
 =======================================================================  /
 
-    You can use this method to grab these URLs at any time
-
-    console.log(createUrl.fullUrl);
-    console.log(createUrl.addParams(createUrl.pageUrl, {'design': 'CHA0001'}));
     
 ======================================================================= */
 charadex.tools = {
@@ -290,7 +286,74 @@ charadex.buildList = (selector = 'charadex') => {
 ======================================================================= */
 charadex.features = {};
 
+/* ==================================================================== */
+/* Filters
+======================================================================= */
+charadex.features.filters = (listJs, parameters, selector = 'charadex') => {
 
+  if (!listJs || !parameters ) return false;
+
+  // Get selection
+  const filtersElement = $(`#${selector}-filters`);
+  const filterElement = $(`#${selector}-filter`);
+  const filterClass = `${selector}-filter`;
+
+  // Add filters
+  for (let filter in parameters) {
+
+    // Get the filter containers
+    let newFilter = filterElement.clone();
+
+    // Remove the id and add a special class
+    newFilter
+    .removeAttr('id')
+    .addClass(filterClass);
+
+    // Find the label and add the filter name
+    newFilter
+    .find('label')
+    .text(filter);
+
+    // Find the select and add the filter name & options
+    newFilter
+    .find('select')
+    .attr('name', charadex.tools.scrub(filter))
+    .append(charadex.tools.createSelectOptions(parameters[filter]));
+
+    // Add to the filters container
+    filtersElement.append(newFilter);
+
+  }
+
+  // Show the filters
+  filtersElement.parents(`#${selector}-filter-container`).show();
+
+  // Deal with the Dom
+  $(`.${filterClass}`).each(function(el) {
+    $(this).on('change', () => {
+
+      // Get the key from the select name attr
+      // And whatever the user selected
+      let key = $(this).find('select').attr('name');
+      let selection = $(this).find('option:selected').val();
+
+      // Filter the list
+      if (selection && selection !== 'all') {
+        listJs.filter(list => charadex.tools.scrub(list.values()[key]) === selection);
+      } else {
+        listJs.filter();
+      }
+
+    });
+  });
+
+  return true;
+
+}
+
+/* ==================================================================== */
+/* Faux Folders
+======================================================================= */
 charadex.features.fauxFolders = (pageUrl, folderParameters, selector = 'charadex') => {
 
   if (!pageUrl || !charadex.tools.checkArray(folderParameters) || !selector) return false;
@@ -308,7 +371,7 @@ charadex.features.fauxFolders = (pageUrl, folderParameters, selector = 'charadex
   }
 
   // Show the folders
-  folderElement.parents(".folder-container").show();
+  folderElement.parents(`#${selector}-folder-container`).show();
 
   // Return a lil thing that'll add folders to entries
   const addFolder = (entry, key) => {
@@ -344,7 +407,7 @@ charadex.features.pagination = (pageAmount, galleryArrayLength, selector = 'char
   });
 
   // Show the container
-  pagination.parents(`.pagination-container`).show();
+  pagination.parents(`.charadex-pagination-container`).show();
 
   return {
     page: pageAmount,
@@ -367,7 +430,6 @@ charadex.features.pagination = (pageAmount, galleryArrayLength, selector = 'char
   };
 
 }
-
 
 
 /* ==================================================================== */
@@ -401,7 +463,7 @@ charadex.features.search = (listJs, searchParameters, searchFilterToggle = true,
   });
 
   // Show search
-  searchElement.parents(".search-container").show();
+  searchElement.parents("#charadex-search-container").show();
 
   return true;
 
@@ -468,6 +530,11 @@ charadex.initialize = async (dataArr, config, dataCallback) => {
     // Create Search
     if (config.search?.toggle) {
       charadex.features.search(gallery, config.search.parameters);
+    }
+
+    // Add filters
+    if (config.filters?.toggle) {
+      let filters = charadex.features.filters(gallery, config.filters.parameters); 
     }
 
   }

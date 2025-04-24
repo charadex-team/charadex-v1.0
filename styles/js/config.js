@@ -69,17 +69,17 @@ charadex.page = {
       amount: 12,
     },
 
-    filter: {
+    filters: {
       toggle: true,
       parameters: {
-        type: ['All', 'Ball']
+        'Design Type': ['All', 'Official Design', 'MYO Design']
       }
     },
 
     fauxFolder: {
       toggle: true,
       dataKey: 'Species',
-      parameters: ['All', 'ID', 'Owner', 'Designer', 'Artist'],
+      parameters: ['All', 'Dog', 'Cat'],
     },
 
     search: {

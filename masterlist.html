@@ -80,15 +80,35 @@
         <h3 class="mb-0"><a href="masterlist.html">Species Masterlist</a></h3>
 
         <!-- Faux Folders
-                <-- Remove this if you'd like to make your own buttons instead!
-                ------------------------------------------------------------------- -->
-        <div style="display:none;" id="filter-buttons">
-          <hr class="mb-3">
-          <div class="row no-gutters mx-n1"></div>
+        <!-- Remove this if you'd like to make your own buttons instead!
+        ------------------------------------------------------------------- -->
+        <div style="display:none;" id="charadex-folder-container">
+          <hr>
+          <div class="row" id="charadex-folders"></div>
+          <!-- Buttons -->
+          <div style="display:none;">
+            <div class="col-lg-3 col-md-4 col-sm-6 p-1" id="charadex-folder">
+              <a class="btn btn-primary d-block" href=""></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Filters
+        <!-- Remove this if you'd like to make your own buttons instead!
+        ------------------------------------------------------------------- -->
+        <div style="display:none;" id="charadex-filter-container">
+          <hr>
+          <div class="row no-gutters m-n1" id="charadex-filters"></div>
+          <div style="display: none;">
+            <div class="col-md-4 col-12 p-1" id="charadex-filter">
+              <label class="px-2"></label>
+              <select class="form-control"></select>
+            </div>
+          </div>
         </div>
 
         <!-- Search -->
-        <div style="display:none;" class="search-container">
+        <div style="display:none;" id="charadex-search-container">
           <hr>
           <div class="row no-gutters m-n1">
 
@@ -106,7 +126,7 @@
         </div>
 
         <!-- Pagination -->
-        <div style="display: none;" class="pagination-container">
+        <div style="display: none;" class="charadex-pagination-container">
           <hr class="mb-4 mt-4">
           <div class="nav d-flex justify-content-center mb-n4">
             <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
@@ -133,7 +153,7 @@
 
 
       <!-- Pagination -->
-      <div style="display: none;" class="pagination-container">
+      <div style="display: none;" class="charadex-pagination-container">
         <hr class="mb-4 mt-4">
         <div class="nav d-flex justify-content-center mb-n4">
           <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
