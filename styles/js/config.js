@@ -61,15 +61,32 @@ charadex.page = {
   masterlist: {
 
     sheetPage: charadex.sheet.pages.masterlist,
-    logSheetPage: charadex.sheet.pages.masterlistLog,
     profileKey: 'design',
+    itemOrder: 'asc',
 
-    itemAmount: 12,
-    itemOrder: "asc",
+    pagination: {
+      toggle: true,
+      amount: 12,
+    },
 
-    filterColumn: 'Design Type',
-    searchFilterParams: ['All', 'ID', 'Owner', 'Designer', 'Artist'],
-    fauxFolderColumn: 'Species',
+    filter: {
+      toggle: true,
+      parameters: {
+        type: ['All', 'Ball']
+      }
+    },
+
+    fauxFolder: {
+      toggle: true,
+      dataKey: 'Species',
+      parameters: ['All', 'ID', 'Owner', 'Designer', 'Artist'],
+    },
+
+    search: {
+      toggle: true,
+      filterToggle: true,
+      parameters: ['All', 'ID', 'Owner', 'Designer', 'Artist']
+    }
 
   },
 

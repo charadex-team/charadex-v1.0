@@ -291,6 +291,35 @@ charadex.buildList = (selector = 'charadex') => {
 charadex.features = {};
 
 
+charadex.features.fauxFolders = (pageUrl, folderParameters, selector = 'charadex') => {
+
+  if (!pageUrl || !charadex.tools.checkArray(folderParameters) || !selector) return false;
+
+  // Get the elements
+  const folderElement = $(`#${selector}-folders`);
+  const buttonElement = $(`#${selector}-folder`).clone();
+
+  // Loop through parameters and add them to the folder element
+  for (let key of folderParameters) {
+    buttonElement.find('.btn')
+      .text(key)
+      .attr('href', charadex.url.addUrlParameters(pageUrl, { folder: key }));
+    folderElement.append(buttonElement);
+  }
+
+  // Show the folders
+  folderElement.parents(".folder-container").show();
+
+  // Return a lil thing that'll add folders to entries
+  const addFolder = (entry, key) => {
+    entry.folder = entry[charadex.tools.scrub(key)];
+  };
+
+  return addFolder;
+
+}
+
+
 /* ==================================================================== */
 /* Pagination
 ======================================================================= */
@@ -394,13 +423,18 @@ charadex.initialize = async (dataArr, config, dataCallback) => {
 
   // Set up
   let pageUrl = charadex.url.getBaseUrl();
+  let folders = false;
 
   // Get our data
   let charadexData = dataArr || await charadex.importSheet(config.sheetId || charadex.sheet.id, config.sheetPage);
 
+  // Add Folders
+  if (config.fauxFolder?.toggle) folders = charadex.features.fauxFolders(pageUrl, config.fauxFolder.parameters);
+
   // Add profile information
   for (let entry of charadexData) {
-    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey);
+    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey); // Go ahead and add profile keys just in case
+    if (folders) folders(entry, config.fauxFolder.dataKey); // If folders, add folder info
   }
 
   console.log(charadexData);
@@ -414,7 +448,7 @@ charadex.initialize = async (dataArr, config, dataCallback) => {
 
   // Create Profile
   const createProfile = () => {
-    
+
   }
 
   // Create Gallery
@@ -423,14 +457,18 @@ charadex.initialize = async (dataArr, config, dataCallback) => {
     let additionalListConfigs = {};
 
     // Add Pagination
-    let pagination = charadex.features.pagination(config.itemAmount, charadexData.length);
-    if (pagination) additionalListConfigs = { ...additionalListConfigs, ...pagination };
+    if (config.pagination?.toggle) {
+      let pagination = charadex.features.pagination(config.pagination.itemAmount, charadexData.length);
+      if (pagination) additionalListConfigs = { ...additionalListConfigs, ...pagination };
+    }
 
     // Initialize Gallery
     let gallery = list.initializeGallery(charadexData, additionalListConfigs);
 
     // Create Search
-    let search = charadex.features.search(gallery, config.searchFilterParams, charadexData.length);
+    if (config.search?.toggle) {
+      charadex.features.search(gallery, config.search.parameters);
+    }
 
   }
 
