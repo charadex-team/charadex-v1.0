@@ -1,4 +1,8 @@
-# Charadex v.1.5.0
+> [!CAUTION]
+> **DO NOT USE THIS BRANCH FOR PRODUCTION.** It's a complete WIP and parts WILL NOT WORK.
+> You are free to play with it while developing - there's lots of new goodies inside.
+
+# Charadex v.1.5.6 - Develop
 
 Charadex v1.0 is a tool designed to simplify the creation and maintenance of species websites.
 
