@@ -24,20 +24,19 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   if (!config) throw Error('No configuration added.');
 
   // Set up
-  let pageUrl = customPageUrl || charadex.url.getBaseUrl();
-  let folders = false;
+  let pageUrl = customPageUrl || charadex.url.getPageUrl(config.sitePage);
+
+  // Add folders, filters & search
+  let folders = config.fauxFolder?.toggle ?? false ? charadex.listFeatures.fauxFolders(pageUrl, config.fauxFolder.parameters, selector) : false;
+  let filters = config.filters?.toggle ?? false ? charadex.listFeatures.filters(config.filters.parameters, selector) : false;
+  let search = config.search?.toggle ?? false ? charadex.listFeatures.search(config.search.parameters, config.search.filterToggle, selector) : false;
 
   // Get our data
   let charadexData = dataArr || await charadex.importSheet(config.sheetPage);
 
-  // Add Folders
-  if (config.fauxFolder?.toggle ?? false) {
-    folders = charadex.listFeatures.fauxFolders(pageUrl, config.fauxFolder.parameters, selector);
-  }
-
   // Add profile information
   for (let entry of charadexData) {
-    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey, selector); // Go ahead and add profile keys just in case
+    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey); // Go ahead and add profile keys just in case
     if (folders) folders(entry, config.fauxFolder.dataKey); // If folders, add folder info
   }
 
@@ -64,7 +63,8 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
       charadexData, 
       config.sort.key, 
       config.sort.order,
-      config.sort.params
+      config.sort.parametersKey,
+      config.sort.parameters,
     );
   }
 
@@ -117,15 +117,9 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
     // Initialize Gallery
     let galleryList = list.initializeGallery(charadexData, additionalListConfigs);
 
-    // Create Search
-    if (config.search?.toggle ?? false) {
-      charadex.listFeatures.search(galleryList, config.search.parameters, selector);
-    }
-
-    // Add filters
-    if (config.filters?.toggle ?? false) {
-      let filters = charadex.listFeatures.filters(galleryList, config.filters.parameters, selector); 
-    }
+    // Initialize filters and search
+    if ((config.filters?.toggle ?? false) && filters) filters.initializeFilters(galleryList);
+    if ((config.search?.toggle ?? false) && search) search.initializeSearch(galleryList);
 
     // Return those values on Callback
     if (typeof listCallback === 'function') {
@@ -146,5 +140,89 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
 }
 
+
+
+/* ==================================================================== */
+/* Grouped Gallery (Mostly for inventory items)
+======================================================================= */
+charadex.initialize.groupGallery = async function (config, dataArray, groupBy, selector = 'charadex', customPageUrl = false) {
+
+  console.log(customPageUrl);
+  /* Check the Configs */
+  if (!config) return console.error(`No config added.`);
+  
+  /* Get some stuff we'll need */
+  const pageUrl = customPageUrl || charadex.url.getPageUrl(config.sitePage);
+
+  // Add filters & Search
+  let filters = config.filters?.toggle ?? false ? charadex.listFeatures.filters(config.filters.parameters, selector) : false;
+  let search = config.search?.toggle ?? false ? charadex.listFeatures.search(config.search.parameters, config.search.filterToggle, selector) : false;
+
+  /* Attempt to Fetch the data */
+  let charadexData = dataArray;
+
+  // Add profile information
+  for (let entry of charadexData) {
+    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey);
+  }
+
+  /* Sort the Dex */
+  if (config.sort?.toggle ?? false) {
+    charadexData = charadex.data.sortArray(
+      charadexData, 
+      config.sort.key, 
+      config.sort.order,
+      config.sort.parametersKey,
+      config.sort.parameters,
+    );
+  }
+    
+  console.log(charadexData);
+
+  /* Attempt deal with gallery
+  ======================================================================= */
+  const handleGallery = () => {
+
+    if (!charadex.tools.checkArray(charadexData)) return false;
+
+    // Filter by parameters
+    charadexData = charadex.data.filterByPageParameters(charadexData);
+
+    // Group data
+    let groupArray = Object.groupBy(charadexData, obj => obj[groupBy]);
+
+    // Create base selectors
+    let itemSelector =  { item: `${selector}-gallery-item` };
+    let containerSelector =  `${selector}-gallery`;
+
+    for (let group in groupArray) {
+
+      //Create the list selector
+      let groupListSelector = charadex.tools.scrub(group);
+      
+      // Create the DOM elements
+      let groupElement = $(`#${selector}-group-list`).clone();
+      groupElement.removeAttr('id');
+      groupElement.find(`.${selector}-list`).addClass(`${groupListSelector}-list`);
+      groupElement.find(`.${selector}-group-title`).text(group);
+      $(`#${selector}-group`).append(groupElement);
+      
+      // Build list based on group
+      let groupListManager = charadex.buildList(groupListSelector);
+      let groupList = groupListManager.initializeGallery(groupArray[group], itemSelector, containerSelector);
+
+      // Add filters & Search
+      if ((config.filters?.toggle ?? false) && filters) filters.initializeFilters(groupList);
+      if ((config.search?.toggle ?? false) && search) search.initializeSearch(groupList);
+
+    }
+
+    return true;
+
+  };
+
+  return handleGallery();
+
+};
 
 export { charadex };

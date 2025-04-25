@@ -20,6 +20,13 @@ charadex.tools = {
     return str.toLowerCase().replace(/[^a-z0-9]/g, "");
   },
 
+  // Similar to scrub
+  // Scrubs data so its all lowercase with no spaces
+  createKey(str) {
+    if (!str) return str;
+    return String(str).toLowerCase().replaceAll(" ", "");
+  },
+
   // Create Select Options
   // Creates select options from an array
   createSelectOptions(optionArray) {
@@ -81,9 +88,6 @@ charadex.tools = {
 =======================================================================  /
 
     You can use this method to grab these URLs at any time
-
-    console.log(createUrl.fullUrl);
-    console.log(createUrl.addParams(createUrl.pageUrl, {'design': 'CHA0001'}));
     
 ======================================================================= */
 charadex.url = {
@@ -96,23 +100,22 @@ charadex.url = {
 
   // Returns the base site URL
   // https://charadex.com
-  getSiteUrl(url) {
-    let pageUrl = url ?? charadex.url.getUrl();
-    return pageUrl.split('?')[0].replace(/\/[^\/]+$/, "").replace(/\/$/, '');
-  },
-
-  // Returns the page URL without the paramenters
-  // https://charadex.com/masterlist.html
-  getBaseUrl(url) {
-    let pageUrl = url ?? charadex.url.getUrl();
-    return pageUrl.split('?')[0].replace(/\/$/, '');
+  getSiteUrl() {
+    let host = window.location.host;
+    if (host === 'localhost') {
+      let fileName = window.location.pathname.split("/");
+      fileName.pop();
+      let baseFile = fileName.join("/");
+      host += baseFile;
+    }
+    return charadex.url.getUrl(window.location.protocol + host);
   },
 
   // Returns the page URL
   // https://charadex.com/masterlist.html
   getPageUrl(page, url) {
     let pageUrl = url ?? charadex.url.getSiteUrl();
-    return `${pageUrl.replace(/\/[^\/]+$/, "")}/${page}.html`
+    return `${pageUrl.replace(/\/$/, '')}/${page}.html`
   },
 
   // Returns the parameters in object form
@@ -149,7 +152,7 @@ charadex.url = {
   // Adds parameters based on an object
   addUrlParameters(url, obj) {
     let params = '';
-    for (let k in obj) params += `&${encodeURIComponent(charadex.tools.scrub(k))}=${encodeURIComponent(charadex.tools.scrub(obj[k]))}`;
+    for (let k in obj) params += `&${encodeURIComponent(charadex.tools.scrub(k))}=${encodeURIComponent(charadex.tools.createKey(obj[k]))}`;
     if (!url.includes('?')) params = '?' + params.substring(1);
     return url + params;
   },
@@ -170,15 +173,15 @@ charadex.data = {
 
   /* Sort Array
   ===================================================================== */
-  sortArray(sheetArray, property, order = 'asc', orderArray = false) {
+  sortArray(sheetArray, property, order = 'asc', orderArrayKey, orderArray = false) {
 
     let sorted;
 
     if (charadex.tools.checkArray(orderArray)) {
-      const orderMap = new Map(orderArr.map((item, index) => [item, index]));
+      const orderMap = new Map(orderArray.map((item, index) => [item, index]));
       sorted = sheetArray.sort((a, b) => {
-        const aIndex = orderMap.get(a[key]);
-        const bIndex = orderMap.get(b[key]);
+        const aIndex = orderMap.get(a[orderArrayKey]);
+        const bIndex = orderMap.get(b[orderArrayKey]);
         return aIndex - bIndex;
       });
     } else {
@@ -275,18 +278,6 @@ charadex.data = {
       }
     }
 
-  },
-
-  /* Relates inventory data specifically
-  ===================================================================== */
-  async relateInventory (inventoryArr) {
-    let itemArr = await charadex.manage.spreadsheet('Items');
-    inventoryArr.filter(i => i.item);
-    for (let index in inventoryArr) {
-      for (let item of itemArr) {
-        if (inventoryArr[index].item === item.item) inventoryArr[index] = {...inventoryArr[index], ...item};
-      }
-    }
   },
   
   /* Adds profile links
@@ -447,65 +438,95 @@ charadex.listFeatures = {};
 /* ==================================================================== */
 /* Filters
 ======================================================================= */
-charadex.listFeatures.filters = (listJs, parameters, selector = 'charadex') => {
+charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
-  if (!listJs || !parameters ) return false;
+  if (!parameters ) return false;
 
   // Get selection
   const filtersElement = $(`#${selector}-filters`);
   const filterElement = $(`#${selector}-filter`);
   const filterClass = `${selector}-filter`;
 
-  // Add filters
-  for (let filter in parameters) {
+  const createFilters = () => {
 
-    // Get the filter containers
-    let newFilter = filterElement.clone();
+    // Add filters
+    for (let filter in parameters) {
 
-    // Remove the id and add a special class
-    newFilter
-    .removeAttr('id')
-    .addClass(filterClass);
+      // Get the filter containers
+      let newFilter = filterElement.clone();
 
-    // Find the label and add the filter name
-    newFilter
-    .find('label')
-    .text(filter);
+      // Remove the id and add a special class
+      newFilter
+      .removeAttr('id')
+      .addClass(filterClass);
 
-    // Find the select and add the filter name & options
-    newFilter
-    .find('select')
-    .attr('name', charadex.tools.scrub(filter))
-    .append(charadex.tools.createSelectOptions(parameters[filter]));
+      // Find the label and add the filter name
+      newFilter
+      .find('label')
+      .text(filter);
 
-    // Add to the filters container
-    filtersElement.append(newFilter);
+      // Find the select and add the filter name & options
+      newFilter
+      .find('select')
+      .attr('name', charadex.tools.scrub(filter))
+      .append(charadex.tools.createSelectOptions(parameters[filter]));
+
+      // Add to the filters container
+      filtersElement.append(newFilter);
+
+    }
+
+    // Show the filters
+    filtersElement.parents(`#${selector}-filter-container`).show();
+
+    return true;
+
+  } 
+
+  // Create the filters when created;
+  createFilters();
+
+  const initializeFilters = (listJs) => {
+
+    if (!listJs) return false;
+
+    // Deal with the Dom
+    $(`.${filterClass}`).each(function(el) {
+      $(this).on('change', () => {
+
+        // Get the key from the select name attr
+        // And whatever the user selected
+        let key = $(this).find('select').attr('name');
+        let selection = $(this).find('option:selected').val();
+
+        // Filter the list
+        if (selection && selection !== 'all') {
+          listJs.filter(list => charadex.tools.scrub(list.values()[key]) === selection);
+        } else {
+          listJs.filter();
+        }
+
+      });
+    });
+    
+    // If they're in a container, hide it if there's nothing in it
+    listJs.on('updated', (list) => {
+      let listClass = $(`.${list.listClass}`);
+      let listContainerSelector = `.${selector}-list-container`;
+      if (list.matchingItems.length < 1 && listClass.length > 0) {
+        listClass.parents(listContainerSelector).hide();
+      } else {
+        listClass.parents(listContainerSelector).show()
+      }
+    })
+
+    return true;
 
   }
 
-  // Show the filters
-  filtersElement.parents(`#${selector}-filter-container`).show();
-
-  // Deal with the Dom
-  $(`.${filterClass}`).each(function(el) {
-    $(this).on('change', () => {
-
-      // Get the key from the select name attr
-      // And whatever the user selected
-      let key = $(this).find('select').attr('name');
-      let selection = $(this).find('option:selected').val();
-
-      // Filter the list
-      if (selection && selection !== 'all') {
-        listJs.filter(list => charadex.tools.scrub(list.values()[key]) === selection);
-      } else {
-        listJs.filter();
-      }
-
-    });
-  });
-
-  return true;
+  return {
+    initializeFilters,
+  }
 
 }
 
@@ -600,37 +621,51 @@ charadex.listFeatures.pagination = (galleryArrayLength, pageAmount = 12, bottomP
 /* ==================================================================== */
 /* Initialize Search
 ======================================================================= */
-charadex.listFeatures.search = (listJs, searchParameters, searchFilterToggle = true, selector = 'charadex') => {
+charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, selector = 'charadex') => {
 
-  if (!listJs || !charadex.tools.checkArray(searchParameters) || !selector) return false;
+  if (!charadex.tools.checkArray(searchParameters)) return false;
 
   const searchElement = $(`#${selector}-search`);
   const searchFilter = $(`#${selector}-search-filter`);
 
-  // If the filter is toggled, create it
-  if (searchFilterToggle) {
-    searchFilter.append(charadex.tools.createSelectOptions(searchParameters));
-    searchFilter.parent().show();
-  }
+  const createSearch = () => {
 
-  // Decide to use search filter or not when searching
-  searchElement.on("keyup", () => {
-
-    const selectedFilter = searchFilter.length > 0 ? searchFilter.val() : false;
-    const searchString = searchElement.val();
-
-    if (selectedFilter && selectedFilter !== 'all') {
-      listJs.search(searchString, [selectedFilter]);
-    } else {
-      listJs.search(searchString, searchColumns);
+    // If the filter is toggled, create it
+    if (searchFilterToggle) {
+      searchFilter.append(charadex.tools.createSelectOptions(searchParameters));
+      searchFilter.parent().show();
     }
 
-  });
+    // Show search
+    searchElement.parents(`#${selector}-search-container`).show();
 
-  // Show search
-  searchElement.parents(`#${selector}-search-container`).show();
+  }
 
-  return true;
+  createSearch();
+
+  const initializeSearch = (listJs) => {
+
+    if (!listJs) return false;
+
+    // Decide to use search filter or not when searching
+    searchElement.on("keyup", () => {
+
+      const selectedFilter = searchFilter.length > 0 ? searchFilter.val() : false;
+      const searchString = searchElement.val();
+
+      if (selectedFilter && selectedFilter !== 'all') {
+        listJs.search(searchString, [selectedFilter]); // Search by the filter val
+      } else {
+        listJs.search(searchString, searchParameters); // Else search any of the parameters
+      }
+
+    });
+
+  }
+
+  return {
+    initializeSearch
+  };
 
 }
 

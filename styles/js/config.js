@@ -69,7 +69,7 @@ charadex.page = {
       toggle: true,
       key: "id",
       order: "desc",
-      params: []
+      parameters: []
     },
 
     pagination: {
@@ -117,7 +117,7 @@ charadex.page = {
           toggle: true,
           key: "timestamp",
           order: "desc",
-          params: []
+          parameters: []
         },
 
         pagination: {
@@ -155,14 +155,75 @@ charadex.page = {
   inventory: {
 
     sheetPage: charadex.sheet.pages.inventory,
-    itemSheetPage: charadex.sheet.pages.items,
-    logSheetPage: charadex.sheet.pages.inventoryLog,
+    sitePage: 'items',
+    dexSelector: 'charadex',
     profileKey: 'username',
 
-    itemAmount: 24,
-    sortTypes: ['All', 'Currency', 'MYO Slot', 'Pet', 'Trait', 'Misc'],
+    sort: {
+      toggle: true,
+      key: "username",
+      order: "asc",
+      parameters: []
+    },
 
-    searchFilterParams: ['Username'],
+    pagination: {
+      toggle: true,
+      bottomToggle: true,
+      amount: 24,
+    },
+
+    filters: {
+      toggle: false,
+      parameters: {}
+    },
+
+    fauxFolder: {
+      toggle: false,
+      dataKey: '',
+      parameters: [],
+    },
+
+    search: {
+      toggle: true,
+      filterToggle: false,
+      parameters: ['Username']
+    },
+
+    prevNext: {
+      toggle: false,
+    },
+
+    
+    // This is a special config for their inventory
+    inventoryConfig: {
+
+      sheetPage: charadex.sheet.pages.items,
+      dexSelector: 'log',
+      profileKey: 'item',
+
+      sort: {
+        toggle: true,
+        key: "item",
+        order: "asc",
+        parametersKey: 'type', 
+        parameters: ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous']
+      },
+
+      search: {
+        toggle: true,
+        filterToggle: false,
+        parameters: ['Item']
+      },
+
+      filters: {
+        toggle: true,
+        parameters: {
+          'Type': ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
+          'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+        }
+      },
+
+    }
 
   },
 
