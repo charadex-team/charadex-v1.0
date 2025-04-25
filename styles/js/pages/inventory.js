@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (charadex.tools.checkArray(profile.masterlist)) {
           let designs = await charadex.initialize.page(
             profile.masterlist,
-            charadex.page.masterlist.relatedData['masterlist'],
+            charadex.page.inventory.relatedData['masterlist'],
           );
         }
 
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (charadex.tools.checkArray(profile.inventorylog)) {
           let logs = await charadex.initialize.page(
             profile.inventorylog,
-            charadex.page.masterlist.relatedData['inventory log'],
+            charadex.page.inventory.relatedData['inventory log'],
           );
         }
 
