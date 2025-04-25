@@ -37,20 +37,143 @@ charadex.sheet = {
 charadex.page = {};
 
 
-/* Index
+/* Item Catalogue
 /* --------------------------------------------------------------- */
-charadex.page.index = {
+charadex.page.items = {
 
-  promptSheetPage: charadex.sheet.pages.prompts,
-  numOfPrompts: 3,
+  sheetPage: charadex.sheet.pages.items,
+  sitePage: 'items',
+  dexSelector: 'charadex',
+  profileKey: 'item',
 
-  staffSheetPage: charadex.sheet.pages.staff,
-  numOfStaff: 8,
+  sort: {
+    toggle: true,
+    key: "id",
+    order: "asc",
+    parameters: []
+  },
 
-  masterlistSheetPage: charadex.sheet.pages.masterlist,
-  numOfDesigns: 4,
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 24,
+  },
+
+  filters: {
+    toggle: true,
+    parameters: {
+      'Type': ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
+      'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+    }
+  },
+
+  fauxFolder: {
+    toggle: true,
+    dataKey: 'Type',
+    parameters: ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: true,
+    parameters: ['All', 'Item', 'Rarity']
+  },
+
+  prevNext: {
+    toggle: true,
+  },
 
 };
+
+
+/* Traits
+/* --------------------------------------------------------------- */
+charadex.page.traits = {
+
+  sheetPage: charadex.sheet.pages.traits,
+  sitePage: 'traits',
+  dexSelector: 'charadex',
+  profileKey: 'trait',
+
+  sort: {
+    toggle: true,
+    key: "id",
+    order: "asc",
+    parameters: []
+  },
+
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 24,
+  },
+
+  filters: {
+    toggle: true,
+    parameters: {
+      'Type': ['All'],
+      'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+    }
+  },
+
+  fauxFolder: {
+    toggle: true,
+    dataKey: 'Type',
+    parameters: ['All'],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: true,
+    parameters: ['All', 'Trait', 'Rarity']
+  },
+
+  prevNext: {
+    toggle: true,
+  },
+
+};
+
+
+/* Prompts
+/* --------------------------------------------------------------- */
+charadex.page.prompts = {
+
+  sheetPage: charadex.sheet.pages.prompts,
+  profileKey: 'prompt',
+
+  itemAmount: 24,
+  itemOrder: "desc",
+
+  searchFilterParams: ['Title'],
+
+};
+
+
+/* Staff
+/* --------------------------------------------------------------- */
+charadex.page.staff = {
+
+  sheetPage: charadex.sheet.pages.staff,
+  profileKey: 'username',
+
+};
+
+
+/* FAQ
+/* --------------------------------------------------------------- */
+charadex.page.faq = {
+
+  sheetPage: charadex.sheet.pages.faq,
+  profileKey: 'id',
+
+  itemAmount: 24,
+  itemOrder: "asc",
+
+  searchFilterParams: ['All', 'Tags'],
+
+}
+
 
 
 /* Masterlist
@@ -128,24 +251,6 @@ charadex.page.masterlist = {
   }
 
 };
-
-
-/* Item Catalogue
-/* --------------------------------------------------------------- */
-charadex.page.items = {
-
-  sheetPage: charadex.sheet.pages.items,
-  profileKey: 'item',
-
-  itemAmount: 24,
-  itemOrder: "asc",
-
-  filterColumn: 'Rarity',
-  searchFilterParams: ['Item'],
-  fauxFolderColumn: 'Type',
-
-};
-
 
 /* Invetory
 /* --------------------------------------------------------------- */
@@ -271,60 +376,20 @@ charadex.page.inventory = {
 };
 
 
-/* Prompts
+/* Index
 /* --------------------------------------------------------------- */
-charadex.page.prompts = {
+charadex.page.index = {
 
-  sheetPage: charadex.sheet.pages.prompts,
-  profileKey: 'prompt',
+  promptSheetPage: charadex.sheet.pages.prompts,
+  numOfPrompts: 3,
 
-  itemAmount: 24,
-  itemOrder: "desc",
+  staffSheetPage: charadex.sheet.pages.staff,
+  numOfStaff: 8,
 
-  searchFilterParams: ['Title'],
+  masterlistSheetPage: charadex.sheet.pages.masterlist,
+  numOfDesigns: 4,
 
 };
 
-
-/* Traits
-/* --------------------------------------------------------------- */
-charadex.page.traits = {
-
-  sheetPage: charadex.sheet.pages.traits,
-  profileKey: 'design',
-
-  itemAmount: 24,
-  itemOrder: "asc",
-
-  filterColumn: 'trait',
-  searchFilterParams: ['All', 'Trait'],
-  fauxFolderColumn: 'Type',
-
-};
-
-
-/* Staff
-/* --------------------------------------------------------------- */
-charadex.page.staff = {
-
-  sheetPage: charadex.sheet.pages.staff,
-  profileKey: 'username',
-
-};
-
-
-/* FAQ
-/* --------------------------------------------------------------- */
-charadex.page.faq = {
-
-  sheetPage: charadex.sheet.pages.faq,
-  profileKey: 'id',
-
-  itemAmount: 24,
-  itemOrder: "asc",
-
-  searchFilterParams: ['All', 'Tags'],
-
-}
 
 export { charadex };
