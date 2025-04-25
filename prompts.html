@@ -3,48 +3,48 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- ----------------------------------------------------------------- -->
-    <!-- About Your Site                                                   -->
-    <!-- ----------------------------------------------------------------- -->
-    <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
-    <title>Charadex</title>
-    <meta property="title" content="Charadex" />
-    <meta property="type" content="website" />
-    <meta property="url" content="https://www.charadex.com/" />
-    <meta property="image" content="assets/meta.png" />
-    <meta name="description" content="A tool for organizing small ARPGs and species.">
+  <!-- ----------------------------------------------------------------- -->
+  <!-- About Your Site                                                   -->
+  <!-- ----------------------------------------------------------------- -->
+  <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
+  <title>Charadex</title>
+  <meta property="title" content="Charadex" />
+  <meta property="type" content="website" />
+  <meta property="url" content="https://www.charadex.com/" />
+  <meta property="image" content="assets/meta.png" />
+  <meta name="description" content="A tool for organizing small ARPGs and species.">
 
-    <!-- No AI scraping directives -->
-    <meta name="robots" content="noai">
-    <meta name="robots" content="noimageai">
-
-
-    <!-- ----------------------------------------------------------------- -->
-    <!-- Styles                                                            -->
-    <!-- ----------------------------------------------------------------- -->
-
-    <!-- Bootstrap CSS -->
-    <!-- Using Bootstrap 4.5 because its closest to Toyhou.se's current version -->
-    <!-- https://getbootstrap.com/docs/4.5/getting-started/introduction/ -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <!-- No AI scraping directives -->
+  <meta name="robots" content="noai">
+  <meta name="robots" content="noimageai">
 
 
-    <!-- ----------------------------------------------------------------- -->
-    <!-- Optional Styles                                                   -->
-    <!-- ----------------------------------------------------------------- -->
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Styles                                                            -->
+  <!-- ----------------------------------------------------------------- -->
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="styles/css/charadex.css">
+  <!-- Bootstrap CSS -->
+  <!-- Using Bootstrap 4.5 because its closest to Toyhou.se's current version -->
+  <!-- https://getbootstrap.com/docs/4.5/getting-started/introduction/ -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+
+  <!-- ----------------------------------------------------------------- -->
+  <!-- Optional Styles                                                   -->
+  <!-- ----------------------------------------------------------------- -->
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" type="text/css" href="styles/css/charadex.css">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400|Comfortaa:500" rel="stylesheet">
 
 
 </head>
@@ -52,154 +52,153 @@
 <body>
 
 
-    <!-- --------------------------------------------------------------------
+  <!-- --------------------------------------------------------------------
     <-- Header
     <-------------------------------------------------------------------- -->
-    
-    <div class="load-html" id="header" data-source="includes/header.html"></div>
+
+  <div class="load-html" id="header" data-source="includes/header.html"></div>
 
 
-    <!-- Spinner for loading-->
-    <div class="spinner-border m-auto" id="loading"></div>
+  <!-- Spinner for loading-->
+  <div class="spinner-border m-auto" id="loading"></div>
 
 
-    <!-- --------------------------------------------------------------------
+  <!-- --------------------------------------------------------------------
     <-- Masterlist
     <-------------------------------------------------------------------- -->
-    <div class="container softload masterlist-container" id="main-container">
+  <div class="container softload masterlist-container" id="main-container">
 
 
-        <!-- Gallery Container
+    <!-- Gallery Container
         ------------------------------------------------------------------- -->
-        <div id="charadex-gallery">
+    <div id="charadex-gallery">
 
 
-            <!-- Filters
+      <!-- Filters
             ----------------------------------------------------------------- -->
-            <div class="card p-md-5 p-4 mb-4">
+      <div class="card p-md-5 p-4 mb-4">
 
-                <h3 class="mb-0"><a href="prompts.html">Prompt Archive</a></h3>
+        <h3 class="mb-0"><a href="prompts.html">Prompt Archive</a></h3>
 
-                <!-- Search Bar -->
-                <div style="display:none;" id="charadex-filters">
-                    <hr class="w-100 mb-4">
-                    <div class="row no-gutters m-n1">
-                        <div class="col-md col-9 p-1">
-                            <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pagination -->
-                <div style="display: none;" id="charadex-pagination">
-                    <hr class="mb-4 mt-4">
-                    <div class="nav d-flex justify-content-center mb-n4">
-                        <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                        <ul class="pagination pagination-top justify-content-center m-0"></ul>
-                        <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
-                    </div>
-                </div>
-
+        <!-- Search Bar -->
+        <div style="display:none;" id="charadex-filters">
+          <hr class="w-100 mb-4">
+          <div class="row no-gutters m-n1">
+            <div class="col-md col-9 p-1">
+              <input class="form-control bg-faded search" type="search" placeholder="Search" id="search">
             </div>
-
-
-            <!-- Repeated Items Render Here
-            ----------------------------------------------------------------- -->
-            <ul class="row no-gutters list list-unstyled m-n2"></ul>
-
+          </div>
         </div>
+
+        <!-- Pagination -->
+        <div style="display: none;" id="charadex-pagination">
+          <hr class="mb-4 mt-4">
+          <div class="nav d-flex justify-content-center mb-n4">
+            <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+            <ul class="pagination pagination-top justify-content-center m-0"></ul>
+            <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- Repeated Items Render Here
+            ----------------------------------------------------------------- -->
+      <ul class="row no-gutters list list-unstyled m-n2"></ul>
 
     </div>
 
+  </div>
 
-    <!-- --------------------------------------------------------------------
+
+  <!-- --------------------------------------------------------------------
     <-- Footer
     <-------------------------------------------------------------------- -->
-    
-    <div class="load-html" id="footer" data-source="includes/footer.html"></div>
+
+  <div class="load-html" id="footer" data-source="includes/footer.html"></div>
 
 
-    <!-- --------------------------------------------------------------------
+  <!-- --------------------------------------------------------------------
     <-- Repeat Items
     <-- Do not remove 'display:none;'
     <-- Edit these to your liking
     <-------------------------------------------------------------------- -->
-    <div style="display:none;">
+  <div style="display:none;">
 
 
-        <!-- Gallery Items
+    <!-- Gallery Items
         ------------------------------------------------------------------- -->
-        <li class="col-md-6 p-2" id="charadex-entries">
-            <a class="card h-100 cardlink" href="">
-                <h5 class="card-header text-center title"></h5>
-                <div class="card-body p-0 d-flex flex-fill">
-                    <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
-                </div>
-            </a>
-        </li>
+    <li class="col-md-6 p-2" id="charadex-entries">
+      <a class="card h-100 cardlink" href="">
+        <h5 class="card-header text-center title"></h5>
+        <div class="card-body p-0 d-flex flex-fill">
+          <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+        </div>
+      </a>
+    </li>
 
 
-        <!-- Singular Item
+    <!-- Singular Item
         ------------------------------------------------------------------- -->
-        <li class="col-12 p-2" id="charadex-card">
+    <li class="col-12 p-2" id="charadex-card">
 
-            <!-- Actual Card -->
-            <div class="card">
+      <!-- Actual Card -->
+      <div class="card">
 
-                <!-- Header -->
-                <h2 class="card-header text-center p-4 title"></h2>
+        <!-- Header -->
+        <h2 class="card-header text-center p-4 title"></h2>
 
-                <!--Main Info -->
-                <div class="p-md-5 p-4">
+        <!--Main Info -->
+        <div class="p-md-5 p-4">
 
-                    <!-- Image -->
-                    <div class="text-center" oncontextmenu="return false">
-                        <img class="image img-fluid rounded" src="">
-                    </div>
-                    <hr>
+          <!-- Image -->
+          <div class="text-center" oncontextmenu="return false">
+            <img class="image img-fluid rounded" src="">
+          </div>
+          <hr>
 
-                    <!-- Description -->
-                    <div class="px-4 py-2 text-pre description"></div>
-                    <hr>
+          <!-- Description -->
+          <div class="px-4 py-2 text-pre description"></div>
+          <hr>
 
-                    <!-- Description -->
-                    <div class="row no-gutters">
-                        <div class="col-md-6 px-4 d-flex justify-content-between">
-                            <b>Starts</b> <span class="startdate"></span>
-                        </div>
-                        <div class="col-md-6 px-4 d-flex justify-content-between">
-                            <b>Ends</b> <span class="enddate"></span>
-                        </div>
-                    </div>
-                    <hr>
-
-                    <a class="btn btn-primary d-block link" target="_blank" href="">Submissions</a>
-
-                </div>
+          <!-- Description -->
+          <div class="row no-gutters">
+            <div class="col-md-6 px-4 d-flex justify-content-between">
+              <b>Starts</b> <span class="startdate"></span>
             </div>
-        </li>
+            <div class="col-md-6 px-4 d-flex justify-content-between">
+              <b>Ends</b> <span class="enddate"></span>
+            </div>
+          </div>
+          <hr>
 
-        
-    </div>
+          <a class="btn btn-primary d-block link" target="_blank" href="">Submissions</a>
+
+        </div>
+      </div>
+    </li>
 
 
-    <!-- ----------------------------------------------------------------- -->
-    <!-- JS                                                                -->
-    <!-- ----------------------------------------------------------------- -->
+  </div>
 
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <!-- ----------------------------------------------------------------- -->
+  <!-- JS                                                                -->
+  <!-- ----------------------------------------------------------------- -->
 
-    <!-- List.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-    <!-- Charadex Script -->
-    <script src="styles/config.js"></script>
-    <script src="styles/charadex.js"></script>
-    <script>charadexLarge(options.prompts);</script>
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+  <!-- List.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
+
+  <!-- Charadex Script -->
+  <script src="styles/js/pages/masterlist.js" type="module"></script>
+  <script src="styles/js/pages/base.js" type="module"></script>
 
 
 </body>
