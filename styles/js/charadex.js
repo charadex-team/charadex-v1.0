@@ -19,11 +19,12 @@ charadex.initialize = {};
 /* ==================================================================== */
 /* Page
 ======================================================================= */
-charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, customPageUrl = false, selector = 'charadex') => {
+charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, customPageUrl = false) => {
 
   if (!config) throw Error('No configuration added.');
 
   // Set up
+  let selector = config.dexSelector;
   let pageUrl = customPageUrl || charadex.url.getPageUrl(config.sitePage);
 
   // Add folders, filters & search
@@ -43,7 +44,12 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   // If there's related data, add it
   if (config.relatedData) {
     for (let page in config.relatedData) {
-      await charadex.data.relateData(charadexData, config.relatedData[page].primaryPageKey, page, config.relatedData[page].secondaryPageKey);
+      await charadex.manageData.relateData(
+        charadexData, 
+        config.relatedData[page].primaryPageKey, 
+        page, 
+        config.relatedData[page].secondaryPageKey
+      );
     }
   }
 
@@ -59,7 +65,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
   /* Sort the Dex */
   if (config.sort?.toggle ?? false) {
-    charadexData = charadex.data.sortArray(
+    charadexData = charadex.manageData.sortArray(
       charadexData, 
       config.sort.key, 
       config.sort.order,
@@ -73,6 +79,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
     let profileArr = list.getProfile(charadexData);
     if (!profileArr) return false;
+
     console.log(profileArr);
 
     if (config.prevNext?.toggle ?? false) {
@@ -106,7 +113,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
     let additionalListConfigs = {};
 
     // Filter by parameters
-    charadexData = charadex.data.filterByPageParameters(charadexData);
+    charadexData = charadex.manageData.filterByPageParameters(charadexData);
 
     // Add Pagination
     if (config.pagination?.toggle ?? false) {
@@ -145,13 +152,13 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 /* ==================================================================== */
 /* Grouped Gallery (Mostly for inventory items)
 ======================================================================= */
-charadex.initialize.groupGallery = async function (config, dataArray, groupBy, selector = 'charadex', customPageUrl = false) {
+charadex.initialize.groupGallery = async function (config, dataArray, groupBy, customPageUrl = false) {
 
-  console.log(customPageUrl);
   /* Check the Configs */
   if (!config) return console.error(`No config added.`);
   
   /* Get some stuff we'll need */
+  let selector = config.dexSelector;
   const pageUrl = customPageUrl || charadex.url.getPageUrl(config.sitePage);
 
   // Add filters & Search
@@ -168,7 +175,7 @@ charadex.initialize.groupGallery = async function (config, dataArray, groupBy, s
 
   /* Sort the Dex */
   if (config.sort?.toggle ?? false) {
-    charadexData = charadex.data.sortArray(
+    charadexData = charadex.manageData.sortArray(
       charadexData, 
       config.sort.key, 
       config.sort.order,
@@ -186,7 +193,7 @@ charadex.initialize.groupGallery = async function (config, dataArray, groupBy, s
     if (!charadex.tools.checkArray(charadexData)) return false;
 
     // Filter by parameters
-    charadexData = charadex.data.filterByPageParameters(charadexData);
+    charadexData = charadex.manageData.filterByPageParameters(charadexData);
 
     // Group data
     let groupArray = Object.groupBy(charadexData, obj => obj[groupBy]);

@@ -203,17 +203,17 @@
         <!-- Nav Tabs
         <!-- ----------------------------------------------------------- -->
         <hr class="my-0">
-        <ul class="nav row n-gutters m-n1 py-4 px-md-5 px-4" id="profile-tabs" role="tablist">
+        <ul class="nav row no-gutters m-n1 py-4 px-md-5 px-4" id="profile-tabs" role="tablist">
           <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary btn-sm active" id="profile-tab" data-toggle="tab" href="#profile" 
-            aria-controls="profile" aria-selected="true">Inventory</a>
+            <a class="nav-link w-100 btn btn-primary btn-sm active" id="inventory-tab" data-toggle="tab" href="#inventory" 
+            aria-controls="inventory" aria-selected="true">Inventory</a>
           </li>
           <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary btn-sm" id="designs-tab" data-toggle="tab" href="#designs" 
+            <a class="nav-link w-100 btn btn-primary btn-sm" id="designs-tab" data-toggle="tab" href="#designs" 
             aria-controls="designs" aria-selected="false">Designs</a>
           </li>
           <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary btn-sm" id="logs-tab" data-toggle="tab" href="#logs" 
+            <a class="nav-link w-100 btn btn-primary btn-sm" id="logs-tab" data-toggle="tab" href="#logs" 
             aria-controls="logs" aria-selected="false">Logs</a>
           </li>
         </ul>
@@ -221,9 +221,9 @@
 
         <!-- Main Body
         <!-- ----------------------------------------------------------- -->
-        <div class="p-md-5 p-4">
+        <div class="tab-content p-md-5 p-4">
 
-          <div class="tab-pane fade active show" id="inventory" role="tabpanel" aria-labelledby="inventory-tab" tabindex="0">
+          <div class="tab-pane fade active show" id="inventory" role="tabpanel" aria-labelledby="inventory-tab">
             <div id="inventory-gallery">
 
               <div class="card bg-faded p-4 mb-4">
@@ -269,7 +269,7 @@
               
               <!-- Gallery List
               ------------------------------------------------------------------- -->
-              <div class="mb-5 inventory-list-container" id="inventory-group-list">
+              <div class="mt-5 inventory-list-container" id="inventory-group-list">
                 <h4 class="inventory-group-title"></h4>
                 <div class="row no-gutters m-n2 inventory-list charadex-gallery-row"></div>
               </div>
@@ -302,7 +302,125 @@
           </div>
             
             
-          <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab" tabindex="0">
+          <div class="tab-pane fade" id="designs" role="tabpanel" aria-labelledby="designs-tab">
+
+            <div class="container masterlist-container" id="main-container">
+              <div id="charadex-gallery">
+          
+                <!-- Top Card Container
+                <!-- ----------------------------------------------------------------- -->
+                <div class="card p-md-5 p-4 mb-4">
+          
+                  <!-- Title
+                  <!-- --------------------------------------------------------------- -->
+                  <h3 class="mb-0 text-primary">Owned Designs</h3>
+          
+                  <!-- Faux Folders
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display:none;" id="designs-folder-container">
+                    <hr>
+                    <div class="row no-gutters m-n1" id="designs-folders"></div>
+                    <!-- Buttons -->
+                    <div style="display:none;">
+                      <div class="col-lg-3 col-md-4 col-sm-6 p-1" id="designs-folder">
+                        <a class="btn btn-primary d-block" href=""></a>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Filters
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display:none;" id="designs-filter-container">
+                    <hr>
+                    <div class="row no-gutters m-n1" id="designs-filters"></div>
+                    <!-- Filters -->
+                    <div style="display: none;">
+                      <div class="col-md-4 col-12 p-1" id="designs-filter">
+                        <label class="px-2"></label>
+                        <select class="form-control"></select>
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Search
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display:none;" id="designs-search-container">
+                    <hr>
+                    <div class="row no-gutters m-n1">
+                      <!-- Search Filter -->
+                      <div class="col-md-4 col-6 p-1" style="display: none;">
+                        <select class="form-control" id="designs-search-filter"></select>
+                      </div>
+                      <!-- Search Bar -->
+                      <div class="col d-flex p-1">
+                        <input class="form-control search" type="search" placeholder="Search" id="designs-search">
+                      </div>
+                    </div>
+                  </div>
+          
+                  <!-- Pagination
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display: none;" class="designs-pagination-container">
+                    <hr class="mb-4 mt-4">
+                    <div class="nav d-flex justify-content-center mb-n4">
+                      <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                      <ul class="pagination designs-pagination designs-pagination-top justify-content-center m-0"></ul>
+                      <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                  </div>
+          
+                  <!-- Prev & Next Topbar
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display: none;" id="designs-prevnext-container">
+                    <hr>
+                    <div class="row no-gutters px-2 text-uppercase">
+                      <div class="col-6 px-1">
+                        <a id="entryPrev" href=""><i class="fas fa-chevron-left me-2"></i><b><span></span></b></a>
+                      </div>
+                      <div class="col-6 px-1 text-right order-md-1">
+                        <a id="entryNext" href=""><b><span></span></b><i class="fas fa-chevron-right ms-2"></i></a>
+                      </div>
+                    </div>
+                  </div>
+          
+                </div>
+          
+                <!-- Repeated Items Render Here
+                <!-- --------------------------------------------------------------- -->
+                <div class="row no-gutters designs-list m-n2"></div>
+          
+                <!-- Pagination
+                <!-- --------------------------------------------------------------- -->
+                <div style="display: none;" class="designs-pagination-container">
+                  <div class="card px-3 py-1 mt-4">
+                    <div class="nav d-flex justify-content-center">
+                      <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                      <ul class="pagination designs-pagination designs-pagination-bottom justify-content-center m-0"></ul>
+                      <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                  </div>
+                </div>
+          
+              </div>
+            </div>
+
+            <!-- Gallery Items
+            <!-- --------------------------------------------------------------- -->
+            <div style="display:none;">
+              <div class="col-lg-3 col-sm-6 p-2" id="designs-gallery-item">
+                <a class="card h-100 profilelink" href="">
+                  <h5 class="card-header text-center profileid"></h5>
+                  <div class="card-body cd-gallery-card d-flex flex-fill">
+                    <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+                  </div>
+                </a>
+              </div>
+            </div>
+
+          </div>
+            
+            
+          <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab">
             <h4 class="text-primary">Transaction Log</h4>
             <div class="card bg-faded p-4" id="log-gallery">
 

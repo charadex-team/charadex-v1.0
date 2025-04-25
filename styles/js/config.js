@@ -3,9 +3,6 @@
 =======================================================================  /
 
   You can use this method to grab these URLs at any time
-
-  console.log(createUrl.fullUrl);
-  console.log(createUrl.addParams(createUrl.pageUrl, {'design': 'CHA0001'}));
     
 ======================================================================= */
 let charadex = {};
@@ -154,11 +151,13 @@ charadex.page = {
   /* --------------------------------------------------------------- */
   inventory: {
 
+    // Dex Set Up
     sheetPage: charadex.sheet.pages.inventory,
-    sitePage: 'items',
+    sitePage: 'inventories',
     dexSelector: 'charadex',
     profileKey: 'username',
 
+    // Dex Options
     sort: {
       toggle: true,
       key: "username",
@@ -193,12 +192,51 @@ charadex.page = {
       toggle: false,
     },
 
+
+    // Related Data
+    relatedData: {
+  
+      [charadex.sheet.pages.inventoryLog]: {
+  
+        sheetPage: charadex.sheet.pages.inventoryLog,
+        primaryPageKey: 'username',
+        secondaryPageKey: 'username',
+        dexSelector: 'log',
+        profileKey: 'id',
+  
+        pagination: {
+          toggle: true,
+          bottomToggle: false,
+          amount: 12,
+        },
+  
+      },
+      
+  
+      [charadex.sheet.pages.masterlist]: {
+  
+        sheetPage: charadex.sheet.pages.masterlist,
+        primaryPageKey: 'username',
+        secondaryPageKey: 'owner',
+        dexSelector: 'designs',
+        profileKey: 'design',
+  
+        pagination: {
+          toggle: true,
+          bottomToggle: false,
+          amount: 12,
+        },
+  
+      }
+  
+    },
+
     
     // This is a special config for their inventory
     inventoryConfig: {
 
       sheetPage: charadex.sheet.pages.items,
-      dexSelector: 'log',
+      dexSelector: 'inventory',
       profileKey: 'item',
 
       sort: {

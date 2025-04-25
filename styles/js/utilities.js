@@ -256,7 +256,7 @@ charadex.data = {
     let filterParams = charadex.url.getUrlParametersObject();
     if (!filterParams) return sheetArray;
 
-    let filteredArray = charadex.data.filterArray(sheetArray, filterParams);
+    let filteredArray = charadex.manageData.filterArray(sheetArray, filterParams);
 
     return filteredArray;
 
@@ -278,6 +278,28 @@ charadex.data = {
       }
     }
 
+  },
+
+  /* Fixes old style of inventories
+  ===================================================================== */
+  async inventoryFix(profileArray) {
+
+    let itemArr = await charadex.importSheet(charadex.sheet.pages.items);
+  
+    let inventoryData = [];
+    for (let property in profileArray) {
+      for (let item of itemArr) {
+        if (property === charadex.tools.scrub(item.item) && profileArray[property] !== '') inventoryData.push({
+          ... item,
+          ... {
+            quantity: profileArray[property]
+          }
+        });
+      }
+    }
+  
+    return inventoryData;
+  
   },
   
   /* Adds profile links
@@ -647,6 +669,9 @@ charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, sel
 
     if (!listJs) return false;
 
+    // Scrub the parameters
+    searchParameters = searchParameters.map(i => charadex.tools.scrub(i));
+
     // Decide to use search filter or not when searching
     searchElement.on("keyup", () => {
 
@@ -654,7 +679,7 @@ charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, sel
       const searchString = searchElement.val();
 
       if (selectedFilter && selectedFilter !== 'all') {
-        listJs.search(searchString, [selectedFilter]); // Search by the filter val
+        listJs.search(searchString, [charadex.tools.scrub(selectedFilter)]); // Search by the filter val
       } else {
         listJs.search(searchString, searchParameters); // Else search any of the parameters
       }

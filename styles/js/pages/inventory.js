@@ -3,27 +3,6 @@
 ======================================================================= */
 import { charadex } from '../charadex.js';
 
-const inventoryFix = async (profileArray) => {
-
-  let profile = profileArray[0];
-  let itemArr = await charadex.importSheet(charadex.sheet.pages.items);
-
-  let inventoryData = [];
-  for (let property in profile) {
-    for (let item of itemArr) {
-      if (property === charadex.tools.scrub(item.item) && profile[property] !== '') inventoryData.push({
-        ... item,
-        ... {
-          quantity: profile[property]
-        }
-      });
-    }
-  }
-
-  return inventoryData;
-
-}
-
 
 /* ==================================================================== */
 /* Load
@@ -38,20 +17,34 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (listData.type == 'profile') {
 
+        let profile = listData.array[0];
 
-        let inventory = await inventoryFix(listData.array);
-
+        // Inventory
         charadex.initialize.groupGallery(
           charadex.page.inventory.inventoryConfig,
-          inventory,
+          await charadex.manageData.inventoryFix(profile),
           'type',
-          'inventory',
           charadex.url.getPageUrl('items')
         )
 
+        // designs
+        if (charadex.tools.checkArray(profile.masterlist)) {
+          let designs = await charadex.initialize.page(
+            profile.masterlist,
+            charadex.page.masterlist.relatedData['masterlist'],
+          );
+        }
+
+        // Logs
+        if (charadex.tools.checkArray(profile.inventorylog)) {
+          let logs = await charadex.initialize.page(
+            profile.inventorylog,
+            charadex.page.masterlist.relatedData['inventory log'],
+          );
+        }
+
 
       }
-
     }
   );
   
