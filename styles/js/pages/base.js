@@ -1,6 +1,16 @@
 /* ==================================================================== */
-/* Load Header and Footer
+/* Import Charadex
 ======================================================================= */
-$(function () {
-  $(".load-html").each(function () { $(this).load(this.dataset.source) });
+import { charadex } from '../charadex.js';
+
+
+/* ==================================================================== */
+/* Load
+======================================================================= */
+document.addEventListener("DOMContentLoaded", async () => {
+
+  // Load the nav/footer/ect
+  charadex.tools.loadIncludedFiles();
+  charadex.tools.loadPage('#charadex-body', 100);
+
 });

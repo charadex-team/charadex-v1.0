@@ -533,6 +533,53 @@ img {
   border-radius: 0 !important;
 }
 
+
+/* ============================================================= */
+/* Loading
+/* ============================================================= */
+
+/* Fades container in on load so its not as jarring */
+.softload {
+  opacity: 0;
+}
+
+.softload.active {
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+/* Fades container in on load so its not as jarring */
+.hardload {
+  opacity: 0;
+}
+
+.hardload.active {
+  opacity: 1;
+  transition: opacity .1s ease;
+}
+
+/* Specifically for the body */
+#charadex-body {
+  display: none;
+}
+
+#charadex-body.active {
+  display: block;
+}
+
+/* Loading Icon */
+#loading {
+  width: 5rem;
+  height: 5rem;
+  position: absolute;
+  top: calc(50% - 2.5rem);
+  left: calc(50% - 2.5rem);
+  animation-duration: 2s;
+  opacity: .5;
+  border-color: var(--cd-body-text-color);
+  border-right-color: transparent !important;
+}
+
 /* ============================================================= */
 /* Chee's Tweaks
 /* ============================================================= */
@@ -554,16 +601,6 @@ body {
   #main-container {
     padding: 5rem 1.5rem;
   }
-}
-
-/* Fades container in on load so its not as jarring */
-.softload {
-  opacity: 0;
-}
-
-.softload.active {
-  opacity: 1;
-  transition: opacity 2s ease;
 }
 
 /* Remove ugly box shadow */
@@ -609,18 +646,6 @@ p:last-child {
   border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
 }
 
-/* Loading Icon */
-#loading {
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
-  top: calc(50% - 2.5rem);
-  left: calc(50% - 2.5rem);
-  animation-duration: 2s;
-  opacity: .5;
-  border-color: var(--cd-body-text-color);
-  border-right-color: transparent !important;
-}
 
 
 #log-table {

@@ -252,7 +252,7 @@ charadex.page.masterlist = {
 
 };
 
-/* Invetory
+/* Inventory
 /* --------------------------------------------------------------- */
 charadex.page.inventory = {
 
@@ -321,8 +321,6 @@ charadex.page.inventory = {
 
     [charadex.sheet.pages.masterlist]: {
 
-      ...charadex.page.masterlist, 
-
       sheetPage: charadex.sheet.pages.masterlist,
       sitePage: 'masterlist',
       primaryPageKey: 'username',
@@ -334,6 +332,12 @@ charadex.page.inventory = {
         toggle: true,
         bottomToggle: true,
         amount: 10,
+      },
+
+      search: {
+        toggle: false,
+        filterToggle: false,
+        parameters: ['Username']
       },
 
     }

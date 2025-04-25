@@ -37,9 +37,20 @@ charadex.tools = {
     return options;
   },
 
+  // Load files via include
+  // Will replace the entire div
+  loadIncludedFiles() {
+    $(".load-html").each(function () {
+      const target = $(this);
+      $.get(this.dataset.source, function (data) {
+        target.replaceWith(data);
+      });
+    });
+  },
+
   // Load Page
-  // Loads a page idk
-  loadPage(loadAreaSelector = '', loadIconSelector = '#loading', timeout = 500) {
+  // Load selected areas
+  loadPage(loadAreaSelector = '', timeout = 500, loadIconSelector = '#loading') {
     setTimeout(function () {
       $(loadIconSelector).hide();
       $(loadAreaSelector).addClass('active');
@@ -658,9 +669,6 @@ charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, sel
       searchFilter.parent().show();
     }
 
-    // Show search
-    searchElement.parents(`#${selector}-search-container`).show();
-
   }
 
   createSearch();
@@ -685,6 +693,9 @@ charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, sel
       }
 
     });
+
+    // Show search
+    searchElement.parents(`#${selector}-search-container`).show();
 
   }
 
