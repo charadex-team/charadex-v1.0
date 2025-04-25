@@ -58,33 +58,25 @@
   <div class="load-html" id="header" data-source="includes/header.html"></div>
 
 
-  <!-- Spinner for loading-->
-  <div class="spinner-border m-auto" id="loading"></div>
-
-
   <!-- --------------------------------------------------------------------
     <-- Masterlist
     <-------------------------------------------------------------------- -->
-  <div class="container softload masterlist-container" id="main-container">
-
-
-    <!-- Gallery Container
-        ------------------------------------------------------------------- -->
+  <div class="container masterlist-container" id="main-container">
     <div id="charadex-gallery">
 
-
-      <!-- Filters
-            ----------------------------------------------------------------- -->
+      <!-- Top Card Container
+      <!-- ----------------------------------------------------------------- -->
       <div class="card p-md-5 p-4 mb-4">
 
+        <!-- Title
+        <!-- --------------------------------------------------------------- -->
         <h3 class="mb-0"><a href="masterlist.html">Species Masterlist</a></h3>
 
         <!-- Faux Folders
-        <!-- Remove this if you'd like to make your own buttons instead!
-        ------------------------------------------------------------------- -->
+        <!-- --------------------------------------------------------------- -->
         <div style="display:none;" id="charadex-folder-container">
           <hr>
-          <div class="row" id="charadex-folders"></div>
+          <div class="row no-gutters m-n1" id="charadex-folders"></div>
           <!-- Buttons -->
           <div style="display:none;">
             <div class="col-lg-3 col-md-4 col-sm-6 p-1" id="charadex-folder">
@@ -94,11 +86,11 @@
         </div>
 
         <!-- Filters
-        <!-- Remove this if you'd like to make your own buttons instead!
-        ------------------------------------------------------------------- -->
+        <!-- --------------------------------------------------------------- -->
         <div style="display:none;" id="charadex-filter-container">
           <hr>
           <div class="row no-gutters m-n1" id="charadex-filters"></div>
+          <!-- Filters -->
           <div style="display: none;">
             <div class="col-md-4 col-12 p-1" id="charadex-filter">
               <label class="px-2"></label>
@@ -107,25 +99,24 @@
           </div>
         </div>
 
-        <!-- Search -->
+        <!-- Search
+        <!-- --------------------------------------------------------------- -->
         <div style="display:none;" id="charadex-search-container">
           <hr>
           <div class="row no-gutters m-n1">
-
             <!-- Search Filter -->
             <div class="col-md-4 col-6 p-1" style="display: none;">
               <select class="form-control" id="charadex-search-filter"></select>
             </div>
-
             <!-- Search Bar -->
             <div class="col d-flex p-1">
               <input class="form-control search" type="search" placeholder="Search" id="charadex-search">
             </div>
-
           </div>
         </div>
 
-        <!-- Pagination -->
+        <!-- Pagination
+        <!-- --------------------------------------------------------------- -->
         <div style="display: none;" class="charadex-pagination-container">
           <hr class="mb-4 mt-4">
           <div class="nav d-flex justify-content-center mb-n4">
@@ -135,83 +126,74 @@
           </div>
         </div>
 
-        <!-- Prev & Next Topbar -->
-        <div style="display: none;" id="prevNext">
-          <hr class="mb-4">
-          <div class="row no-gutters px-2 mb-n3 font-weight-bold text-uppercase">
-            <div class="col-6 px-1"><a id="entryPrev" href=""><i class="fa fa-chevron-left mr-2"></i><span></span></a></div>
-            <div class="col-6 px-1 text-right order-md-1"><a id="entryNext" href=""><span></span><i class="fa fa-chevron-right ml-2"></i></a></div>
+        <!-- Prev & Next Topbar
+        <!-- --------------------------------------------------------------- -->
+        <div style="display: none;" id="charadex-prevnext-container">
+          <hr>
+          <div class="row no-gutters px-2 text-uppercase">
+            <div class="col-6 px-1">
+              <a id="entryPrev" href=""><i class="fas fa-chevron-left me-2"></i><b><span></span></b></a>
+            </div>
+            <div class="col-6 px-1 text-right order-md-1">
+              <a id="entryNext" href=""><b><span></span></b><i class="fas fa-chevron-right ms-2"></i></a>
+            </div>
           </div>
         </div>
 
       </div>
 
-
       <!-- Repeated Items Render Here
-            ----------------------------------------------------------------- -->
-      <ul class="row no-gutters charadex-list list-unstyled m-n2"></ul>
+      <!-- --------------------------------------------------------------- -->
+      <div class="row no-gutters charadex-list m-n2"></div>
 
-
-      <!-- Pagination -->
+      <!-- Pagination
+      <!-- --------------------------------------------------------------- -->
       <div style="display: none;" class="charadex-pagination-container">
-        <hr class="mb-4 mt-4">
-        <div class="nav d-flex justify-content-center mb-n4">
-          <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-          <ul class="pagination charadex-pagination charadex-pagination-bottom justify-content-center m-0"></ul>
-          <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+        <div class="card px-3 py-1 mt-4">
+          <div class="nav d-flex justify-content-center">
+            <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+            <ul class="pagination charadex-pagination charadex-pagination-bottom justify-content-center m-0"></ul>
+            <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+          </div>
         </div>
       </div>
 
     </div>
-
   </div>
 
-
-
   <!-- --------------------------------------------------------------------
-    <-- Footer
-    <-------------------------------------------------------------------- -->
+  <-- Footer
+  <-------------------------------------------------------------------- -->
   <div class="load-html" id="footer" data-source="includes/footer.html"></div>
 
-
-
   <!-- --------------------------------------------------------------------
-    <-- Repeat Items
-    <-- Do not remove 'display:none;'
-    <-- Edit these to your liking
-    <-------------------------------------------------------------------- -->
+  <-- Repeat Items
+  <-- Do not remove 'display:none;'
+  <-- Edit these to your liking
+  <-------------------------------------------------------------------- -->
   <div style="display:none;">
 
 
-    <!-- Faux Folder Buttons
-        ------------------------------------------------------------------- -->
-    <div class="col-lg-3 col-md-4 col-sm-6 p-1" id="charadex-filter-buttons">
-      <a class="btn btn-primary d-block" href=""></a>
-    </div>
-
-
     <!-- Gallery Items
-        ------------------------------------------------------------------- -->
-    <li class="col-lg-3 col-sm-6 p-2" id="charadex-gallery-item">
-      <a class="card h-100 cardlink" href="">
-        <h5 class="card-header text-center design"></h5>
+    <!-- --------------------------------------------------------------- -->
+    <div class="col-lg-3 col-sm-6 p-2" id="charadex-gallery-item">
+      <a class="card h-100 profilelink" href="">
+        <h5 class="card-header text-center profileid"></h5>
         <div class="card-body d-flex flex-fill">
           <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
         </div>
       </a>
-    </li>
+    </div>
 
 
     <!-- Singular Item
-        ------------------------------------------------------------------- -->
-    <li class="col-12 p-2" id="charadex-profile">
-
-      <!-- Actual Card -->
+    <!-- --------------------------------------------------------------- -->
+    <div class="col-12 p-2" id="charadex-profile">
       <div class="card">
 
         <!-- Header -->
         <h2 class="card-header text-center p-4">
-          <a class="cardlink design"></a> (<a class="cardlinkalt" href="">#<span class="id"></span></a>)
+          <a class="profilelink profileid"></a> (#<span class="id"></span>)
         </h2>
 
 
@@ -304,13 +286,27 @@
               <!-- Item -->
               <div class="">
                 <b class="text-muted">Transaction Log</b>
-                <div class="pl-3 pt-2 small" id="log-table">
+                <div class="pl-3 pt-2 small" id="log-gallery">
+
+                  <div class="log-list"></div>
                   <div class="d-none">
-                    <div class="row no-gutters" id="log-entry">
+                    <div class="row no-gutters" id="log-gallery-item">
                       <div class="col-md-3"><span class="timestamp"></span></div>
                       <div class="col-md-9"><span class="reason"></span></div>
                     </div>
                   </div>
+
+                  <!-- Pagination
+                  <!-- --------------------------------------------------------------- -->
+                  <div style="display: none;" class="log-pagination-container">
+                    <hr>
+                    <div class="nav d-flex justify-content-center mb-n4">
+                      <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                      <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
+                      <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
@@ -322,9 +318,10 @@
           <div class="card bg-faded py-2 px-3 mt-3 small text-center">
             <b>If you need to update this entry, please do so <a href="">here</a>.</b>
           </div>
+
         </div>
       </div>
-    </li>
+    </div>
 
 
   </div>

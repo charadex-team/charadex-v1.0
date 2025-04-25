@@ -61,18 +61,29 @@ charadex.page = {
   masterlist: {
 
     sheetPage: charadex.sheet.pages.masterlist,
+    sitePage: 'masterlist',
+    dexSelector: 'charadex',
     profileKey: 'design',
-    itemOrder: 'asc',
+
+    sort: {
+      toggle: true,
+      key: "id",
+      order: "desc",
+      params: []
+    },
 
     pagination: {
       toggle: true,
+      bottomToggle: true,
       amount: 12,
     },
 
     filters: {
       toggle: true,
       parameters: {
-        'Design Type': ['All', 'Official Design', 'MYO Design']
+        'Design Type': ['All', 'Official Design', 'MYO Design'],
+        'Status': ['All', 'Can Sell', 'Can Trade'],
+        'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
       }
     },
 
@@ -86,6 +97,37 @@ charadex.page = {
       toggle: true,
       filterToggle: true,
       parameters: ['All', 'ID', 'Owner', 'Designer', 'Artist']
+    },
+
+    prevNext: {
+      toggle: true,
+    },
+
+    relatedData: {
+
+      [charadex.sheet.pages.masterlistLog]: {
+
+        sheetPage: charadex.sheet.pages.masterlistLog,
+        primaryPageKey: 'id',
+        secondaryPageKey: 'id',
+        dexSelector: 'log',
+        profileKey: 'design',
+
+        sort: {
+          toggle: true,
+          key: "timestamp",
+          order: "desc",
+          params: []
+        },
+
+        pagination: {
+          toggle: true,
+          bottomToggle: false,
+          amount: 12,
+        },
+
+      }
+
     }
 
   },

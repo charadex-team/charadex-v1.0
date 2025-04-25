@@ -9,13 +9,29 @@ import { charadex } from '../charadex.js';
 ======================================================================= */
 document.addEventListener("DOMContentLoaded", async () => {
 
-  let dex = charadex.initialize(
+  let dex = await charadex.initialize.page(
     null,
     charadex.page.masterlist,
-  );
+    null, 
+    async (listData) => {
 
-  
-  $('#loading').hide();
-  $('.softload').addClass('active');
+      if (listData.type == 'profile') {
+
+        // Create the log dex
+        if (charadex.tools.checkArray(listData.array[0].masterlistlog)) {
+          let logs = await charadex.initialize.page(
+            listData.array[0].masterlistlog,
+            charadex.page.masterlist.relatedData['masterlist log'],
+            null, 
+            null,
+            null,
+            'log'
+          );
+        }
+
+      }
+
+    }
+  );
   
 });
