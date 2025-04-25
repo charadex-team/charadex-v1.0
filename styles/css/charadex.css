@@ -15,55 +15,55 @@ body {
   /* ============================================================= */
   /* Primary Color
   ================================================================ */
-  --cd-primary-color:                    #8FB7D4;
-  --cd-primary-text-color:               #fff;
+  --cd-primary-color: #8FB7D4;
+  --cd-primary-text-color: #fff;
 
   /* ============================================================= */
   /* Secondary Color
   ================================================================ */
-  --cd-secondary-color:                  #939799;
-  --cd-secondary-text-color:             #fff;
+  --cd-secondary-color: #939799;
+  --cd-secondary-text-color: #fff;
 
   /* ============================================================= */
   /* Backgrounds
   ================================================================ */
-  --cd-body-background-color:            #f8f8f8;
-  --cd-content-background-color:         #ffffff;
-  --cd-faded-background-color:           #f8f8f8;
+  --cd-body-background-color: #f8f8f8;
+  --cd-content-background-color: #ffffff;
+  --cd-faded-background-color: #f8f8f8;
 
   /* Background Extras */
-  --cd-body-background-image:             url();
+  --cd-body-background-image: url();
 
   /* ============================================================= */
   /* Text
   ================================================================ */
-  --cd-body-text-color:                  #303030;
-  --cd-faded-text-color:                 #575757;
+  --cd-body-text-color: #303030;
+  --cd-faded-text-color: #575757;
 
   /* ============================================================= */
   /* Borders
   ================================================================ */
-  --cd-border-color:                     rgba(0, 0, 0, 0.125);
-  --cd-border-width:                     1px;
-  --cd-border-style:                     solid;
-  --cd-border-radius:                    1rem;
+  --cd-border-color: rgba(0, 0, 0, 0.125);
+  --cd-border-width: 1px;
+  --cd-border-style: solid;
+  --cd-border-radius: 1rem;
 
   /* ============================================================= */
   /* Navbar
   ================================================================ */
-  --cd-navbar-background-color:          #222222;
-  --cd-navbar-brand-color:               var(--cd-primary-color);
-  --cd-navbar-brand-color-hover:         var(--cd-secondary-color);
-  --cd-navbar-text-color:                var(--cd-content-background-color);
-  --cd-navbar-link-color:                var(--cd-navbar-text-color);
-  --cd-navbar-link-color-hover:          var(--cd-primary-color);
-  --cd-navbar-font-family:               var(--cd-header-font-family);
-  
+  --cd-navbar-background-color: #222222;
+  --cd-navbar-brand-color: var(--cd-primary-color);
+  --cd-navbar-brand-color-hover: var(--cd-secondary-color);
+  --cd-navbar-text-color: var(--cd-content-background-color);
+  --cd-navbar-link-color: var(--cd-navbar-text-color);
+  --cd-navbar-link-color-hover: var(--cd-primary-color);
+  --cd-navbar-font-family: var(--cd-header-font-family);
+
   /* ============================================================= */
   /* Main Fonts
   ================================================================ */
-  --cd-body-font-family:                 'Montserrat', sans-serif;
-  --cd-header-font-family:               'Comfortaa', sans-serif;
+  --cd-body-font-family: 'Montserrat', sans-serif;
+  --cd-header-font-family: 'Comfortaa', sans-serif;
 
 
   /* ============================================================= */
@@ -80,42 +80,42 @@ body {
   --cd-navbar-dropdown-background-hover: var(--cd-primary-color);
 
   /* Link/Text */
-  --cd-navbar-dropdown-link-color:       var(--cd-navbar-link-color);
+  --cd-navbar-dropdown-link-color: var(--cd-navbar-link-color);
   --cd-navbar-dropdown-link-color-hover: var(--cd-primary-text-color);
 
   /* Divider */
-  --cd-navbar-dropdown-divider:          rgba(255,255,255,.12);
-  --cd-navbar-dropdown-border-radius:    0 0 var(--cd-border-radius) var(--cd-border-radius);
+  --cd-navbar-dropdown-divider: rgba(255, 255, 255, .12);
+  --cd-navbar-dropdown-border-radius: 0 0 var(--cd-border-radius) var(--cd-border-radius);
 
 
   /* ============================================================= */
   /* Footer
   ================================================================ */
-  
+
   /* Background */
-  --cd-footer-background-color:          var(--cd-navbar-background-color);
+  --cd-footer-background-color: var(--cd-navbar-background-color);
 
   /* Link/Text */
-  --cd-footer-text-color:                var(--cd-navbar-text-color);
-  --cd-footer-link-color:                var(--cd-navbar-link-color);
-  --cd-footer-link-color-hover:          var(--cd-navbar-link-color-hover);
+  --cd-footer-text-color: var(--cd-navbar-text-color);
+  --cd-footer-link-color: var(--cd-navbar-link-color);
+  --cd-footer-link-color-hover: var(--cd-navbar-link-color-hover);
 
 
   /* ============================================================= */
   /* Link
   ================================================================ */
 
-  --cd-link-text-color:                  #4c8ebd;
-  --cd-link-text-color-hover:            var(--cd-secondary-color);
+  --cd-link-text-color: #4c8ebd;
+  --cd-link-text-color-hover: var(--cd-secondary-color);
 
 
   /* ============================================================= */
   /* HR
   ================================================================ */
 
-  --cd-hr-border-width:                  var(--cd-border-width);
-  --cd-hr-border-color:                  var(--cd-border-color);
-  --cd-hr-border-style:                  var(--cd-border-style);
+  --cd-hr-border-width: var(--cd-border-width);
+  --cd-hr-border-color: var(--cd-border-color);
+  --cd-hr-border-style: var(--cd-border-style);
 
 
   /* ============================================================= */
@@ -123,57 +123,57 @@ body {
   ================================================================ */
 
   /* Background */
-  --cd-pagination-background-color:      transparent;
-  --cd-pagination-background-hover:      transparent;
+  --cd-pagination-background-color: transparent;
+  --cd-pagination-background-hover: transparent;
 
   /* Text */
-  --cd-pagination-text-color:            var(--cd-faded-text-color);
-  --cd-pagination-text-color-hover:      var(--cd-primary-color);
+  --cd-pagination-text-color: var(--cd-faded-text-color);
+  --cd-pagination-text-color-hover: var(--cd-primary-color);
 
   /* Border */
-  --cd-pagination-border-radius:         var(--cd-border-radius);
-  --cd-pagination-border-width:          0;
-  --cd-pagination-border-style:          var(--cd-border-style);
-  --cd-pagination-border-color:          var(--cd-border-color);
-  --cd-pagination-border-color-hover:    var(--cd-primary-color);
+  --cd-pagination-border-radius: var(--cd-border-radius);
+  --cd-pagination-border-width: 0;
+  --cd-pagination-border-style: var(--cd-border-style);
+  --cd-pagination-border-color: var(--cd-border-color);
+  --cd-pagination-border-color-hover: var(--cd-primary-color);
 
 
   /* ============================================================= */
   /* Cards
   ================================================================ */
-  
+
   /* Background */
-  --cd-card-background-color:            var(--cd-content-background-color);
-  --cd-card-header-background-color:     var(--cd-card-background-color);
+  --cd-card-background-color: var(--cd-content-background-color);
+  --cd-card-header-background-color: var(--cd-card-background-color);
 
   /* Text */
-  --cd-card-header-font-family:          var(--cd-header-font-family);
+  --cd-card-header-font-family: var(--cd-header-font-family);
 
   /* Border */
-  --cd-card-border-width:                var(--cd-border-width);
-  --cd-card-border-style:                var(--cd-border-style);
-  --cd-card-border-color:                var(--cd-border-color);
-  --cd-card-border-radius:               var(--cd-border-radius);
+  --cd-card-border-width: var(--cd-border-width);
+  --cd-card-border-style: var(--cd-border-style);
+  --cd-card-border-color: var(--cd-border-color);
+  --cd-card-border-radius: var(--cd-border-radius);
 
 
   /* ============================================================= */
   /* Button
   ================================================================ */
-  
+
   /* Background */
-  --cd-button-background-color:          var(--cd-primary-color);
-  --cd-button-background-color-hover:    var(--cd-secondary-color);
+  --cd-button-background-color: var(--cd-primary-color);
+  --cd-button-background-color-hover: var(--cd-secondary-color);
 
   /* Text */
-  --cd-button-text-color:                var(--cd-primary-text-color);
-  --cd-button-text-color-hover:          var(--cd-secondary-text-color);
+  --cd-button-text-color: var(--cd-primary-text-color);
+  --cd-button-text-color-hover: var(--cd-secondary-text-color);
 
   /* Border */
-  --cd-button-border-width:              var(--cd-border-width);
-  --cd-button-border-style:              var(--cd-border-style);
-  --cd-button-border-color:              var(--cd-button-background-color);
-  --cd-button-border-color-hover:        var(--cd-button-background-color-hover);
-  --cd-button-border-radius:             var(--cd-border-radius);
+  --cd-button-border-width: var(--cd-border-width);
+  --cd-button-border-style: var(--cd-border-style);
+  --cd-button-border-color: var(--cd-button-background-color);
+  --cd-button-border-color-hover: var(--cd-button-background-color-hover);
+  --cd-button-border-radius: var(--cd-border-radius);
 
 
   /* ============================================================= */
@@ -181,17 +181,17 @@ body {
   ================================================================ */
 
   /* Background */
-  --cd-input-background-color:           var(--cd-faded-background-color);
+  --cd-input-background-color: var(--cd-faded-background-color);
 
   /* Text */
-  --cd-input-text-color:                 var(--cd-faded-text-color);
+  --cd-input-text-color: var(--cd-faded-text-color);
 
   /* Border */
-  --cd-input-border-width:               var(--cd-border-width);
-  --cd-input-border-style:               var(--cd-border-style);
-  --cd-input-border-color:               var(--cd-border-color);
-  --cd-input-border-color-hover:         var(--cd-primary-color);
-  --cd-input-border-radius:              var(--cd-border-radius);
+  --cd-input-border-width: var(--cd-border-width);
+  --cd-input-border-style: var(--cd-border-style);
+  --cd-input-border-color: var(--cd-border-color);
+  --cd-input-border-color-hover: var(--cd-primary-color);
+  --cd-input-border-radius: var(--cd-border-radius);
 
 }
 
@@ -248,7 +248,7 @@ a:active {
   font-size: 2rem;
 }
 
-.navbar .navbar-brand:hover, 
+.navbar .navbar-brand:hover,
 .navbar .navbar-brand:focus {
   color: var(--cd-navbar-brand-color-hover) !important;
 }
@@ -257,8 +257,8 @@ a:active {
   color: var(--cd-navbar-link-color) !important;
 }
 
-.navbar .navbar-nav .nav-link:hover, 
-.navbar .navbar-nav .nav-link:focus{
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
   color: var(--cd-navbar-link-color-hover) !important;
 }
 
@@ -268,13 +268,13 @@ a:active {
 }
 
 .navbar .nav-link {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .navbar .nav-link-icon {
-    font-size: .5rem;
-    margin-left: .25rem;
+  font-size: .5rem;
+  margin-left: .25rem;
 }
 
 
@@ -292,7 +292,7 @@ a:active {
 }
 
 .dropdown:hover .dropdown-menu,
-.dropdown-menu:hover{
+.dropdown-menu:hover {
   display: block !important
 }
 
@@ -306,10 +306,10 @@ a:active {
   transition: color .2s ease, background .2s ease;
 }
 
-.navbar .dropdown-item:hover, 
+.navbar .dropdown-item:hover,
 .dropdown-item:focus,
 .dropdown-item:active {
-  color: var(--cd-navbar-dropdown-link-color-hover)!important;
+  color: var(--cd-navbar-dropdown-link-color-hover) !important;
   background-color: var(--cd-navbar-dropdown-background-hover) !important;
 }
 
@@ -322,7 +322,7 @@ a:active {
 /* Footer
 /* ============================================================= */
 
-.footer{
+.footer {
   background-color: var(--cd-footer-background-color) !important;
   color: var(--cd-footer-text-color) !important;
 }
@@ -366,7 +366,7 @@ a:active {
 }
 
 /* Keeps users from accidentally highlighting */
-.page-link{
+.page-link {
   cursor: pointer;
   user-select: none;
 }
@@ -431,7 +431,7 @@ a:active {
 .btn.btn-primary:active,
 a.badge.badge-primary:hover,
 a.badge.badge-primary:focus,
-a.badge.badge-primary:active  {
+a.badge.badge-primary:active {
   color: var(--cd-button-text-color-hover) !important;
   border-color: var(--cd-button-border-color-hover) !important;
   background-color: var(--cd-button-background-color-hover) !important;
@@ -501,8 +501,12 @@ a.badge.badge-primary:active  {
   color: var(--cd-faded-text-color) !important;
 }
 
-h1, h2, h3,
-h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--cd-navbar-font-family) !important;
 }
 
@@ -517,9 +521,17 @@ img {
 }
 
 /* Fix any border radiuses that were messed from before */
-.rounded {border-radius: var(--cd-border-radius) !important}
-.rounded-circle {border-radius: 100%;}
-.rounded-0 {border-radius: 0 !important;}
+.rounded {
+  border-radius: var(--cd-border-radius) !important
+}
+
+.rounded-circle {
+  border-radius: 100%;
+}
+
+.rounded-0 {
+  border-radius: 0 !important;
+}
 
 /* ============================================================= */
 /* Chee's Tweaks
@@ -532,22 +544,24 @@ body {
 }
 
 #main-container {
-    min-height: calc(100vh - 105px);
-    padding: 1rem;
-    -ms-flex: 1 1 auto!important;
-    flex: 1 1 auto!important;
+  min-height: calc(100vh - 105px);
+  padding: 1rem;
+  -ms-flex: 1 1 auto !important;
+  flex: 1 1 auto !important;
 }
 
 @media (min-width: 768px) {
-    #main-container {
-        padding: 5rem 1.5rem;
-    }
+  #main-container {
+    padding: 5rem 1.5rem;
+  }
 }
 
 /* Fades container in on load so its not as jarring */
 .softload {
   opacity: 0;
-} .softload.active {
+}
+
+.softload.active {
   opacity: 1;
   transition: opacity 2s ease;
 }
@@ -562,7 +576,7 @@ button:focus,
 
 /* Remove margin from last paragraphs */
 p:last-child {
-    margin-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* Small container for more compact view */
@@ -573,21 +587,21 @@ p:last-child {
 /* Prevents awkward load in stutter */
 #charadex-gallery .list .card-body {
   min-height: calc(200px + 2.5rem);
-} 
+}
 
 #charadex-gallery .list .card-body img {
   max-height: 200px;
 }
 
 .gallery-img {
-    max-height: 150px;
+  max-height: 150px;
 }
 
 /* Combines search and its companion filter */
 #search-filter.form-control {
   border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
   border-right: 0 !important;
-} 
+}
 
 #search.filtered.form-control {
   margin-left: -.5rem;
@@ -597,7 +611,7 @@ p:last-child {
 
 /* Loading Icon */
 #loading {
-  width: 5rem; 
+  width: 5rem;
   height: 5rem;
   position: absolute;
   top: calc(50% - 2.5rem);
@@ -610,8 +624,25 @@ p:last-child {
 
 
 #log-table {
-    max-height: 200px;
-    overflow-y: auto;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.cd-gallery-card {
+  min-height: calc(200px + 2.5rem);
+}
+
+.cd-gallery-card > img {
+  max-height: calc(200px - 2.5rem) !important;
+}
+
+.cd-profile-image-container > img{
+  max-height: 400px;
+}
+
+.cd-traits-scroll {
+  max-height: 200px;
+  overflow-y: scroll;
 }
 
 /* ============================================================= */
@@ -621,24 +652,24 @@ p:last-child {
 /* Makes sure your text formatting is preserved from the sheet */
 /* Best for large areas like notes */
 .text-pre {
-    white-space: break-spaces;
+  white-space: break-spaces;
 }
 
 .hero-title {
-    color: var(--cd-primary-text-color);
-    background-color: var(--cd-primary-color);
-    border-radius: var(--cd-border-radius);
-    font-family: var(--cd-header-font-family);
-    display: flex;
-    padding: 1.5rem;
-    min-height: 250px;
-    font-weight: 800;
-    font-size: 2.5rem;
+  color: var(--cd-primary-text-color);
+  background-color: var(--cd-primary-color);
+  border-radius: var(--cd-border-radius);
+  font-family: var(--cd-header-font-family);
+  display: flex;
+  padding: 1.5rem;
+  min-height: 250px;
+  font-weight: 800;
+  font-size: 2.5rem;
 }
 
 @media (min-width: 768px) {
-    .hero-title {
-        letter-spacing: 2px;
-        font-size: 5rem;
-    }
+  .hero-title {
+    letter-spacing: 2px;
+    font-size: 5rem;
+  }
 }

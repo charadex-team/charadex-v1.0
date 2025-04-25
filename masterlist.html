@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 
   <!-- ----------------------------------------------------------------- -->
@@ -179,7 +179,7 @@
     <div class="col-lg-3 col-sm-6 p-2" id="charadex-gallery-item">
       <a class="card h-100 profilelink" href="">
         <h5 class="card-header text-center profileid"></h5>
-        <div class="card-body d-flex flex-fill">
+        <div class="card-body cd-gallery-card d-flex flex-fill">
           <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
         </div>
       </a>
@@ -192,127 +192,161 @@
       <div class="card">
 
         <!-- Header -->
-        <h2 class="card-header text-center p-4">
-          <a class="profilelink profileid"></a> (#<span class="id"></span>)
-        </h2>
+        <div class="card-header p-4 text-center">
+          <h3 class="mb-0 pr-2"><a class="profilelink profileid"></a></h3> 
+          <div class="text-muted">(#<span class="id"></span>)</div>
+        </div>
+
+        <!-- Image -->
+        <div class="cd-profile-image-container p-md-5 p-4 text-center" oncontextmenu="return false">
+          <img class="image img-fluid" src="">
+        </div>
 
 
-        <!--Main Info -->
-        <div class="px-md-5 pt-md-5 p-4">
+        <!-- Nav Tabs
+        <!-- ----------------------------------------------------------- -->
+        <hr class="my-0">
+        <ul class="nav row n-gutters m-n1 py-4 px-md-5 px-4" id="profile-tabs" role="tablist">
+          <li class="col p-1 nav-item" role="presentation">
+            <a class="w-100 btn btn-primary btn-sm active" id="profile-tab" data-toggle="tab" href="#profile" 
+            aria-controls="profile" aria-selected="true">Profile</a>
+          </li>
+          <li class="col p-1 nav-item" role="presentation">
+            <a class="w-100 btn btn-primary btn-sm" id="logs-tab" data-toggle="tab" href="#logs" aria-controls="logs" 
+            aria-selected="false">Logs</a>
+          </li>
+        </ul>
+        <hr class="my-0">
 
-          <!-- Character Info -->
-          <div class="row no-gutters">
 
+        <!-- Main Info
+        <!-- ----------------------------------------------------------- -->
+        <div class="p-md-5 p-4">
 
-            <!-- Image -->
-            <div class="col-md-5 p-3">
-              <div class="mx-auto w-100 text-center" oncontextmenu="return false">
-                <img class="image img-fluid" src="">
-              </div>
-            </div>
+          <div class="tab-content">
 
+            <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+              <div class="row no-gutters m-n2">
 
-            <!-- Information List -->
-            <div class="col-md-7 p-3">
+                <div class="col-md-6 p-2">
+                  <div class="card bg-faded p-4 h-100">
 
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Owner</b>
-                <span class="owner"></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Artist</b>
-                <span class="artist"></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Designer</b>
-                <span class="designer"></span>
-              </div>
-
-              <hr>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Species</b>
-                <span class="species"></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Rarity</b>
-                <span class="rarity"></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Design Type</b>
-                <span class="designtype"></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Value</b>
-                <span>$<span class="value"></span></span>
-              </div>
-
-              <!-- Item -->
-              <div class="d-flex justify-content-between mb-2">
-                <b class="text-muted">Status</b>
-                <span class="status"></span>
-              </div>
-
-              <hr>
-
-              <!-- Item -->
-              <div class="">
-                <b class="text-muted">Traits</b>
-                <div class="pl-3 text-pre traits"></div>
-              </div>
-
-              <hr>
-
-              <!-- Item -->
-              <div class="">
-                <b class="text-muted">Notes</b>
-                <div class="pl-3 text-pre notes"></div>
-              </div>
-
-              <hr>
-
-              <!-- Item -->
-              <div class="">
-                <b class="text-muted">Transaction Log</b>
-                <div class="pl-3 pt-2 small" id="log-gallery">
-
-                  <div class="log-list"></div>
-                  <div class="d-none">
-                    <div class="row no-gutters" id="log-gallery-item">
-                      <div class="col-md-3"><span class="timestamp"></span></div>
-                      <div class="col-md-9"><span class="reason"></span></div>
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Species</b>
+                      <span class="species"></span>
                     </div>
-                  </div>
-
-                  <!-- Pagination
-                  <!-- --------------------------------------------------------------- -->
-                  <div style="display: none;" class="log-pagination-container">
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Rarity</b>
+                      <span class="rarity"></span>
+                    </div>
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Design Type</b>
+                      <span class="designtype"></span>
+                    </div>
+                    
                     <hr>
-                    <div class="nav d-flex justify-content-center mb-n4">
-                      <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                      <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
-                      <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+
+                    <!-- Item -->
+                    <div>
+                      <b class="text-muted">Traits</b>
+                      <div class="px-4 text-pre traits cd-traits-scroll"></div>
                     </div>
+
                   </div>
-
                 </div>
-              </div>
 
-              <!-- Add more list items above this line-->
+                <div class="col-md-6 p-2">
+                  <div class="card bg-faded p-4 h-100">
+
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Owner</b>
+                      <a class="owner ownerlink"></a>
+                    </div>
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Artist</b>
+                      <a class="artist artistlink"></a>
+                    </div>
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Designer</b>
+                      <a class="designer designerlink"></a>
+                    </div>
+
+                    <hr>
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Value</b>
+                      <span>$<span class="value"></span></span>
+                    </div>
+      
+                    <!-- Item -->
+                    <div class="d-flex no-gutters mb-2">
+                      <b class="text-muted col-md-5 col-6">Status</b>
+                      <span class="status"></span>
+                    </div>
+
+                    <hr>
+                    
+                    <!-- Item -->
+                    <div>
+                      <b class="text-muted">Notes</b>
+                      <div class="px-4 text-pre notes"></div>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
             </div>
-          </div>
+            
+            
+            <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab" tabindex="0">
+              <h4 class="text-primary">Transaction Log</h4>
+              <div class="card bg-faded p-4" id="log-gallery">
+
+                <!-- List -->
+                <!-- --------------------------------------------------------------- -->
+                <div class="row no-gutters">
+                  <div class="col-md-3"><b>Timestamp</b></div>
+                  <div class="col-md-9"><b>Reason</b></div>
+                </div>
+                <hr>
+                <div class="log-list"></div>
+
+                <!-- List Item -->
+                <!-- --------------------------------------------------------------- -->
+                <div style="display: none;">
+                  <div class="row no-gutters" id="log-gallery-item">
+                    <div class="col-md-3"><span class="timestamp"></span></div>
+                    <div class="col-md-9"><span class="reason"></span></div>
+                  </div>
+                </div>
+
+                <!-- Pagination
+                <!-- --------------------------------------------------------------- -->
+                <div style="display: none;" class="log-pagination-container">
+                  <hr>
+                  <div class="nav d-flex justify-content-center mb-n4">
+                    <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                    <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
+                    <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div> 
 
           <!-- Where to Update -->
           <div class="card bg-faded py-2 px-3 mt-3 small text-center">
