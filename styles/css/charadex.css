@@ -507,6 +507,10 @@ a.badge.badge-primary:active {
   background-color: var(--cd-faded-background-color) !important;
 }
 
+.bg-reset {
+  background-color: var(--cd-content-background-color) !important;
+}
+
 .text-muted {
   color: var(--cd-faded-text-color) !important;
 }
@@ -608,7 +612,7 @@ body {
 #main-container {
   min-height: calc(100vh - 105px);
   padding: 1rem;
-  -ms-flex: 1 1 auto !important;
+  -ml-flex: 1 1 auto !important;
   flex: 1 1 auto !important;
 }
 
@@ -669,11 +673,11 @@ p:last-child {
 }
 
 .cd-gallery-card {
-  min-height: calc(200px + 2.5rem);
+  min-height: calc(175px + 2.5rem);
 }
 
 .cd-gallery-card > img {
-  max-height: calc(200px - 2.5rem) !important;
+  max-height: calc(175px - 2.5rem) !important;
 }
 
 .cd-profile-image-container > img{
