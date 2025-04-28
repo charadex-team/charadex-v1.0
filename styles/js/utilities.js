@@ -56,6 +56,19 @@ charadex.tools = {
       $(loadAreaSelector).addClass('active');
     }, timeout);
   },
+  
+  // Change meta information
+  updateMeta() {
+    try {
+      let title = $(document).attr('title');
+      title = $(document).attr('title', title.replace('Charadex', charadex.site.title));
+      $('meta[name="title"]').attr("content", title);
+      $('meta[name="url"]').attr("content", charadex.site.url);
+      $('meta[name="description"]').attr("content", charadex.site.description);
+    } catch (err) {
+      console.error(err);
+    }
+  },
 
   // Check Array
   // Check if array is actually an array and has info

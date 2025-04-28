@@ -10,20 +10,18 @@ let charadex = {};
 /* ==================================================================== */
 /* Site
 /* If you don't want to hard code your site information, you
-/* can fill this out and it'll do it itself
-/* Though any preview links will still show Charadex's information
+/* can fill this out instead
+/* Any preview links will still show Charadex's information
 /* ==================================================================== */
 charadex.site = {
-
-  title: "A species",
-  url: "https://charadex.comdd",
-  description: `Test description...`
-
+  title: "Charadex",
+  url: "https://charadex.com",
+  description: `A tool for organizing small ARPGs and species.`
 }
 
 /* ==================================================================== */
-/* Sheet ID
-/* Your sheet ID
+/* Sheet Config
+/* Your sheet configuration
 /* ==================================================================== */
 charadex.sheet = {
 
