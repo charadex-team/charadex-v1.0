@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   );
   
-  charadex.tools.loadPage('.hardload', 0);
-  charadex.tools.loadPage('.softload', 200);
+  charadex.tools.loadPage('.softload', 500);
   
 });

@@ -9,5 +9,5 @@ import { charadex } from '../charadex.js';
 ======================================================================= */
 document.addEventListener("DOMContentLoaded", async () => {
   let dex = await charadex.initialize.page(null, charadex.page.traits);
-  charadex.tools.loadPage('.softload', 600);
+  charadex.tools.loadPage('.softload', 500);
 });

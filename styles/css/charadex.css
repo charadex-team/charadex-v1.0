@@ -411,6 +411,16 @@ a:active {
   border-radius: calc(var(--cd-border-radius) - 1px) calc(var(--cd-border-radius) - 1px) 0 0 !important;
 }
 
+.card-footer {
+  background-color: var(--cd-card-header-background-color) !important;
+  border-top-color: var(--cd-card-border-color) !important;
+  border-top-width: var(--cd-card-border-width) !important;
+  border-top-style: var(--cd-card-border-style) !important;
+  font-family: var(--cd-card-header-font-family) !important;
+  border-radius: 0 0  calc(var(--cd-border-radius) - 1px) calc(var(--cd-border-radius) - 1px) !important;
+}
+
+
 
 /* ============================================================= */
 /* Buttons & Badges
@@ -668,6 +678,12 @@ p:last-child {
 .cd-traits-scroll {
   max-height: 200px;
   overflow-y: scroll;
+}
+
+.cd-prompt-background {
+  background-position: center;
+  background-size: cover;
+  min-height: 150px;
 }
 
 /* ============================================================= */

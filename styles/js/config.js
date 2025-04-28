@@ -140,12 +140,45 @@ charadex.page.traits = {
 charadex.page.prompts = {
 
   sheetPage: charadex.sheet.pages.prompts,
-  profileKey: 'prompt',
+  sitePage: 'prompts',
+  dexSelector: 'charadex',
+  profileKey: 'title',
 
-  itemAmount: 24,
-  itemOrder: "desc",
+  sort: {
+    toggle: true,
+    key: "enddate",
+    order: "asc",
+    parameters: []
+  },
 
-  searchFilterParams: ['Title'],
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 12,
+  },
+
+  filters: {
+    toggle: false,
+    parameters: {
+      'TBA': [],
+    }
+  },
+
+  fauxFolder: {
+    toggle: false,
+    dataKey: '',
+    parameters: [],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: false,
+    parameters: ['Title']
+  },
+
+  prevNext: {
+    toggle: true,
+  },
 
 };
 
