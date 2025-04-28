@@ -64,6 +64,26 @@ body {
   ================================================================ */
   --cd-body-font-family: 'Montserrat', sans-serif;
   --cd-header-font-family: 'Comfortaa', sans-serif;
+  
+  /* ============================================================= */
+  /* Rarities
+  ================================================================ */
+
+  --cd-rarity-common-bg: #d58353;
+  --cd-rarity-common-txt: #fcf4ed;
+
+  --cd-rarity-uncommon-bg: #e0bb68;
+  --cd-rarity-uncommon-txt: var(--cd-rarity-common-txt);
+  
+  --cd-rarity-rare-bg: #97b34e;
+  --cd-rarity-rare-txt: var(--cd-rarity-common-txt);
+
+  --cd-rarity-veryrare-bg: #548b71;
+  --cd-rarity-veryrare-txt: var(--cd-rarity-common-txt);
+
+  /* Legendary & Mythic */
+  --cd-rarity-legendary-bg: #5a473e;
+  --cd-rarity-legendary-txt: var(--cd-rarity-common-txt);
 
 
   /* ============================================================= */
@@ -192,6 +212,7 @@ body {
   --cd-input-border-color: var(--cd-border-color);
   --cd-input-border-color-hover: var(--cd-primary-color);
   --cd-input-border-radius: var(--cd-border-radius);
+  
 
 }
 
@@ -693,6 +714,36 @@ p:last-child {
   background-position: center;
   background-size: cover;
   min-height: 150px;
+}
+
+/* ============================================================= */
+/* Rarity
+/* ============================================================= */
+
+.badge-common {
+  background-color: var(--cd-rarity-common-bg);
+  color: var(--cd-rarity-common-txt);
+}
+
+.badge-uncommon {
+  background-color: var(--cd-rarity-uncommon-bg);
+  color: var(--cd-rarity-uncommon-txt);
+}
+
+.badge-rare {
+  background-color: var(--cd-rarity-rare-bg);
+  color: var(--cd-rarity-rare-txt);
+}
+
+.badge-veryrare {
+  background-color: var(--cd-rarity-veryrare-bg);
+  color: var(--cd-rarity-veryrare-txt);
+}
+
+.badge-legendary,
+.badge-mythic {
+  background-color: var(--cd-rarity-legendary-bg);
+  color: var(--cd-rarity-legendary-txt);
 }
 
 /* ============================================================= */
