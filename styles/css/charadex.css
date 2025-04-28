@@ -530,6 +530,11 @@ img {
   image-rendering: -webkit-optimize-contrast;
 }
 
+.img-thumbnail {
+  border-radius:  var(--cd-border-radius) !important;
+  border-color: var(--cd-border-color) !important;
+}
+
 /* Fix any border radiuses that were messed from before */
 .rounded {
   border-radius: var(--cd-border-radius) !important

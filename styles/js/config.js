@@ -188,7 +188,45 @@ charadex.page.prompts = {
 charadex.page.staff = {
 
   sheetPage: charadex.sheet.pages.staff,
+  sitePage: 'players',
+  dexSelector: 'charadex',
   profileKey: 'username',
+
+  sort: {
+    toggle: false,
+    key: "username",
+    order: "asc",
+    parameters: []
+  },
+
+  pagination: {
+    toggle: false,
+    bottomToggle: false,
+    amount: 12,
+  },
+
+  filters: {
+    toggle: false,
+    parameters: {
+      'TBA': [],
+    }
+  },
+
+  fauxFolder: {
+    toggle: false,
+    dataKey: '',
+    parameters: [],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: false,
+    parameters: ['Username']
+  },
+
+  prevNext: {
+    toggle: false,
+  },
 
 };
 
