@@ -11,8 +11,8 @@
   <!-- About Your Site                                                   -->
   <!-- ----------------------------------------------------------------- -->
   <link rel="shortcut icon" type="image/png" href="assets/favicon.png" />
-  <title>Charadex</title>
-  <meta name="title" content="Charadex" />
+  <title>Charadex Inventories</title>
+  <meta name="title" content="Charadex Inventories" />
   <meta name="type" content="website" />
   <meta name="url" content="https://www.charadex.com/" />
   <meta name="image" content="assets/meta.png" />
@@ -51,187 +51,172 @@
 
 <body id="charadex-body">
 
+  <!-- --------------------------------------------------------------------
+  <-- Header
+  <-------------------------------------------------------------------- -->
+  <div class="load-html" data-source="includes/header.html"></div>
 
   <!-- --------------------------------------------------------------------
-    <-- Header
-    <-------------------------------------------------------------------- -->
-
-  <div class="load-html" id="header" data-source="includes/header.html"></div>
-
-
-  <!-- Spinner for loading-->
-  <div class="spinner-border m-auto" id="loading"></div>
+  <-- Masterlist
+  <-------------------------------------------------------------------- -->
+  <div class="container" id="main-container">
+    <div class="card p-md-5 p-4 mb-3">
 
 
-  <!-- --------------------------------------------------------------------
-    <-- Terms
-    <-- I've provided a boiler plate, edit these how you see fit!
-    <-------------------------------------------------------------------- -->
-  <div class="container softload py-md-5 my-4 py-4" id="main-container">
-    <div class="row no-gutters m-n2">
-
-      <!-- Main Content
-            --------------------------------------------------------------------- -->
-      <div class="col-12 p-2">
-        <div class="card p-md-5 p-4 h-100">
-
-          <!-- Hero Image & Title
-                    ------------------------------------------------------------- -->
-          <div class="hero-title mb-4" style="background-image: url();">
-            <div class="m-auto">Charadex</div>
-          </div>
-
-
-          <!-- Description
-                    ------------------------------------------------------------- -->
-          <div class="px-4 text-muted">
-            <p>Write about your species...</p>
-          </div>
-
-
-          <!-- Links
-                    ------------------------------------------------------------- -->
-          <hr class="my-4">
-          <div class="row no-gutters m-n1 mb-n2">
-
-            <div class="col-lg-4 p-1">
-              <h5>About</h5>
-              <div class="px-3">
-                <a class="btn btn-primary d-block mb-1" href="world.html">World</a>
-                <a class="btn btn-primary d-block mb-1" href="species.html">Species</a>
-                <a class="btn btn-primary d-block mb-1" href="masterlist.html">Designs</a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 p-1">
-              <h5>Community</h5>
-              <div class="px-3">
-                <a class="btn btn-primary d-block mb-1" href="#">Toyhou.se</a>
-                <a class="btn btn-primary d-block mb-1" href="#">Discord</a>
-                <a class="btn btn-primary d-block mb-1" href="prompts.html">Prompts</a>
-              </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 p-1">
-              <h5>Resources</h5>
-              <div class="px-3">
-                <a class="btn btn-primary d-block mb-1" href="#">Help Desk</a>
-                <a class="btn btn-primary d-block mb-1" href="faq.html">FAQ</a>
-                <a class="btn btn-primary d-block mb-1" href="terms.html">TOS</a>
-              </div>
-            </div>
-
-          </div>
-
-
-          <!-- Social Media Links
-                    ------------------------------------------------------------- -->
-          <hr class="mt-4">
-          <div class="text-center mb-md-n4 font-weight-bold">
-
-            <a class="mx-3" href="#"><i class="fas fa-floppy-disk fa-fw mr-1"></i> Toyhou.se</a>
-            <a class="mx-3" href="#"><i class="fab fa-discord fa-fw mr-1"></i> Discord</a>
-            <a class="mx-3" href="#"><i class="fab fa-twitter fa-fw mr-1"></i> Twitter </a>
-            <a class="mx-3" href="#"><i class="fab fa-tumblr fa-fw mr-1"></i> Tumblr</a>
-            <a class="mx-3" href="#"><i class="fas fa-cloud fa-fw mr-1"></i> BSky</a>
-
-          </div>
-        </div>
+      <!-- Hero Image & Title
+      <!-- --------------------------------------------------------------- -->
+      <div class="hero-title mb-4" style="background-image: url('./assets/meta.png');">
+        <div class="m-auto">Charadex</div>
       </div>
 
-
-      <!-- Prompts
-            --------------------------------------------------------------------- -->
-      <div class="col-md-6 p-2" id="prompt-gallery">
-        <div class="card p-md-5 p-4 h-100">
-
-          <h4 class="mb-0">Prompts</h4>
-          <hr class="mb-4">
-          <div class="list row no-gutters gallery-row m-n1"></div>
-
-          <div class="d-none">
-            <div class="col-12 gallery-item p-1" id="prompt-item">
-              <div class="card bg-faded p-3">
-                <h5 class="m-0">
-                  <a class="cardlink title" href=""></a>
-                </h5>
-                <hr class="my-2">
-                <div class="row no-gutters small my-n2">
-                  <div class="col-md-6 p-2 d-flex justify-content-between">
-                    <b>Starts</b> <span class="startdate"></span>
-                  </div>
-                  <div class="col-md-6 p-2 d-flex justify-content-between">
-                    <b>Ends</b> <span class="enddate"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <!-- Description
+      <!-- --------------------------------------------------------------- -->
+      <div class="px-4 text-muted">
+        <p>Write about your species...</p>
       </div>
 
+      <!-- Links
+      <!-- --------------------------------------------------------------- -->
+      <hr class="my-4">
+      <div class="row no-gutters m-n1 mb-n2">
 
-      <!-- Staff
-            --------------------------------------------------------------------- -->
-      <div class="col-md-6 p-2" id="staff-gallery">
-        <div class="card p-md-5 p-4 h-100">
-
-          <h4 class="mb-0">Staff</h4>
-          <hr class="mb-4">
-          <div class="list row no-gutters gallery-row m-n1"></div>
-
-          <div class="d-none">
-            <div class="col-md-6 gallery-item p-1" id="staff-item">
-              <div class="row no-gutters m-n1">
-                <div class="col-4 p-1 my-auto">
-                  <img class="img-fluid img-thumbnail image" src="">
-                </div>
-                <div class="col-8 p-1">
-                  <a class="d-block mt-2 link text-truncate" href=""><b class="username"></b></a>
-                  <span class="badge badge-primary jobtitle"></span>
-                </div>
-              </div>
-            </div>
+        <div class="col-lg-4 p-1">
+          <h5>About</h5>
+          <div class="px-3">
+            <a class="btn btn-primary d-block mb-1" href="world.html">World</a>
+            <a class="btn btn-primary d-block mb-1" href="species.html">Species</a>
+            <a class="btn btn-primary d-block mb-1" href="masterlist.html">Designs</a>
           </div>
-
         </div>
+
+        <div class="col-lg-4 col-md-6 p-1">
+          <h5>Community</h5>
+          <div class="px-3">
+            <a class="btn btn-primary d-block mb-1" href="#">Toyhou.se</a>
+            <a class="btn btn-primary d-block mb-1" href="#">Discord</a>
+            <a class="btn btn-primary d-block mb-1" href="prompts.html">Prompts</a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6 p-1">
+          <h5>Resources</h5>
+          <div class="px-3">
+            <a class="btn btn-primary d-block mb-1" href="#">Help Desk</a>
+            <a class="btn btn-primary d-block mb-1" href="faq.html">FAQ</a>
+            <a class="btn btn-primary d-block mb-1" href="terms.html">TOS</a>
+          </div>
+        </div>
+
       </div>
 
+      <!-- Social Media Links
+    <!-- --------------------------------------------------------------- -->
+      <hr class="my-4">
+      <div class="text-center mb-md-n4 font-weight-bold">
 
-      <!-- Designs
-            --------------------------------------------------------------------- -->
-      <div class="col-md-12 p-2" id="design-gallery">
-        <div class="card p-md-5 p-4 h-100">
+        <a class="mx-3" href="#"><i class="fas fa-floppy-disk fa-fw mr-1"></i> Toyhou.se</a>
+        <a class="mx-3" href="#"><i class="fab fa-discord fa-fw mr-1"></i> Discord</a>
+        <a class="mx-3" href="#"><i class="fab fa-twitter fa-fw mr-1"></i> Twitter </a>
+        <a class="mx-3" href="#"><i class="fab fa-tumblr fa-fw mr-1"></i> Tumblr</a>
+        <a class="mx-3" href="#"><i class="fas fa-cloud fa-fw mr-1"></i> BlueSky</a>
 
-          <h4 class="mb-0">Latest Designs</h4>
-          <hr class="mb-4">
-          <div class="list row no-gutters gallery-row m-n1"></div>
-
-          <div class="d-none">
-            <div class="col-md-3 col-6 gallery-item p-1" id="design-item">
-              <a class="card p-2 bg-faded d-block text-center cardlink" href="">
-                <img class="image img-fluid gallery-img" src=""><br>
-                <span class="btn btn-primary d-block mt-2 design"></span>
-              </a>
-            </div>
-          </div>
-
-        </div>
       </div>
-
-
 
     </div>
+      
+    <!-- Designs
+    <!-- --------------------------------------------------------------- -->
+    <div class="card p-md-5 p-4 mb-3" id="design-gallery">
+      <h4 class="mb-0"><a href="masterlist.html">Recent Designs</a></h4>
+      <hr>
+      <div class="row no-gutters design-list softload m-n2"></div>
+    </div>
+
+    <!-- Prompts
+    <!-- --------------------------------------------------------------- -->
+    <div class="card p-md-5 p-4 mb-3" id="prompt-gallery">
+      <h4 class="mb-0"><a href="prompts.html">Prompts</a></h4>
+      <hr>
+      <div class="row no-gutters prompt-list softload m-n2"></div>
+    </div>
+
+    <!-- Staff
+    <!-- --------------------------------------------------------------- -->
+    <div class="card p-md-5 p-4 mb-3" id="staff-gallery">
+      <h4 class="mb-0"><a href="staff.html">Staff</a></h4>
+      <hr>
+      <div class="row no-gutters staff-list softload m-n2"></div>
+    </div>
+
+    
   </div>
 
 
+
   <!-- --------------------------------------------------------------------
-    <-- Footer
-    <-------------------------------------------------------------------- -->
+  <-- Footer
+  <-------------------------------------------------------------------- -->
+  <div class="load-html" data-source="includes/footer.html"></div>
 
-  <div class="load-html" id="footer" data-source="includes/footer.html"></div>
 
+
+  <!-- --------------------------------------------------------------------
+  <-- Repeat Items
+  <-- Do not remove 'display:none;'
+  <-- Edit these to your liking
+  <-------------------------------------------------------------------- -->
+  <div style="display:none;">
+
+    <!-- Designs
+    <!-- --------------------------------------------------------------- -->
+    <div class="col-md-3 col-sm-6 p-2" id="design-gallery-item">
+      <div class="card bg-faded h-100">
+        <div class="card-header bg-faded text-center">
+          <h5 class="mb-0">
+            <a class="profileid profilelink" href=""></a>
+          </h5>
+        </div>
+        <div class="card-body cd-gallery-card d-flex flex-fill">
+          <img class="image img-fluid m-auto" src="" >
+        </div>
+        <div class="card-footer bg-faded text-center">
+          <a class="owner ownerlink small" href=""></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Prompts
+    <!-- --------------------------------------------------------------- -->
+    <div class="col-md-4 col-sm-6 p-2" id="prompt-gallery-item">
+      <div class="card">
+        <h6 class="card-header bg-faded text-truncate">
+          <a class="profileid profilelink"></a>
+        </h6>
+        <div class="cd-prompt-background"></div>
+        <div class="card-body bg-faded small description"></div>
+      </div>
+    </div>
+
+    <!-- Staff
+    <!-- --------------------------------------------------------------- -->
+    <div class="col-md-4 col-sm-6 p-2" id="staff-gallery-item">
+      <div class="card bg-faded p-3 h-100">
+        <div class="row no-gutters m-n2">
+          <div class="col-md-5 p-2">
+            <img class="image img-thumbnail img-fluid m-auto" src="">
+          </div>
+          <div class="col-md-7 p-2">
+            <div class="text-truncate">
+              <a class="profileid profilelink"></a>
+            </div>
+            <hr class="my-2">
+            <span class="small jobtitle"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   <!-- ----------------------------------------------------------------- -->
   <!-- JS                                                                -->
@@ -244,8 +229,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 
   <!-- Charadex Script -->
-  <script src="styles/js/pages/index.js" type="module"></script>
   <script src="styles/js/pages/base.js" type="module"></script>
+  <script src="styles/js/pages/index.js" type="module"></script>
 
 
 </body>

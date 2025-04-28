@@ -8,24 +8,51 @@ import { charadex } from '../charadex.js';
 /* Load
 ======================================================================= */
 document.addEventListener("DOMContentLoaded", async () => {
-  let dex = await charadex.initialize.page(
-    null, 
-    charadex.page.faq, 
-    (arr) => {
-    let pageUrl = charadex.url.getPageUrl(charadex.page.faq.sitePage);
-    for (let question of arr) {
 
-      // Make the tags pretty and actually work <3
-      question.tags = question.tags ? question.tags.split(',') : [];
-      let fancyTagArr = [];
-      if (question.tags.length >= 1) {
-        for (let tag of question.tags) {
-          fancyTagArr.push(`<a href="${charadex.url.addUrlParameters(pageUrl, {tags: tag.trim()})}">#${tag.trim()}</a>`);
-        }
-      }
-      question.fancytags = fancyTagArr.join(' ');
+  /* Prompts
+  ===================================================================== */
+  let prompts = await charadex.initialize.page(null, charadex.page.index.prompts, (arr) => {
 
-    }
+    // Splice the silly little array
+    let sliceAmount = charadex.page.index.prompts.amount || 4;
+    arr.splice(sliceAmount, arr.length);
+
+  }, (data) => {
+
+    // Add the silly little prompt stuff here too
+    $('.cd-prompt-background').each(function(i) {
+      const element = $(this);
+      const image = data.array[i]?.image;
+      element.attr('style', `background-image: url(${image})`);
+    });
+    
   });
+
+
+  /* Staff
+  ===================================================================== */
+  let staff = await charadex.initialize.page(null, charadex.page.index.staff, (arr) => {
+    
+    // Splice the silly little array
+    let sliceAmount = charadex.page.index.staff.amount || 6;
+    arr.splice(sliceAmount, arr.length);
+
+  });
+
+
+  /* Designs
+  ===================================================================== */
+  let designs = await charadex.initialize.page(null, charadex.page.index.designs, (arr) => {
+    
+    // Splice the silly little array
+    let sliceAmount = charadex.page.index.designs.amount || 6;
+    arr.splice(sliceAmount, arr.length);
+
+  });
+
+
+  /* Load Page
+  ===================================================================== */
   charadex.tools.loadPage('.softload', 500);
+
 });

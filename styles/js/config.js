@@ -492,14 +492,23 @@ charadex.page.inventory = {
 /* --------------------------------------------------------------- */
 charadex.page.index = {
 
-  promptSheetPage: charadex.sheet.pages.prompts,
-  numOfPrompts: 3,
+  prompts: {
+    ... charadex.page.prompts,
+    dexSelector: 'prompt',
+    amount: 3,
+  },
 
-  staffSheetPage: charadex.sheet.pages.staff,
-  numOfStaff: 8,
+  staff: {
+    ... charadex.page.staff,
+    dexSelector: 'staff',
+    amount: 6,
+  },
 
-  masterlistSheetPage: charadex.sheet.pages.masterlist,
-  numOfDesigns: 4,
+  designs: {
+    ... charadex.page.masterlist,
+    dexSelector: 'design',
+    amount: 4,
+  }
 
 };
 
