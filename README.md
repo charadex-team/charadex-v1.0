@@ -22,6 +22,11 @@
 
 &nbsp;
 
+> [!WARNING]
+> If you are using an older version of the sheet and want to update to v1.5.0, don't upgrade just yet. Charadex v1.6.0 will be out soon and will have a lot more tools to help you organize your data. 
+
+&nbsp;
+
 ## Community Help
 
 If you're using this version and find any bugs, please let me know in the [Discord Server](https://discord.gg/3ghSjBug6a), or make an [issue](https://github.com/charadex-team/charadex-v1.0/issues).
