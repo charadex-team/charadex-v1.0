@@ -509,9 +509,6 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
     }
 
-    // Show the filters
-    filtersElement.parents(`#${selector}-filter-container`).show();
-
     return true;
 
   } 
@@ -522,6 +519,9 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
   const initializeFilters = (listJs) => {
 
     if (!listJs) return false;
+
+    // Show the filters
+    filtersElement.parents(`#${selector}-filter-container`).show();
 
     // Deal with the Dom
     $(`.${filterClass}`).each(function(el) {

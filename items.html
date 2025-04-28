@@ -144,7 +144,7 @@
 
       <!-- Repeated Items Render Here
       <!-- --------------------------------------------------------------- -->
-      <div class="row no-gutters charadex-list m-n2"></div>
+      <div class="row no-gutters charadex-list softload m-n2"></div>
 
       <!-- Pagination
       <!-- --------------------------------------------------------------- -->
@@ -176,16 +176,28 @@
 
     <!-- Gallery Items
     <!-- --------------------------------------------------------------- -->
-    <div class="col-lg-3 col-sm-6 p-2" id="charadex-gallery-item">
-      <a class="card h-100 profilelink" href="">
-        <h5 class="card-header text-center profileid"></h5>
-        <div class="card-body cd-gallery-card d-flex flex-fill">
-          <img class="image img-fluid m-auto" src="" oncontextmenu="return false">
+    <div class="col-md-6 p-2" id="charadex-gallery-item">
+      <div class="card h-100">
+
+        <!-- Header -->
+        <div class="card-header p-4">
+          <div class="row no-gutters align-items-end m-n1">
+            <div class="col"><h5 class="mb-0 pr-2"><a class="profilelink profileid"></a></h5></div>
+            <div class="col-auto text-right raritybadge"></div>
+          </div>
         </div>
-        <div class="card-footer">
-          <div class="raritybadge"></div>
+        
+        <!-- Body -->
+        <div class="card-body p-md-4 p-3 d-flex flex-fill align-items-center">
+          <div class="row no-gutters m-n2">
+            <div class="col-md-4 p-2"><img class="image img-fluid m-auto" src="" ></div>
+            <div class="col-md-8 p-2">
+              <div class="description"></div>
+            </div>
+          </div>
         </div>
-      </a>
+
+      </div>
     </div>
 
 
@@ -195,165 +207,61 @@
       <div class="card">
 
         <!-- Header -->
-        <div class="card-header p-4 text-center">
-          <h3 class="mb-0 pr-2"><a class="profilelink profileid"></a></h3> 
-          <div class="text-muted">(#<span class="id"></span>)</div>
+        <div class="card-header px-md-5 px-4 py-4">
+          <div class="row no-gutters align-items-end m-n1">
+            <div class="col"><h3 class="mb-0 pr-2"><a class="profilelink profileid"></a></h3></div>
+            <div class="col-auto text-right raritybadge"></div>
+          </div>
         </div>
-
-        <!-- Image -->
-        <div class="cd-profile-image-container p-md-5 p-4 text-center" oncontextmenu="return false">
-          <img class="image img-fluid" src="">
-        </div>
-
-
-        <!-- Nav Tabs
-        <!-- ----------------------------------------------------------- -->
-        <hr class="my-0">
-        <ul class="nav row n-gutters m-n1 py-4 px-md-5 px-4" id="profile-tabs" role="tablist">
-          <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary active" id="profile-tab" data-toggle="tab" href="#profile" 
-            aria-controls="profile" aria-selected="true">Profile</a>
-          </li>
-          <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary" id="logs-tab" data-toggle="tab" href="#logs" aria-controls="logs" 
-            aria-selected="false">Logs</a>
-          </li>
-        </ul>
-        <hr class="my-0">
-
 
         <!-- Main Info
         <!-- ----------------------------------------------------------- -->
         <div class="p-md-5 p-4">
+          <div class="row no-gutters m-n2">
 
-          <div class="tab-content">
-
-            <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-              <div class="row no-gutters m-n2">
-
-                <div class="col-md-6 p-2">
-                  <div class="card bg-faded p-4 h-100">
-
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Species</b>
-                      <span class="species"></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Rarity</b>
-                      <span class="rarity"></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Design Type</b>
-                      <span class="designtype"></span>
-                    </div>
-                    
-                    <hr>
-
-                    <!-- Item -->
-                    <div>
-                      <b class="text-muted">Traits</b>
-                      <div class="px-4 text-pre traits cd-traits-scroll"></div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div class="col-md-6 p-2">
-                  <div class="card bg-faded p-4 h-100">
-
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Owner</b>
-                      <a class="owner ownerlink"></a>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Artist</b>
-                      <a class="artist artistlink"></a>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Designer</b>
-                      <a class="designer designerlink"></a>
-                    </div>
-
-                    <hr>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Value</b>
-                      <span>$<span class="value"></span></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Status</b>
-                      <span class="status"></span>
-                    </div>
-
-                    <hr>
-                    
-                    <!-- Item -->
-                    <div>
-                      <b class="text-muted">Notes</b>
-                      <div class="px-4 text-pre notes"></div>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
+            <!-- Image -->
+            <div class="col-md-4 d-flex justify-content-center text-center p-2">
+              <img class="image img-fluid" src="">
             </div>
-            
-            
-            <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab" tabindex="0">
-              <h4 class="text-primary">Transaction Log</h4>
-              <div class="card bg-faded p-4" id="log-gallery">
 
-                <!-- List -->
-                <!-- --------------------------------------------------------------- -->
-                <div class="row no-gutters">
-                  <div class="col-md-3"><b>Timestamp</b></div>
-                  <div class="col-md-9"><b>Reason</b></div>
+            <div class="col-md-8 p-2">
+              <div class="card bg-faded p-4 h-100">
+
+                <!-- Item -->
+                <div class="d-flex no-gutters mb-2">
+                  <b class="text-muted col-md-5 col-6">Item</b>
+                  <span class="item"></span>
                 </div>
+  
+                <!-- Item -->
+                <div class="d-flex no-gutters mb-2">
+                  <b class="text-muted col-md-5 col-6">Type</b>
+                  <span class="type"></span>
+                </div>
+  
+                <!-- Item -->
+                <div class="d-flex no-gutters mb-2">
+                  <b class="text-muted col-md-5 col-6">Rarity</b>
+                  <span class="rarity"></span>
+                </div>
+  
+                <!-- Item -->
+                <div class="d-flex no-gutters">
+                  <b class="text-muted col-md-5 col-6">Price</b>
+                  <span>$<span class="price"></span></span>
+                </div>
+
                 <hr>
-                <div class="log-list"></div>
-
-                <!-- List Item -->
-                <!-- --------------------------------------------------------------- -->
-                <div style="display: none;">
-                  <div class="row no-gutters" id="log-gallery-item">
-                    <div class="col-md-3"><span class="timestamp"></span></div>
-                    <div class="col-md-9"><span class="reason"></span></div>
-                  </div>
-                </div>
-
-                <!-- Pagination
-                <!-- --------------------------------------------------------------- -->
-                <div style="display: none;" class="log-pagination-container">
-                  <hr>
-                  <div class="nav d-flex justify-content-center mb-n4">
-                    <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                    <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
-                    <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
-                  </div>
+                
+                <!-- Item -->
+                <div>
+                  <b class="text-muted">Description</b>
+                  <div class="px-4 text-pre description"></div>
                 </div>
 
               </div>
             </div>
 
-          </div> 
-
-          <!-- Where to Update -->
-          <div class="card bg-faded py-2 px-3 mt-3 small text-center">
-            <b>If you need to update this entry, please do so <a href="">here</a>.</b>
           </div>
 
         </div>
@@ -377,8 +285,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/list.js/2.3.0/list.min.js" crossorigin="anonymous"></script>
 
   <!-- Charadex Script -->
-  <script src="styles/js/pages/items.js" type="module"></script>
   <script src="styles/js/pages/base.js" type="module"></script>
+  <script src="styles/js/pages/items.js" type="module"></script>
 
 
 </body>

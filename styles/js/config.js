@@ -13,7 +13,7 @@ let charadex = {};
 /* ------------------------------------------------------------------- */
 charadex.sheet = {
 
-  id: "1MhAv9KfLfJu0aoxnJxQ4Qo6GkXaRemkGIxChcdS6Me0",
+  id: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
 
   pages: {
     masterlist:    "masterlist",
@@ -321,24 +321,16 @@ charadex.page.inventory = {
 
     [charadex.sheet.pages.masterlist]: {
 
+      // This imports the config from the masterlist
+      // So you dont have to repeat yourself
+      ...charadex.page.masterlist, 
+
       sheetPage: charadex.sheet.pages.masterlist,
       sitePage: 'masterlist',
       primaryPageKey: 'username',
       secondaryPageKey: 'owner',
       dexSelector: 'designs',
       profileKey: 'design',
-
-      pagination: {
-        toggle: true,
-        bottomToggle: true,
-        amount: 10,
-      },
-
-      search: {
-        toggle: false,
-        filterToggle: false,
-        parameters: ['Username']
-      },
 
     }
 
