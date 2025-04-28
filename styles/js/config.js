@@ -188,7 +188,7 @@ charadex.page.prompts = {
 charadex.page.staff = {
 
   sheetPage: charadex.sheet.pages.staff,
-  sitePage: 'players',
+  sitePage: 'inventories',
   dexSelector: 'charadex',
   profileKey: 'username',
 
@@ -236,12 +236,45 @@ charadex.page.staff = {
 charadex.page.faq = {
 
   sheetPage: charadex.sheet.pages.faq,
+  sitePage: 'faq',
+  dexSelector: 'charadex',
   profileKey: 'id',
 
-  itemAmount: 24,
-  itemOrder: "asc",
+  sort: {
+    toggle: false,
+    key: "id",
+    order: "asc",
+    parameters: []
+  },
 
-  searchFilterParams: ['All', 'Tags'],
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 12,
+  },
+
+  filters: {
+    toggle: false,
+    parameters: {
+      'TBA': [],
+    }
+  },
+
+  fauxFolder: {
+    toggle: false,
+    dataKey: '',
+    parameters: [],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: true,
+    parameters: ['All', 'Question', 'Answer', 'Tags']
+  },
+
+  prevNext: {
+    toggle: false,
+  },
 
 }
 
