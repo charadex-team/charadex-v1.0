@@ -536,12 +536,8 @@ a.badge.badge-primary:active {
   color: var(--cd-faded-text-color) !important;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3,
+h4, h5, h6 {
   font-family: var(--cd-navbar-font-family) !important;
 }
 
@@ -607,18 +603,6 @@ img {
   display: block;
 }
 
-/* Loading Icon */
-#loading {
-  width: 5rem;
-  height: 5rem;
-  position: absolute;
-  top: calc(50% - 2.5rem);
-  left: calc(50% - 2.5rem);
-  animation-duration: 2s;
-  opacity: .5;
-  border-color: var(--cd-body-text-color);
-  border-right-color: transparent !important;
-}
 
 /* ============================================================= */
 /* Chee's Tweaks
@@ -661,6 +645,10 @@ p:last-child {
   max-width: 950px !important;
 }
 
+/* ============================================================= */
+/* Custom Classes
+/* ============================================================= */
+
 /* Prevents awkward load in stutter */
 #charadex-gallery .list .card-body {
   min-height: calc(200px + 2.5rem);
@@ -668,29 +656,6 @@ p:last-child {
 
 #charadex-gallery .list .card-body img {
   max-height: 200px;
-}
-
-.gallery-img {
-  max-height: 150px;
-}
-
-/* Combines search and its companion filter */
-#search-filter.form-control {
-  border-radius: var(--cd-border-radius) 0 0 var(--cd-border-radius) !important;
-  border-right: 0 !important;
-}
-
-#search.filtered.form-control {
-  margin-left: -.5rem;
-  width: calc(100% + .5rem) !important;
-  border-radius: 0 var(--cd-border-radius) var(--cd-border-radius) 0 !important;
-}
-
-
-
-#log-table {
-  max-height: 200px;
-  overflow-y: auto;
 }
 
 .cd-gallery-card {
@@ -705,16 +670,45 @@ p:last-child {
   max-height: 400px;
 }
 
+/* Traits */
 .cd-traits-scroll {
   max-height: 200px;
   overflow-y: scroll;
 }
 
+/* Prompts */
 .cd-prompt-background {
   background-position: center;
   background-size: cover;
   min-height: 150px;
 }
+
+/* Makes sure your text formatting is preserved from the sheet */
+/* Best for large areas like notes */
+.cd-text-pre {
+  white-space: break-spaces;
+}
+
+/* For the hero image in the index */
+.cd-hero-title {
+  color: var(--cd-primary-color);
+  background-color: var(--cd-faded-background-color);
+  border-radius: var(--cd-border-radius);
+  font-family: var(--cd-header-font-family);
+  display: flex;
+  padding: 1.5rem;
+  min-height: 250px;
+  font-weight: 800;
+  font-size: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .cd-hero-title {
+    letter-spacing: 2px;
+    font-size: 5rem;
+  }
+}
+
 
 /* ============================================================= */
 /* Rarity
@@ -744,33 +738,4 @@ p:last-child {
 .badge-mythic {
   background-color: var(--cd-rarity-legendary-bg);
   color: var(--cd-rarity-legendary-txt);
-}
-
-/* ============================================================= */
-/* Custom Classes
-/* ============================================================= */
-
-/* Makes sure your text formatting is preserved from the sheet */
-/* Best for large areas like notes */
-.text-pre {
-  white-space: break-spaces;
-}
-
-.hero-title {
-  color: var(--cd-primary-text-color);
-  background-color: var(--cd-primary-color);
-  border-radius: var(--cd-border-radius);
-  font-family: var(--cd-header-font-family);
-  display: flex;
-  padding: 1.5rem;
-  min-height: 250px;
-  font-weight: 800;
-  font-size: 2.5rem;
-}
-
-@media (min-width: 768px) {
-  .hero-title {
-    letter-spacing: 2px;
-    font-size: 5rem;
-  }
 }
