@@ -57,4 +57,5 @@ If you're using this version and find any bugs, please let me know in the [Disco
 
 - [Discord Server](https://discord.gg/3ghSjBug6a)
 - [Support Charadex](https://ko-fi.com/charadex)
+- [Example Site](https://charadex-team.github.io/charadex-v1.0/index.html)
 - [Example Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/edit?usp=sharing)
