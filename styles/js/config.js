@@ -26,18 +26,18 @@ charadex.site = {
 /* ==================================================================== */
 charadex.sheet = {
 
-  id: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
+  id: "1D4HYjnHo6y_KS0vcOiGk9WTnFKW37Isd5VlSRFE6EGU",
 
   pages: {
     masterlist:    "masterlist",
     masterlistLog: "masterlist log",
+    players:       "players",
     inventory:     "inventory",
     inventoryLog:  "inventory log",
     items:         "items",
     traits:        "traits",
     prompts:       "prompts",
     faq:           "faq",
-    staff:         "mods",
   },
 
   options: {
@@ -165,7 +165,7 @@ charadex.page.prompts = {
   sheetPage: charadex.sheet.pages.prompts,
   sitePage: 'prompts',
   dexSelector: 'charadex',
-  profileProperty: 'title',
+  profileProperty: 'prompt',
 
   sort: {
     toggle: true,
@@ -210,7 +210,7 @@ charadex.page.prompts = {
 /* --------------------------------------------------------------- */
 charadex.page.staff = {
 
-  sheetPage: charadex.sheet.pages.staff,
+  sheetPage: charadex.sheet.pages.players,
   sitePage: 'inventories',
   dexSelector: 'charadex',
   profileProperty: 'username',
@@ -315,7 +315,7 @@ charadex.page.masterlist = {
   sort: {
     toggle: true,
     key: "id",
-    order: "desc",
+    order: "asc",
     parameters: []
   },
 
@@ -355,8 +355,8 @@ charadex.page.masterlist = {
     [charadex.sheet.pages.masterlistLog]: {
 
       sheetPage: charadex.sheet.pages.masterlistLog,
-      primaryProperty: 'id',
-      relatedProperty: 'id',
+      primaryProperty: 'design',
+      relatedProperty: 'design',
       dexSelector: 'log',
       profileProperty: 'design',
       profileToggle: false,
@@ -382,10 +382,10 @@ charadex.page.masterlist = {
 
 /* Inventory
 /* --------------------------------------------------------------- */
-charadex.page.inventory = {
+charadex.page.player = {
 
   // Dex Set Up
-  sheetPage: charadex.sheet.pages.inventory,
+  sheetPage: charadex.sheet.pages.players,
   sitePage: 'inventories',
   dexSelector: 'charadex',
   profileProperty: 'username',
@@ -394,7 +394,7 @@ charadex.page.inventory = {
   sort: {
     toggle: true,
     key: "username",
-    order: "asc",
+    order: "desc",
     parameters: []
   },
 
@@ -428,6 +428,18 @@ charadex.page.inventory = {
 
   // Related Data
   relatedData: {
+
+    [charadex.sheet.pages.inventory]: {
+
+      sheetPage: charadex.sheet.pages.inventoryLog,
+      sitePage: 'inventories',
+      primaryProperty: 'username',
+      relatedProperty: 'username',
+      dexSelector: 'inventory',
+      profileProperty: 'username',
+      profileToggle: false,
+
+    },
 
     [charadex.sheet.pages.inventoryLog]: {
 

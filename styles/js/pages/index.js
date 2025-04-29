@@ -28,14 +28,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     
   });
 
-
   /* Staff
   ===================================================================== */
   let staff = await charadex.initialize.page(null, charadex.page.index.staff, (arr) => {
     
     // Splice the silly little array
+    let mods = arr.filter(a => a.mod);
     let sliceAmount = charadex.page.index.staff.amount || 6;
-    arr.splice(sliceAmount, arr.length);
+    return mods.length > sliceAmount ? mods.splice(sliceAmount, mods.length) : mods;
 
   });
 

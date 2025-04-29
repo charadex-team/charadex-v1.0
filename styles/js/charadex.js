@@ -57,7 +57,8 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
   // Let us manipulate the data before it gets to the list
   if (typeof dataCallback === 'function') {
-    dataCallback(charadexData);
+    let newData = dataCallback(charadexData);
+    if (newData !== undefined && charadex.tools.checkArray(newData)) charadexData = newData;
   }
 
   /* Sort the Dex */

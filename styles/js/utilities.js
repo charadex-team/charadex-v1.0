@@ -307,26 +307,15 @@ charadex.manageData = {
 
   },
 
-  /* Fixes old style of inventories
+  /* Relates inventory data specifically
   ===================================================================== */
-  async inventoryFix(profileArray) {
-
-    let itemArr = await charadex.importSheet(charadex.sheet.pages.items);
-  
-    let inventoryData = [];
-    for (let property in profileArray) {
+  async relateInventory (inventoryArr) {
+    let itemArr = await charadex.importSheet('Items');
+    for (let index in inventoryArr) {
       for (let item of itemArr) {
-        if (property === charadex.tools.scrub(item.item) && profileArray[property] !== '') inventoryData.push({
-          ... item,
-          ... {
-            quantity: profileArray[property]
-          }
-        });
+        if (inventoryArr[index].item === item.item) inventoryArr[index] = {...inventoryArr[index], ...item};
       }
     }
-  
-    return inventoryData;
-  
   },
   
   /* Adds profile links

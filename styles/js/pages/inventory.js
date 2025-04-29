@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   let dex = await charadex.initialize.page(
     null,
-    charadex.page.inventory,
+    charadex.page.player,
     null, 
     async (listData) => {
 
@@ -20,18 +20,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         let profile = listData.profileArray[0];
 
         // Inventory
-        charadex.initialize.groupGallery(
-          charadex.page.inventory.inventoryConfig,
-          await charadex.manageData.inventoryFix(profile),
-          'type',
-          charadex.url.getPageUrl('items')
-        )
+        if (charadex.tools.checkArray(profile.inventory)) {
+          let itemArr = await charadex.manageData.relateInventory(profile.inventory);
+          charadex.initialize.groupGallery(
+            charadex.page.player.inventoryConfig,
+            profile.inventory,
+            'type',
+            charadex.url.getPageUrl('items')
+          )
+        }
 
-        // designs
+        // Designs
         if (charadex.tools.checkArray(profile.masterlist)) {
           let designs = await charadex.initialize.page(
             profile.masterlist,
-            charadex.page.inventory.relatedData['masterlist'],
+            charadex.page.player.relatedData['masterlist'],
           );
         }
 
@@ -39,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (charadex.tools.checkArray(profile.inventorylog)) {
           let logs = await charadex.initialize.page(
             profile.inventorylog,
-            charadex.page.inventory.relatedData['inventory log'],
+            charadex.page.player.relatedData['inventory log'],
           );
         }
 
