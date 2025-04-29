@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (listData.type == 'profile') {
 
-        let profile = listData.array[0];
+        let profile = listData.profileArray[0];
 
         // Inventory
         charadex.initialize.groupGallery(
