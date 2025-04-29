@@ -60,8 +60,6 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
     dataCallback(charadexData);
   }
 
-  console.log(charadexData);
-
   /* Sort the Dex */
   if (config.sort?.toggle ?? false) {
     charadexData = charadex.manageData.sortArray(
@@ -78,8 +76,6 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
     let profileArr = list.getProfile(charadexData);
     if (!profileArr) return false;
-
-    console.log(profileArr);
 
     if (config.prevNext?.toggle ?? false) {
       charadex.listFeatures.prevNextLink(pageUrl, charadexData, profileArr, selector);
@@ -182,8 +178,6 @@ charadex.initialize.groupGallery = async function (config, dataArray, groupBy, c
       config.sort.parameters,
     );
   }
-    
-  console.log(charadexData);
 
   /* Attempt deal with gallery
   ======================================================================= */
