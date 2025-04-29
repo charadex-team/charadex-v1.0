@@ -89,7 +89,8 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
       listCallback({
         type: 'profile',
         pageUrl: pageUrl,
-        array: profileArr,
+        array: charadexData,
+        profileArray: profileArr,
         list: profileList
       })
     }
