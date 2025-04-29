@@ -41,8 +41,12 @@ charadex.sheet = {
 
   options: {
 
-    itemTypes: ['All', 'Currency', 'MYO Ticket', 'Trait Ticket', 'Miscellaneous'],
+    designTypes: ['All', 'Official Design', 'Guest Design', 'MYO Slot', 'MYO Design'],
+    statuses: ['All', 'Resell', 'Trade', 'Gift', 'Voided', 'For Sale', 'Purchased'],
     rarity: ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+    species: ['All', 'Dog', 'Cat', 'Bunny'],
+    itemTypes: ['All', 'Currency', 'MYO Slot', 'Pet', 'Trait', 'Misc'],
+    traitTypes: ['All', 'Ears', 'Eyes', 'Body', 'Limbs', 'Tails', 'Misc', 'Mutations']
 
   }
 
@@ -129,7 +133,7 @@ charadex.page.traits = {
   filters: {
     toggle: true,
     parameters: {
-      'Type': ['All'],
+      'Type': charadex.sheet.options.traitTypes,
       'Rarity': charadex.sheet.options.rarity,
     }
   },
@@ -137,7 +141,7 @@ charadex.page.traits = {
   fauxFolder: {
     toggle: true,
     folderProperty: 'Type',
-    parameters: ['All'],
+    parameters: charadex.sheet.options.traitTypes,
   },
 
   search: {
@@ -323,22 +327,22 @@ charadex.page.masterlist = {
   filters: {
     toggle: true,
     parameters: {
-      'Design Type': ['All', 'Official Design', 'MYO Design'],
-      'Status': ['All', 'Can Sell', 'Can Trade'],
-      'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+      'Design Type': charadex.sheet.options.designTypes,
+      'Status': charadex.sheet.options.statuses,
+      'Rarity': charadex.sheet.options.rarity,
     }
   },
 
   fauxFolder: {
     toggle: true,
     folderProperty: 'Species',
-    parameters: ['All', 'Dog', 'Cat'],
+    parameters: charadex.sheet.options.species,
   },
 
   search: {
     toggle: true,
     filterToggle: true,
-    parameters: ['All', 'ID', 'Owner', 'Designer', 'Artist']
+    parameters: ['All', 'ID', 'Design', 'Owner', 'Designer', 'Artist', 'Traits']
   },
 
   prevNext: {
@@ -472,7 +476,7 @@ charadex.page.inventory = {
       sortProperty: "item",
       order: "asc",
       parametersKey: 'type', 
-      parameters: ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous']
+      parameters: charadex.sheet.options.itemTypes
     },
 
     search: {
@@ -484,8 +488,8 @@ charadex.page.inventory = {
     filters: {
       toggle: true,
       parameters: {
-        'Type': ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
-        'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+        'Type': charadex.sheet.options.itemTypes,
+        'Rarity': charadex.sheet.options.rarity,
       }
     },
 
