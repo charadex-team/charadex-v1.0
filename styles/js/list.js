@@ -194,10 +194,10 @@ charadex.listFeatures.fauxFolders = (pageUrl, folderParameters, selector = 'char
 
   // Get the elements
   const folderElement = $(`#${selector}-folders`);
-  const buttonElement = $(`#${selector}-folder`).clone();
 
   // Loop through parameters and add them to the folder element
   for (let key of folderParameters) {
+    const buttonElement = $(`#${selector}-folder`).clone();
     buttonElement.find('.btn')
       .text(key)
       .attr('href', charadex.url.addUrlParameters(pageUrl, { folder: key }));
