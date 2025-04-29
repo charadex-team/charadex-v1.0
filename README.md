@@ -23,7 +23,7 @@
 &nbsp;
 
 > [!WARNING]
-> If you are using an older version of the sheet and want to update to v1.5.0, don't upgrade just yet. Charadex v1.6.0 will be out soon and will have a lot more tools to help you organize your data. 
+> If you are using an older version of the sheet and want to update to v1.5.0, don't upgrade just yet. Charadex v1.5.6 will be out soon and will have a lot more tools to help you organize your data.
 
 &nbsp;
 
@@ -42,10 +42,10 @@ If you're using this version and find any bugs, please let me know in the [Disco
 
 **Setting Up**
 
-- [Getting Started]() (TBA)
+- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/Getting-Started)
 - [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/Hosting)
-- [Sheet Set-Up]() (TBA)
-- [Site Set-Up]() (TBA)
+- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/Sheet-Set-Up)
+- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/Site-Set-Up)
 
 **Other Information**
 
