@@ -663,7 +663,7 @@ p:last-child {
 }
 
 .cd-gallery-card > img {
-  max-height: calc(175px - 2.5rem) !important;
+  max-height: 175px !important;
 }
 
 .cd-profile-image-container > img{
