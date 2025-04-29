@@ -126,14 +126,16 @@ charadex.url = {
   // Returns the base site URL
   // https://charadex.com
   getSiteUrl() {
-    let host = window.location.host;
-    if (host === 'localhost') {
+    let host = window.location.protocol + window.location.host;
+    if (host.includes('localhost')) {
       let fileName = window.location.pathname.split("/");
       fileName.pop();
       let baseFile = fileName.join("/");
       host += baseFile;
+    } else if (!host.includes('localhost')) {
+      host = charadex.site.url;
     }
-    return charadex.url.getUrl(window.location.protocol + host);
+    return charadex.url.getUrl(host);
   },
 
   // Returns the page URL
