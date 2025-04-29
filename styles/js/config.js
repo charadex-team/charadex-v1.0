@@ -37,8 +37,14 @@ charadex.sheet = {
     prompts:       "prompts",
     faq:           "faq",
     staff:         "mods",
-  }
+  },
 
+  options: {
+
+    itemTypes: ['All', 'Currency', 'MYO Ticket', 'Trait Ticket', 'Miscellaneous'],
+    rarity: ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+
+  }
 
 }
 
@@ -56,7 +62,7 @@ charadex.page.items = {
   sheetPage: charadex.sheet.pages.items,
   sitePage: 'items',
   dexSelector: 'charadex',
-  profileKey: 'item',
+  profileProperty: 'item',
 
   sort: {
     toggle: true,
@@ -74,15 +80,15 @@ charadex.page.items = {
   filters: {
     toggle: true,
     parameters: {
-      'Type': ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
-      'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+      'Type': charadex.sheet.options.itemTypes,
+      'Rarity': charadex.sheet.options.rarity,
     }
   },
 
   fauxFolder: {
     toggle: true,
-    dataKey: 'Type',
-    parameters: ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous'],
+    folderProperty: 'Type',
+    parameters: charadex.sheet.options.itemTypes,
   },
 
   search: {
@@ -105,7 +111,7 @@ charadex.page.traits = {
   sheetPage: charadex.sheet.pages.traits,
   sitePage: 'traits',
   dexSelector: 'charadex',
-  profileKey: 'trait',
+  profileProperty: 'trait',
 
   sort: {
     toggle: true,
@@ -124,13 +130,13 @@ charadex.page.traits = {
     toggle: true,
     parameters: {
       'Type': ['All'],
-      'Rarity': ['All', 'Common', 'Uncommon', 'Rare', 'Very Rare', 'Legendary'],
+      'Rarity': charadex.sheet.options.rarity,
     }
   },
 
   fauxFolder: {
     toggle: true,
-    dataKey: 'Type',
+    folderProperty: 'Type',
     parameters: ['All'],
   },
 
@@ -154,7 +160,7 @@ charadex.page.prompts = {
   sheetPage: charadex.sheet.pages.prompts,
   sitePage: 'prompts',
   dexSelector: 'charadex',
-  profileKey: 'title',
+  profileProperty: 'title',
 
   sort: {
     toggle: true,
@@ -178,7 +184,7 @@ charadex.page.prompts = {
 
   fauxFolder: {
     toggle: false,
-    dataKey: '',
+    folderProperty: '',
     parameters: [],
   },
 
@@ -202,7 +208,7 @@ charadex.page.staff = {
   sheetPage: charadex.sheet.pages.staff,
   sitePage: 'inventories',
   dexSelector: 'charadex',
-  profileKey: 'username',
+  profileProperty: 'username',
 
   sort: {
     toggle: false,
@@ -226,7 +232,7 @@ charadex.page.staff = {
 
   fauxFolder: {
     toggle: false,
-    dataKey: '',
+    folderProperty: '',
     parameters: [],
   },
 
@@ -250,7 +256,7 @@ charadex.page.faq = {
   sheetPage: charadex.sheet.pages.faq,
   sitePage: 'faq',
   dexSelector: 'charadex',
-  profileKey: 'id',
+  profileProperty: 'id',
 
   sort: {
     toggle: false,
@@ -274,7 +280,7 @@ charadex.page.faq = {
 
   fauxFolder: {
     toggle: false,
-    dataKey: '',
+    folderProperty: '',
     parameters: [],
   },
 
@@ -299,7 +305,7 @@ charadex.page.masterlist = {
   sheetPage: charadex.sheet.pages.masterlist,
   sitePage: 'masterlist',
   dexSelector: 'charadex',
-  profileKey: 'design',
+  profileProperty: 'design',
 
   sort: {
     toggle: true,
@@ -325,7 +331,7 @@ charadex.page.masterlist = {
 
   fauxFolder: {
     toggle: true,
-    dataKey: 'Species',
+    folderProperty: 'Species',
     parameters: ['All', 'Dog', 'Cat'],
   },
 
@@ -344,10 +350,10 @@ charadex.page.masterlist = {
     [charadex.sheet.pages.masterlistLog]: {
 
       sheetPage: charadex.sheet.pages.masterlistLog,
-      primaryPageKey: 'id',
-      secondaryPageKey: 'id',
+      primaryProperty: 'id',
+      relatedProperty: 'id',
       dexSelector: 'log',
-      profileKey: 'design',
+      profileProperty: 'design',
 
       sort: {
         toggle: true,
@@ -376,7 +382,7 @@ charadex.page.inventory = {
   sheetPage: charadex.sheet.pages.inventory,
   sitePage: 'inventories',
   dexSelector: 'charadex',
-  profileKey: 'username',
+  profileProperty: 'username',
 
   // Dex Options
   sort: {
@@ -399,7 +405,7 @@ charadex.page.inventory = {
 
   fauxFolder: {
     toggle: false,
-    dataKey: '',
+    folderProperty: '',
     parameters: [],
   },
 
@@ -421,10 +427,10 @@ charadex.page.inventory = {
 
       sheetPage: charadex.sheet.pages.inventoryLog,
       sitePage: 'inventories',
-      primaryPageKey: 'username',
-      secondaryPageKey: 'username',
+      primaryProperty: 'username',
+      relatedProperty: 'username',
       dexSelector: 'log',
-      profileKey: 'id',
+      profileProperty: 'id',
 
       pagination: {
         toggle: true,
@@ -443,10 +449,10 @@ charadex.page.inventory = {
 
       sheetPage: charadex.sheet.pages.masterlist,
       sitePage: 'masterlist',
-      primaryPageKey: 'username',
-      secondaryPageKey: 'owner',
+      primaryProperty: 'username',
+      relatedProperty: 'owner',
       dexSelector: 'designs',
-      profileKey: 'design',
+      profileProperty: 'design',
 
     }
 
@@ -459,11 +465,11 @@ charadex.page.inventory = {
     sheetPage: charadex.sheet.pages.items,
     sitePage: 'items',
     dexSelector: 'inventory',
-    profileKey: 'item',
+    profileProperty: 'item',
 
     sort: {
       toggle: true,
-      key: "item",
+      sortProperty: "item",
       order: "asc",
       parametersKey: 'type', 
       parameters: ['All', 'Currency', 'MYO Ticket', 'Breeding', 'Trait Potion', 'Corruption Potion','Mutation Item', 'Miscellaneous']

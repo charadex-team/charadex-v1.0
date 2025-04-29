@@ -35,8 +35,8 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
   // Add profile information
   for (let entry of charadexData) {
-    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey); // Go ahead and add profile keys just in case
-    if (folders) folders(entry, config.fauxFolder.dataKey); // If folders, add folder info
+    charadex.tools.addProfileLinks(entry, pageUrl, config.profileProperty); // Go ahead and add profile keys just in case
+    if (folders) folders(entry, config.fauxFolder.folderProperty); // If folders, add folder info
     if (entry.rarity) entry.raritybadge = `<span class="badge badge-${charadex.tools.scrub(entry.rarity)}">${entry.rarity}</span>`; // Adds a rarity badge
   }
 
@@ -45,9 +45,9 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
     for (let page in config.relatedData) {
       await charadex.manageData.relateData(
         charadexData, 
-        config.relatedData[page].primaryPageKey, 
+        config.relatedData[page].primaryProperty, 
         page, 
-        config.relatedData[page].secondaryPageKey
+        config.relatedData[page].relatedProperty
       );
     }
   }
@@ -66,7 +66,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   if (config.sort?.toggle ?? false) {
     charadexData = charadex.manageData.sortArray(
       charadexData, 
-      config.sort.key, 
+      config.sort.sortProperty, 
       config.sort.order,
       config.sort.parametersKey,
       config.sort.parameters,
@@ -169,14 +169,14 @@ charadex.initialize.groupGallery = async function (config, dataArray, groupBy, c
 
   // Add profile information
   for (let entry of charadexData) {
-    charadex.tools.addProfileLinks(entry, pageUrl, config.profileKey);
+    charadex.tools.addProfileLinks(entry, pageUrl, config.profileProperty);
   }
 
   /* Sort the Dex */
   if (config.sort?.toggle ?? false) {
     charadexData = charadex.manageData.sortArray(
       charadexData, 
-      config.sort.key, 
+      config.sort.sortProperty, 
       config.sort.order,
       config.sort.parametersKey,
       config.sort.parameters,
