@@ -359,6 +359,7 @@ charadex.page.masterlist = {
       relatedProperty: 'id',
       dexSelector: 'log',
       profileProperty: 'design',
+      profileToggle: false,
 
       sort: {
         toggle: true,
@@ -436,6 +437,7 @@ charadex.page.inventory = {
       relatedProperty: 'username',
       dexSelector: 'log',
       profileProperty: 'id',
+      profileToggle: false,
 
       pagination: {
         toggle: true,
@@ -458,6 +460,7 @@ charadex.page.inventory = {
       relatedProperty: 'owner',
       dexSelector: 'designs',
       profileProperty: 'design',
+      profileToggle: false,
 
     }
 
@@ -471,6 +474,7 @@ charadex.page.inventory = {
     sitePage: 'items',
     dexSelector: 'inventory',
     profileProperty: 'item',
+    profileToggle: false,
 
     sort: {
       toggle: true,
