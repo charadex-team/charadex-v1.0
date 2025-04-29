@@ -8,6 +8,7 @@ import { charadex } from './config.js';
 /* Tools
 =======================================================================  /
 
+  A bunch of tools I made for the dex to ease my woes
     
 ======================================================================= */
 charadex.tools = {
@@ -111,7 +112,7 @@ charadex.tools = {
 /* URL
 =======================================================================  /
 
-    You can use this method to grab these URLs at any time
+  We're keeping urls CLEAN this time i s2g
     
 ======================================================================= */
 charadex.url = {

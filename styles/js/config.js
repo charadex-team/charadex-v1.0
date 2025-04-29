@@ -2,7 +2,8 @@
 /* Charadex
 =======================================================================  /
 
-  You can use this method to grab these URLs at any time
+  The charadex namespace. You can use it if you like, but this should
+  prevent charadex from messing with any other imported code.
     
 ======================================================================= */
 let charadex = {};
@@ -54,7 +55,7 @@ charadex.sheet = {
 
 
 /* ==================================================================== */
-/* All Site Options
+/* Page configuration
 /* ==================================================================== */
 charadex.page = {};
 
