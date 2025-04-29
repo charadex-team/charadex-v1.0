@@ -178,17 +178,24 @@
     <!-- --------------------------------------------------------------- -->
     <div class="col-lg-3 col-sm-6 p-2" id="charadex-gallery-item">
       <div class="card h-100">
+
+        <!-- Header -->
         <div class="card-header text-center">
           <h5 class="mb-0">
             <a class="profileid profilelink" href=""></a>
           </h5>
         </div>
+
+        <!-- Image-->
         <div class="card-body cd-gallery-card d-flex flex-fill">
           <img class="image img-fluid m-auto" src="" >
         </div>
+
+        <!-- Owner -->
         <div class="card-footer text-center">
           <a class="owner ownerlink small" href=""></a>
         </div>
+
       </div>
     </div>
 
@@ -228,132 +235,133 @@
 
         <!-- Main Info
         <!-- ----------------------------------------------------------- -->
-        <div class="p-md-5 p-4">
+        <div class="p-md-5 p-4 tab-content">
 
-          <div class="tab-content">
+          <!-- Main Profile
+          <!-- ----------------------------------------------------------- -->
+          <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+            <h4 class="text-primary">Profile</h4>
+            <div class="row no-gutters m-n2">
 
-            <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-              <div class="row no-gutters m-n2">
+              <div class="col-md-6 p-2">
+                <div class="card bg-faded p-4 h-100">
 
-                <div class="col-md-6 p-2">
-                  <div class="card bg-faded p-4 h-100">
-
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Species</b>
-                      <span class="species"></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Rarity</b>
-                      <span class="rarity"></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Design Type</b>
-                      <span class="designtype"></span>
-                    </div>
-                    
-                    <hr>
-
-                    <!-- Item -->
-                    <div>
-                      <b class="text-muted">Traits</b>
-                      <div class="px-4 cd-text-pre traits cd-traits-scroll"></div>
-                    </div>
-
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Species</b>
+                    <span class="species"></span>
                   </div>
-                </div>
-
-                <div class="col-md-6 p-2">
-                  <div class="card bg-faded p-4 h-100">
-
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Owner</b>
-                      <a class="owner ownerlink"></a>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Artist</b>
-                      <a class="artist artistlink"></a>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Designer</b>
-                      <a class="designer designerlink"></a>
-                    </div>
-
-                    <hr>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Value</b>
-                      <span>$<span class="value"></span></span>
-                    </div>
-      
-                    <!-- Item -->
-                    <div class="d-flex no-gutters mb-2">
-                      <b class="text-muted col-md-5 col-6">Status</b>
-                      <span class="status"></span>
-                    </div>
-
-                    <hr>
-                    
-                    <!-- Item -->
-                    <div>
-                      <b class="text-muted">Notes</b>
-                      <div class="px-4 cd-text-pre notes"></div>
-                    </div>
-
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Rarity</b>
+                    <span class="rarity"></span>
                   </div>
-                </div>
-
-              </div>
-            </div>
-            
-            
-            <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab" tabindex="0">
-              <h4 class="text-primary">Transaction Log</h4>
-              <div class="card bg-faded p-4" id="log-gallery">
-
-                <!-- List -->
-                <!-- --------------------------------------------------------------- -->
-                <div class="row no-gutters">
-                  <div class="col-md-3"><b>Timestamp</b></div>
-                  <div class="col-md-9"><b>Reason</b></div>
-                </div>
-                <hr>
-                <div class="log-list"></div>
-
-                <!-- List Item -->
-                <!-- --------------------------------------------------------------- -->
-                <div style="display: none;">
-                  <div class="row no-gutters" id="log-gallery-item">
-                    <div class="col-md-3"><span class="timestamp"></span></div>
-                    <div class="col-md-9"><span class="reason"></span></div>
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Design Type</b>
+                    <span class="designtype"></span>
                   </div>
-                </div>
-
-                <!-- Pagination
-                <!-- --------------------------------------------------------------- -->
-                <div style="display: none;" class="log-pagination-container">
+                  
                   <hr>
-                  <div class="nav d-flex justify-content-center mb-n4">
-                    <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
-                    <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
-                    <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+
+                  <!-- Item -->
+                  <div>
+                    <b class="text-muted">Traits</b>
+                    <div class="px-4 cd-text-pre traits cd-traits-scroll"></div>
                   </div>
+
                 </div>
-
               </div>
-            </div>
 
-          </div> 
+              <div class="col-md-6 p-2">
+                <div class="card bg-faded p-4 h-100">
+
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Owner</b>
+                    <a class="owner ownerlink"></a>
+                  </div>
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Artist</b>
+                    <a class="artist artistlink"></a>
+                  </div>
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Designer</b>
+                    <a class="designer designerlink"></a>
+                  </div>
+
+                  <hr>
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Value</b>
+                    <span>$<span class="value"></span></span>
+                  </div>
+    
+                  <!-- Item -->
+                  <div class="d-flex no-gutters mb-2">
+                    <b class="text-muted col-md-5 col-6">Status</b>
+                    <span class="status"></span>
+                  </div>
+
+                  <hr>
+                  
+                  <!-- Item -->
+                  <div>
+                    <b class="text-muted">Notes</b>
+                    <div class="px-4 cd-text-pre notes"></div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          
+          <!-- Logs
+          <!-- ----------------------------------------------------------- -->
+          <div class="tab-pane fade" id="logs" role="tabpanel" aria-labelledby="logs-tab" tabindex="0">
+            <h4 class="text-primary">Transaction Log</h4>
+            <div class="card bg-faded p-4" id="log-gallery">
+
+              <!-- List -->
+              <!-- --------------------------------------------------------------- -->
+              <div class="row no-gutters">
+                <div class="col-md-3"><b>Timestamp</b></div>
+                <div class="col-md-9"><b>Reason</b></div>
+              </div>
+              <hr>
+              <div class="log-list"></div>
+
+              <!-- List Item -->
+              <!-- --------------------------------------------------------------- -->
+              <div style="display: none;">
+                <div class="row no-gutters" id="log-gallery-item">
+                  <div class="col-md-3"><span class="timestamp"></span></div>
+                  <div class="col-md-9"><span class="reason"></span></div>
+                </div>
+              </div>
+
+              <!-- Pagination
+              <!-- --------------------------------------------------------------- -->
+              <div style="display: none;" class="log-pagination-container">
+                <hr>
+                <div class="nav d-flex justify-content-center mb-n4">
+                  <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                  <ul class="pagination log-pagination log-pagination-top justify-content-center m-0"></ul>
+                  <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
 
           <!-- Where to Update -->
           <div class="card bg-faded py-2 px-3 mt-3 small text-center">

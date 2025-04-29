@@ -673,7 +673,7 @@ p:last-child {
 /* Traits */
 .cd-traits-scroll {
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /* Prompts */
