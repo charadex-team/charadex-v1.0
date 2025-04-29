@@ -74,6 +74,9 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   // Create Profile
   const createProfile = () => {
 
+    // If they dont need to render a profile, don't
+    if (config.profileToggle !== undefined && !config.profileToggle) return false;
+
     let profileArr = list.getProfile(charadexData);
     if (!profileArr) return false;
 
