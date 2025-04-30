@@ -157,7 +157,7 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
 
         // Filter the list
-        if (charadex.tools.checkArray(selection) && !selection.includes('all')) {
+        if (charadex.tools.checkArray(selection) && !selection.includes('All')) {
           listJs.filter(list => selection.includes(list.values()[key]));
         } else {
           listJs.filter();
