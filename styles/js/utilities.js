@@ -351,15 +351,15 @@ charadex.manageData = {
 ======================================================================= */
 charadex.importSheet = async (sheetPage, sheetId = charadex.sheet.id) => {
 
-  if (!sheetId) throw Error('Missing sheetID.');
-  if (!sheetPage) throw Error('Missing sheetPage.');
+  if (!sheetId) return console.error('Missing sheetID.');
+  if (!sheetPage) return console.error('Missing sheetPage.');
 
   // Fetch the sheet
   const importUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&headers=1&tq=WHERE A IS NOT NULL&sheet=${sheetPage}`;
 
   // Attempt to get it
   const sheetJSON = await fetch(importUrl).then(i => i.text()).catch(err => {
-    return alert(`${err} sheet. Please make sure that the sheet is public and that you're only using the ID.`);
+    return console.error(`${err} sheet. Please make sure that the sheet is public and that you're only using the ID.`);
   });
 
   // Parse the text

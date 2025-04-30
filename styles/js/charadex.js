@@ -19,7 +19,7 @@ charadex.initialize = {};
 ======================================================================= */
 charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, customPageUrl = false) => {
 
-  if (!config) throw Error('No configuration added.');
+  if (!config) return console.error('No configuration added.');
 
   // Set up
   let selector = config.dexSelector;
