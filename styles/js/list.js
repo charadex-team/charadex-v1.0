@@ -124,7 +124,9 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
       newFilter.find('select')
       .attr('name', charadex.tools.scrub(filter))
       .append(charadex.tools.createSelectOptions(parameters[filter]))
-      .selectpicker();
+      .selectpicker({
+        noneSelectedText : `All`
+      });
 
       // Add to the filters container
       filtersElement.append(newFilter);
@@ -155,10 +157,18 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
         let key = $(this).find('select').attr('name');
         let selection = $(this).find('option:selected').toArray().map(item => item.text);
 
-
         // Filter the list
         if (charadex.tools.checkArray(selection) && !selection.includes('All')) {
-          listJs.filter(list => selection.includes(list.values()[key]));
+          listJs.filter((list) => {
+            let values = list.values()[key];
+            if (charadex.tools.checkArray(selection)) {
+              for (let val of values) {
+                return selection.includes(val);
+              }
+            } else {
+              return selection.includes(list.values()[key]);
+            }
+          });
         } else {
           listJs.filter();
         }

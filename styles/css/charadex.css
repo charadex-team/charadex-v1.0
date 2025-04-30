@@ -431,6 +431,16 @@ a:active {
   color: var(--cd-body-text-color) !important;
 }
 
+.dropdown-menu {
+  border-radius: var(--cd-border-radius) !important;
+  background-color: var(--cd-faded-background-color) !important;
+  color: var(--cd-body-text-color) !important;
+}
+
+.dropdown-item {
+  color: var(--cd-body-text-color) !important;
+}
+
 
 /* ============================================================= */
 /* Card
@@ -470,6 +480,7 @@ a:active {
 
 .btn {
   border-style: var(--cd-button-border-style) !important;
+  border-width: var(--cd-button-border-width) !important;
   border-radius: var(--cd-button-border-radius) !important;
 }
 
@@ -477,7 +488,6 @@ a:active {
 .badge.badge-primary {
   color: var(--cd-button-text-color) !important;
   background-color: var(--cd-button-background-color) !important;
-  border-width: var(--cd-button-border-width) !important;
   border-color: var(--cd-button-border-color) !important;
 }
 
