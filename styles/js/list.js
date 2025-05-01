@@ -121,12 +121,15 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
       .text(filter);
 
       // Find the select and add the filter name & options
-      newFilter.find('select')
+      let filterDOM = newFilter.find('select')
       .attr('name', charadex.tools.scrub(filter))
-      .append(charadex.tools.createSelectOptions(parameters[filter]))
-      .selectpicker({
-        noneSelectedText : `All`
-      });
+      .append(charadex.tools.createSelectOptions(parameters[filter]));
+      
+      try {
+        filterDOM.selectpicker({noneSelectedText : `All`});
+      } catch (err) { 
+        console.error('Make sure the Multiselect CDN is in this file.') 
+      }
 
       // Add to the filters container
       filtersElement.append(newFilter);
