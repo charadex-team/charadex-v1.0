@@ -161,12 +161,12 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
         if (charadex.tools.checkArray(selection) && !selection.includes('All')) {
           listJs.filter((list) => {
             let values = list.values()[key];
-            if (charadex.tools.checkArray(selection)) {
+            if (charadex.tools.checkArray(values)) {
               for (let val of values) {
                 return selection.includes(val);
               }
             } else {
-              return selection.includes(list.values()[key]);
+              return selection.includes(values);
             }
           });
         } else {
