@@ -102,7 +102,20 @@ charadex.tools = {
   addProfileLinks(entry, pageUrl, key = 1) {
     entry.profileid = entry[key];
     entry.profilelink = charadex.url.addUrlParameters(pageUrl, { profile: entry[key] });
-  }
+  },
+
+  // Try to add the select picker
+  addMultiselect (selectElement) {
+    try {
+      selectElement.selectpicker({
+        noneSelectedText : `All`,
+        style: '',
+        styleBase: 'form-control'
+      });
+    } catch (err) { 
+      console.error('Make sure the Multiselect CDN is in this file.') 
+    }
+  } 
 
 }
 

@@ -83,9 +83,9 @@ charadex.buildList = (selector = 'charadex') => {
 /* Features
 /* ====================================================================  /
 
-  list
-  params
-  selector
+  Different features for charadex - they're all compiled in the
+  charadex.initialize function but you can use them seperately
+  if you wish
     
 ======================================================================= */
 charadex.listFeatures = {};
@@ -124,17 +124,9 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
       let filterDOM = newFilter.find('select')
       .attr('name', charadex.tools.scrub(filter))
       .append(charadex.tools.createSelectOptions(parameters[filter]));
-      
-      // Try to add the select picker
-      try {
-        filterDOM.selectpicker({
-          noneSelectedText : `All`,
-          style: '',
-          styleBase: 'form-control'
-        });
-      } catch (err) { 
-        console.error('Make sure the Multiselect CDN is in this file.') 
-      }
+
+      // Add multiselect
+      charadex.tools.addMultiselect(filterDOM);
 
       // Add to the filters container
       filtersElement.append(newFilter);
