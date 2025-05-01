@@ -1,56 +1,61 @@
-# Charadex v.1.5.0
+# Charadex v.1.5.5
 
-Charadex v1.0 is a tool designed to simplify the creation and maintenance of species websites.
+> [!IMPORTANT]
+> You can (tentatively) use this branch in development. **It is fully compatible with with the [Charadex v1.5.0 Google Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/).**
+> It can work with older sheets as well but it'll take a bit of work.
 
-By utilizing Google Sheets, users can generate logs of designs, items, player inventories, and other data, which is then utilized to create a user-friendly website that external users can easily navigate. Additionally, it can be hosted for free and is relatively easy to maintain and customize.
+## Changelog
 
-If you're interested in using this tool, please refer to the links provided below. I've done my best to write up clear and concise documentation.
+- Complete rehaul of the JavaScript to be more modular.
+- Hopefully fixed links - no more ugly extra slashes.
+- Added ability to apply multiple ListJS filters.
+- Added ability to filter out the gallery by URL parameters (there is no UI implementation for this yet.)
+- Folders now use their own special `folder` property that's determined by your chosen key to prevent filters clashing.
+- Profiles now use a universal `profileid` and `profilelink` instead of one of the original properties. (i.e. Profile links will look like ...charadex.com/masterlist.html?profile=CHA0001). Old links to profiles will still work by filtering out the gallery based on the property. (i.e. ?design=CHA0001 will bring users to the gallery but will only that specific design will show.)
+- Ability to create grouped galleries - you'll be able to see these prominently on User Profiles. Their inventories are grouped and can be searched and filtered.
+- User Profiles now have Owned Designs.
+- The tags in the FAQs now work correctly and users will be able to click tags to bring them to other questions with the same tags.
+- Rarities have pretty badges that you'll be able to change the colors to in the CSS.
+- The index page lists have been overhauled a fair bit.
+- Fixed the meta tags, I have no idea where I got property instead of name.
+- Lots of other goodies, feel free to crack it open.
 
 &nbsp;
 
-<p align="center">Do not download from this page - please download the latest version <a href="https://github.com/charadex-team/charadex-v1.0/releases/latest">here</a>.</p>
+> [!WARNING]
+> If you are using an older version of the sheet and want to update to v1.5.0, don't upgrade just yet. Charadex v1.5.6 will be out soon and will have a lot more tools to help you organize your data.
 
 &nbsp;
 
+## Community Help
 
-# Navigation
+If you're using this version and find any bugs, please let me know in the [Discord Server](https://discord.gg/3ghSjBug6a), or make an [issue](https://github.com/charadex-team/charadex-v1.0/issues).
 
-> [Wiki](https://github.com/charadex-team/charadex-v1.0/wiki)<br /> 
-> [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/Hosting)
+&nbsp;
 
-## v1.5.0
+## Navigation
 
-**Downloads**
-> [Download Sheet](https://docs.google.com/spreadsheets/d/1ZtejMZmVxjQEpuSOcWcVbWbb8Lcj1zLRKJsjHL2G6JY/copy)<br /> 
-> [Download Site](https://github.com/charadex-team/charadex-v1.0/releases/latest)
+**Download**
 
-**Examples**
-> [Sheet Example](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/edit?usp=sharing)<br /> 
-> [Live Example](https://charadex-team.github.io/charadex-v1.0/)
+- [Charadex](https://github.com/charadex-team/charadex-v1.0/archive/refs/heads/v1.5.5-develop.zip)
+- [Google Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/copy)
 
-**Guides**
-> [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Getting-Started)<br /> 
-> [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Sheet-Set-Up)<br /> 
-> [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.5.0-Site-Set-Up)
+**Setting Up**
 
-## v1.4.0
+- [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/Getting-Started)
+- [Hosting](https://github.com/charadex-team/charadex-v1.0/wiki/Hosting)
+- [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/Sheet-Set-Up)
+- [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/Site-Set-Up)
 
-**Downloads**
-> [Download Sheet](https://docs.google.com/spreadsheets/d/1l_F95Zhyj5OPQ0zs-54pqacO6bVDiH4rlh16VhPNFUc/copy)<br /> 
-> [Download Site](https://github.com/charadex-team/charadex-v1.0/releases/tag/v1.4)
+**Other Information**
 
-**Guides**
-> [Getting Started](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Getting-Started)<br /> 
-> [Sheet Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Sheet-Set-up)<br /> 
-> [Site Set-Up](https://github.com/charadex-team/charadex-v1.0/wiki/v1.4.0-Site-Set-Up)
+- [FAQ](https://github.com/charadex-team/charadex-v1.0/wiki/FAQ)
+- [Credits](https://github.com/charadex-team/charadex-v1.0/wiki#credits)
+- [License](https://github.com/charadex-team/charadex-v1.0/wiki#license)
 
-## Other
+**Extra**
 
-**Information**
-> [FAQ](https://github.com/charadex-team/charadex-v1.0/wiki#faq)<br /> 
-> [Credits](https://github.com/charadex-team/charadex-v1.0/wiki#credits)<br /> 
-> [License](https://github.com/charadex-team/charadex-v1.0/wiki#license)
-
-**Support**
-> [Discord Server](https://discord.gg/3ghSjBug6a)<br /> 
-> [Ko-Fi](https://ko-fi.com/charadex)
+- [Discord Server](https://discord.gg/3ghSjBug6a)
+- [Support Charadex](https://ko-fi.com/charadex)
+- [Example Site](https://charadex-team.github.io/charadex-v1.0/index.html)
+- [Example Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/edit?usp=sharing)
