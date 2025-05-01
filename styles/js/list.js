@@ -125,8 +125,13 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
       .attr('name', charadex.tools.scrub(filter))
       .append(charadex.tools.createSelectOptions(parameters[filter]));
       
+      // Try to add the select picker
       try {
-        filterDOM.selectpicker({noneSelectedText : `All`});
+        filterDOM.selectpicker({
+          noneSelectedText : `All`,
+          style: '',
+          styleBase: 'form-control'
+        });
       } catch (err) { 
         console.error('Make sure the Multiselect CDN is in this file.') 
       }

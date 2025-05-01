@@ -415,12 +415,6 @@ a:active {
 /* Multi Select Fixes
 /* ============================================================= */
 
-.btn-light {
-  background-color: var(--cd-faded-background-color) !important;
-}
-
-.btn-light:focus,
-.btn-light:hover,
 .bootstrap-select > .dropdown-toggle.bs-placeholder, 
 .bootstrap-select>.dropdown-toggle.bs-placeholder:active, 
 .bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
@@ -439,6 +433,14 @@ a:active {
 
 .dropdown-item {
   color: var(--cd-body-text-color) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item:active,
+.dropdown-item.selected {
+  background-color: var(--cd-primary-color) !important;
+  color: var(--cd-primary-text-color) !important;
 }
 
 
