@@ -61,13 +61,18 @@ charadex.tools = {
   // Change meta information
   updateMeta() {
     try {
-      let title = $(document).attr('title');
-      title = $(document).attr('title', title.replace('Charadex', charadex.site.title));
-      $('meta[name="title"]').attr("content", title);
-      $('meta[name="url"]').attr("content", charadex.site.url);
-      $('meta[name="description"]').attr("content", charadex.site.description);
+      let title =  $('title');
+      let titleStr = title.text();
+      if ((titleStr).includes('Charadex')) {
+        titleStr = titleStr.replace('Charadex', charadex.site.title);
+        title.text(titleStr);
+        $('meta[name="title"]').attr("content", titleStr);
+        $('meta[name="url"]').attr("content", charadex.site.url);
+        $('meta[name="description"]').attr("content", charadex.site.description);
+      }
+      return;
     } catch (err) {
-      console.error(err);
+      return console.error(err);
     }
   },
 
@@ -102,7 +107,20 @@ charadex.tools = {
   addProfileLinks(entry, pageUrl, key = 1) {
     entry.profileid = entry[key];
     entry.profilelink = charadex.url.addUrlParameters(pageUrl, { profile: entry[key] });
-  }
+  },
+
+  // Try to add the select picker
+  addMultiselect (selectElement) {
+    try {
+      selectElement.selectpicker({
+        noneSelectedText : `All`,
+        style: '',
+        styleBase: 'form-control'
+      });
+    } catch (err) { 
+      console.error('Make sure the Multiselect CDN is in this file.') 
+    }
+  } 
 
 }
 

@@ -412,6 +412,39 @@ a:active {
 
 
 /* ============================================================= */
+/* Multi Select Fixes
+/* ============================================================= */
+
+.bootstrap-select > .dropdown-toggle.bs-placeholder, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:active, 
+.bootstrap-select>.dropdown-toggle.bs-placeholder:focus,
+.bootstrap-select>.dropdown-toggle.bs-placeholder:hover {
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: var(--cd-body-text-color) !important;
+}
+
+.dropdown-menu {
+  border-radius: var(--cd-border-radius) !important;
+  background-color: var(--cd-faded-background-color) !important;
+  color: var(--cd-body-text-color) !important;
+}
+
+.dropdown-item {
+  color: var(--cd-body-text-color) !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus,
+.dropdown-item:active,
+.dropdown-item.selected {
+  background-color: var(--cd-primary-color) !important;
+  color: var(--cd-primary-text-color) !important;
+}
+
+
+/* ============================================================= */
 /* Card
 /* ============================================================= */
 
@@ -447,14 +480,17 @@ a:active {
 /* Buttons & Badges
 /* ============================================================= */
 
+.btn {
+  border-style: var(--cd-button-border-style) !important;
+  border-width: var(--cd-button-border-width) !important;
+  border-radius: var(--cd-button-border-radius) !important;
+}
+
 .btn.btn-primary,
 .badge.badge-primary {
   color: var(--cd-button-text-color) !important;
   background-color: var(--cd-button-background-color) !important;
-  border-width: var(--cd-button-border-width) !important;
-  border-style: var(--cd-button-border-style) !important;
   border-color: var(--cd-button-border-color) !important;
-  border-radius: var(--cd-button-border-radius) !important;
 }
 
 .btn.btn-primary:hover,
@@ -468,7 +504,6 @@ a.badge.badge-primary:active {
   background-color: var(--cd-button-background-color-hover) !important;
   box-shadow: none !important;
 }
-
 
 /* ============================================================= */
 /* Input

@@ -83,9 +83,9 @@ charadex.buildList = (selector = 'charadex') => {
 /* Features
 /* ====================================================================  /
 
-  list
-  params
-  selector
+  Different features for charadex - they're all compiled in the
+  charadex.initialize function but you can use them seperately
+  if you wish
     
 ======================================================================= */
 charadex.listFeatures = {};
@@ -121,15 +121,18 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
       .text(filter);
 
       // Find the select and add the filter name & options
-      newFilter
-      .find('select')
+      let filterDOM = newFilter.find('select')
       .attr('name', charadex.tools.scrub(filter))
       .append(charadex.tools.createSelectOptions(parameters[filter]));
+
+      // Add multiselect
+      charadex.tools.addMultiselect(filterDOM);
 
       // Add to the filters container
       filtersElement.append(newFilter);
 
     }
+
 
     return true;
 
@@ -152,11 +155,20 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
         // Get the key from the select name attr
         // And whatever the user selected
         let key = $(this).find('select').attr('name');
-        let selection = $(this).find('option:selected').val();
+        let selection = $(this).find('option:selected').toArray().map(item => item.text);
 
         // Filter the list
-        if (selection && selection !== 'all') {
-          listJs.filter(list => charadex.tools.scrub(list.values()[key]) === selection);
+        if (charadex.tools.checkArray(selection) && !selection.includes('All')) {
+          listJs.filter((list) => {
+            let values = list.values()[key];
+            if (charadex.tools.checkArray(values)) {
+              for (let val of values) {
+                return selection.includes(val);
+              }
+            } else {
+              return selection.includes(values);
+            }
+          });
         } else {
           listJs.filter();
         }
