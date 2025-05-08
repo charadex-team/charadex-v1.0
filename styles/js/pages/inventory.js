@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           charadex.url.getPageUrl('items')
         )
 
-        // designs
+        // Designs
         if (charadex.tools.checkArray(profile.masterlist)) {
           let designs = await charadex.initialize.page(
             profile.masterlist,

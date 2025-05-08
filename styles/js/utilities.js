@@ -274,26 +274,6 @@ charadex.manageData = {
 
   },
 
-  /* Create Classes for List JS
-  ===================================================================== */
-  createListClasses(sheetArray) {
-
-    let classArr = [...new Set(sheetArray.slice(0, 5).flatMap(Object.keys))];
-    let newArr = [];
-    for (let i in classArr) {
-      newArr[i] = classArr[i];
-      if (classArr[i].includes('image') || classArr[i].includes('avatar') || classArr[i].includes('thumbnail')) {
-        newArr[i] = { name: classArr[i], attr: 'src' };
-      }
-      if (classArr[i].includes('link') || classArr[i].includes('toyhouse')) {
-        newArr[i] = { name: classArr[i], attr: 'href' };
-      }
-    }
-
-    return newArr;
-
-  },
-
   /* Filter sheet by the page parameters
   ===================================================================== */
   filterByPageParameters(sheetArray) {
