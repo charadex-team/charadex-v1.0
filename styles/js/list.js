@@ -4,13 +4,13 @@
 import { charadex } from './utilities.js';
 import List from "https://esm.sh/gh/javve/list.js@v2.3.0";
 
+
 /* ==================================================================== */
 /* Build List
 /* ====================================================================  /
 
-  list
-  params
-  selector
+  This is just an eaasy way to build a new list based on charadex
+  You dont have to use it to build your own
     
 ======================================================================= */
 charadex.buildList = (selector = 'charadex') => {
@@ -95,12 +95,12 @@ charadex.listFeatures = {};
 ======================================================================= */
 charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
-  if (!parameters ) return false;
+  if (!parameters) return false;
 
   // Get selection
-  const filtersElement = $(`#${selector}-filters`);
-  const filterElement = $(`#${selector}-filter`);
   const filterClass = `${selector}-filter`;
+  const filtersElement = $(`#${filterClass}s`);
+  const filterElement = $(`#${filterClass}`);
 
   const createFilters = () => {
 
@@ -133,7 +133,6 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
     }
 
-
     return true;
 
   } 
@@ -162,9 +161,7 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
           listJs.filter((list) => {
             let values = list.values()[key];
             if (charadex.tools.checkArray(values)) {
-              for (let val of values) {
-                return selection.includes(val);
-              }
+              for (let val of values) return selection.includes(val);
             } else {
               return selection.includes(values);
             }
@@ -191,9 +188,7 @@ charadex.listFeatures.filters = (parameters, selector = 'charadex') => {
 
   }
 
-  return {
-    initializeFilters,
-  }
+  return { initializeFilters }
 
 }
 
@@ -234,7 +229,10 @@ charadex.listFeatures.fauxFolders = (pageUrl, folderParameters, selector = 'char
 ======================================================================= */
 charadex.listFeatures.pagination = (galleryArrayLength, pageAmount = 12, bottomPaginationToggle = true, selector = 'charadex') => {
 
+  // Checks
   if (!pageAmount || !galleryArrayLength || !selector) return false;
+
+  // You're safe to remove this if you want the pagination to show up even if its just one page
   if (galleryArrayLength <= pageAmount) return false;
 
   // Get our selectors
@@ -290,26 +288,27 @@ charadex.listFeatures.pagination = (galleryArrayLength, pageAmount = 12, bottomP
 ======================================================================= */
 charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, selector = 'charadex') => {
 
+  // If there's no search parameters, abort
   if (!charadex.tools.checkArray(searchParameters)) return false;
 
+  // Get our elements
   const searchElement = $(`#${selector}-search`);
   const searchFilter = $(`#${selector}-search-filter`);
 
+  // Create
   const createSearch = () => {
-
-    // If the filter is toggled, create it
     if (searchFilterToggle) {
       searchFilter.append(charadex.tools.createSelectOptions(searchParameters));
       searchFilter.parent().show();
     }
-
   }
-
-  createSearch();
 
   const initializeSearch = (listJs) => {
 
     if (!listJs) return false;
+    
+    // Else create the search
+    createSearch();
 
     // Scrub the parameters
     searchParameters = searchParameters.map(i => charadex.tools.scrub(i));
@@ -333,16 +332,20 @@ charadex.listFeatures.search = (searchParameters, searchFilterToggle = true, sel
 
   }
 
-  return {
-    initializeSearch
-  };
+  return { initializeSearch };
 
 }
 
+
+/* ==================================================================== */
+/* Prev Next Link
+======================================================================= */
 charadex.listFeatures.prevNextLink = function (pageUrl, galleryArray, profileArray, selector = 'charadex') {
 
+  // Checks
   if (!charadex.tools.checkArray(galleryArray) || !charadex.tools.checkArray(profileArray) || !pageUrl) return false;
 
+  // Will help us create links
   const updateLink = (selector, profile) => {
     const element = $(selector);
     if (profile) {
@@ -354,12 +357,15 @@ charadex.listFeatures.prevNextLink = function (pageUrl, galleryArray, profileArr
     }
   };
 
+  // Check gallery index
   const currentIndex = galleryArray.findIndex((item) => item.profileid === profileArray[0].profileid);
   if (currentIndex === -1) return false;
 
+  // Add links based on links
   updateLink('#entryPrev', galleryArray[currentIndex - 1] || null);
   updateLink('#entryNext', galleryArray[currentIndex + 1] || null);
 
+  // Show the prevnext buttons
   $(`#${selector}-prevnext-container`).show();
   
   return true;

@@ -13,7 +13,6 @@ import { charadex } from './list.js';
 charadex.initialize = {};
 
 
-
 /* ==================================================================== */
 /* Page
 ======================================================================= */
@@ -57,7 +56,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
   // Let us manipulate the data before it gets to the list
   if (typeof dataCallback === 'function') {
-    let newData = dataCallback(charadexData);
+    let newData = await dataCallback(charadexData);
     if (newData !== undefined && charadex.tools.checkArray(newData)) charadexData = newData;
   }
 
@@ -73,7 +72,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   }
 
   // Create Profile
-  const createProfile = () => {
+  const createProfile = async () => {
 
     // If they dont need to render a profile, don't
     if (config.profileToggle !== undefined && !config.profileToggle) return false;
@@ -90,7 +89,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
     // Return those values on Callback
     if (typeof listCallback === 'function') {
-      listCallback({
+      await listCallback({
         type: 'profile',
         pageUrl: pageUrl,
         array: charadexData,
@@ -104,10 +103,10 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   }
 
   // If there's a profile, nyoom
-  if (createProfile()) return;
+  if (await createProfile()) return;
 
   // Create Gallery
-  const createGallery = () => {
+  const createGallery = async () => {
 
     // Add additional list junk
     let additionalListConfigs = {};
@@ -130,7 +129,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
 
     // Return those values on Callback
     if (typeof listCallback === 'function') {
-      listCallback({
+      await listCallback({
         type: 'gallery',
         pageUrl: pageUrl,
         array: charadexData,
@@ -143,7 +142,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   }
 
   // Else the gallery nyooms instead
-  return createGallery();
+  return await createGallery();
 
 }
 
