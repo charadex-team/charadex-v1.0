@@ -32,12 +32,12 @@ File Links: [config.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5
 Find your `config.js` file, we'll be making several edits.
 
 Add the following snippet to the other pages:
-```JSON
+```
   imageGallery:  "image gallery",
 ```
 
 Then add the following anywhere **before** the `charadex.pages.masterlist` config:
-```JSON
+```
 /* Image Gallery
 /* --------------------------------------------------------------- */
 charadex.page.imageGallery = {
@@ -86,7 +86,7 @@ charadex.page.imageGallery = {
 
 Finally, find the `charadex.pages.masterlist` config and add the following inside `relatedData`:
 
-```JSON
+```
   [charadex.sheet.pages.imageGallery]: {
 
     ... charadex.page.imageGallery,
