@@ -37,7 +37,7 @@ If you're using this version and find any bugs, please let me know in the [Disco
 
 **Download**
 
-- [Charadex](https://github.com/charadex-team/charadex-v1.0/archive/refs/heads/v1.5.5-develop.zip)
+- [Charadex](https://github.com/charadex-team/charadex-v1.0/releases/tag/v1.5.5)
 - [Google Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/copy)
 
 **Setting Up**
