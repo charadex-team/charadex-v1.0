@@ -116,11 +116,11 @@ Finally, find the `charadex.pages.masterlist` config and add the following insid
 
 &nbsp;
 
-### Step 2.5 | Update relatedData function
+### Step 2.5 | Update relateData function
 
 File Links: [utilities.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/styles/js/utilities.js)
 
-If you aren't using the most up to date version of v1.5.5, make sure to go to the `utilities.js` file and find the `relatedData` function in `charadex.manageData`. Completely overwrite it with the following: 
+If you aren't using the most up to date version of v1.5.5, make sure to go to the `utilities.js` file and find the `relateData` function in `charadex.manageData`. Completely overwrite it with the following: 
 
 ```JS
 /* Relates data to a main sheet via a key
