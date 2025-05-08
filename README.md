@@ -1,13 +1,15 @@
 > [!WARNING]  
-> This feature is still in developement! **Do not use the develop/features branch in production.**
+> This feature hasn't been extensively tested and might have bugs! Use at your own risk.
 
 &nbsp;
 
 # Charadex v1.5.5 / Features / Image Gallery
 
-This is a small feature to add a **very basic** image gallery to your Charadex Site. In it's basic form, it's only going to allow you to add one artist and it does not currently have any way of marking images NSFW. It's only made to show images on masterlist profiles and in the gallery.html - there's nothing for showing up in user profiles or on the index page. If you're interested in something bigger, it'll help to [support the project]().
+This will add a **very basic** image gallery to your Charadex Site. It's only going to allow you to add one artist and there's no content warning feature. It will only add a gallery.html page and a gallery section to the masterlist.
 
-You do not have to already be using v1.5.5 to upgrade to use this. It'll work right out of the box with all of the original v1.5.5 features. If you just want to add this feature to your current v1.5.5 site, please follow the guide below.
+If you're upgrading from an older version of the site, you can use this right out of the box. If you've already upgraded and just want to add this feature to your current v1.5.5 site, please follow the guide below.
+
+Note that you might have to edit some variables if you've edited config/page names.
 
 &nbsp;
 
@@ -23,6 +25,8 @@ Open [this sheet](https://docs.google.com/spreadsheets/d/1vcUJX7MODFgdtY5BEYkMhA
 
 ### Step 2
 
+File Links: [config.js]()
+
 Find your `config.js` file, we'll be making several edits.
 
 Add the following snippet to the other pages:
@@ -30,7 +34,7 @@ Add the following snippet to the other pages:
   imageGallery:  "image gallery",
 ```
 
-Then add the following anywhere before the `charadex.pages.masterlist` config:
+Then add the following anywhere **before** the `charadex.pages.masterlist` config:
 ```JSON
 /* Image Gallery
 /* --------------------------------------------------------------- */
@@ -112,6 +116,8 @@ Finally, find the `charadex.pages.masterlist` config and add the following insid
 
 ### Step 2.5 | Update relatedData function
 
+File Links: [utilities.js]()
+
 If you aren't using the most up to date version of v1.5.5, make sure to go to the `utilities.js` file and find the `relatedData` function in `charadex.manageData`. Completely overwrite it with the following: 
 
 ```JS
@@ -139,13 +145,17 @@ If you aren't using the most up to date version of v1.5.5, make sure to go to th
 
 &nbsp;
 
-### Step 3 | Add gallery files
+### Step 3 | Add Gallery Files
 
-Add the [`gallery.js`]() file to `styles/js/pages` folder, then add the [`gallery.html`]() file to the main folder. Make sure to update the meta data in the HTML file. 
+File Links: [gallery.html](), [gallery.js]()
+
+Add the `gallery.js` file to `styles/js/pages` folder, then add the `gallery.html` file to the main folder. Make sure to update the meta data in the HTML file. 
 
 &nbsp;
 
 ### Step 4 | Add to Masterlist
+
+File Links: [masterlist.html](), [masterlist.js]()
 
 Find your `masterlist.js` file in the `styles/js/pages` folder and add the following snippet **within** the `if (listData.type == 'profile')` brackets:
 
