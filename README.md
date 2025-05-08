@@ -23,10 +23,84 @@ Open [this sheet](https://docs.google.com/spreadsheets/d/1vcUJX7MODFgdtY5BEYkMhA
 
 ### Step 2
 
-Find your `config.js` file and add the following snippet in the `charadex.pages.masterlist` object. I suggest adding it at the end, and make sure it's within the config object's brackets.
+Find your `config.js` file, we'll be making several edits.
 
-```json
+Add the following snippet to the other pages:
+```JSON
+  imageGallery:  "image gallery",
+```
 
+Then add the following anywhere before the `charadex.pages.masterlist` config:
+```JSON
+/* Image Gallery
+/* --------------------------------------------------------------- */
+charadex.page.imageGallery = {
+
+  sheetPage: charadex.sheet.pages.imageGallery,
+  sitePage: 'gallery',
+  dexSelector: 'charadex',
+  profileProperty: 'id',
+
+  sort: {
+    toggle: true,
+    key: "id",
+    order: "asc",
+    parameters: []
+  },
+
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 12,
+  },
+
+  filters: {
+    toggle: false,
+    parameters: {}
+  },
+
+  fauxFolder: {
+    toggle: false,
+    folderProperty: '',
+    parameters: [],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: true,
+    parameters: ['All', 'Designs', 'Artist']
+  },
+
+  prevNext: {
+    toggle: false,
+  },
+
+};
+```
+
+Finally, find the `charadex.pages.masterlist` config and add the following inside `relatedData`:
+
+```JSON
+/* Relates data to a main sheet via a key
+  ===================================================================== */
+  async relateData (primaryArray, primaryKey, secondaryPageName, secondaryKey) {
+
+    let scrub = charadex.tools.scrub;
+    let secondaryArray = await charadex.importSheet(secondaryPageName);
+
+    for (let primaryEntry of primaryArray) {
+      primaryEntry[scrub(secondaryPageName)] = [];
+      for (let secondaryEntry of secondaryArray) {
+        let secondaryDataArray = secondaryEntry[secondaryKey].split(',');
+        for (let prop of secondaryDataArray) {
+          if (scrub(primaryEntry[primaryKey]) === scrub(prop)) {
+            primaryEntry[scrub(secondaryPageName)].push(secondaryEntry);
+          }
+        }
+      }
+    }
+
+  },
 ```
 
 &nbsp;

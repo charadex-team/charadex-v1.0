@@ -26,11 +26,12 @@ charadex.site = {
 /* ==================================================================== */
 charadex.sheet = {
 
-  id: "1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak",
+  id: "1vcUJX7MODFgdtY5BEYkMhAh0u_e7ea9yXQdCjRDhaI8",
 
   pages: {
     masterlist:    "masterlist",
     masterlistLog: "masterlist log",
+    imageGallery:  "image gallery",
     inventory:     "inventory",
     inventoryLog:  "inventory log",
     items:         "items",
@@ -302,6 +303,52 @@ charadex.page.faq = {
 }
 
 
+/* Image Gallery
+/* --------------------------------------------------------------- */
+charadex.page.imageGallery = {
+
+  sheetPage: charadex.sheet.pages.imageGallery,
+  sitePage: 'gallery',
+  dexSelector: 'charadex',
+  profileProperty: 'id',
+
+  sort: {
+    toggle: true,
+    key: "id",
+    order: "asc",
+    parameters: []
+  },
+
+  pagination: {
+    toggle: true,
+    bottomToggle: true,
+    amount: 12,
+  },
+
+  filters: {
+    toggle: false,
+    parameters: {}
+  },
+
+  fauxFolder: {
+    toggle: false,
+    folderProperty: '',
+    parameters: [],
+  },
+
+  search: {
+    toggle: true,
+    filterToggle: true,
+    parameters: ['All', 'Designs', 'Artist']
+  },
+
+  prevNext: {
+    toggle: false,
+  },
+
+};
+
+
 
 /* Masterlist
 /* --------------------------------------------------------------- */
@@ -365,6 +412,30 @@ charadex.page.masterlist = {
         toggle: true,
         key: "timestamp",
         order: "desc",
+        parameters: []
+      },
+
+      pagination: {
+        toggle: true,
+        bottomToggle: false,
+        amount: 12,
+      },
+
+    },
+
+    [charadex.sheet.pages.imageGallery]: {
+
+      sheetPage: charadex.sheet.pages.imageGallery,
+      primaryProperty: 'design',
+      relatedProperty: 'designs',
+      dexSelector: 'gallery',
+      profileProperty: 'id',
+      profileToggle: false,
+
+      sort: {
+        toggle: true,
+        key: "id",
+        order: "asc",
         parameters: []
       },
 
