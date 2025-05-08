@@ -103,7 +103,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   }
 
   // If there's a profile, nyoom
-  if (createProfile()) return;
+  if (await createProfile()) return;
 
   // Create Gallery
   const createGallery = async () => {
@@ -142,7 +142,7 @@ charadex.initialize.page = async (dataArr, config, dataCallback, listCallback, c
   }
 
   // Else the gallery nyooms instead
-  return createGallery();
+  return await createGallery();
 
 }
 
