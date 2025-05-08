@@ -81,6 +81,40 @@ charadex.page.imageGallery = {
 Finally, find the `charadex.pages.masterlist` config and add the following inside `relatedData`:
 
 ```JSON
+  [charadex.sheet.pages.imageGallery]: {
+
+    ... charadex.page.imageGallery,
+
+    sheetPage: charadex.sheet.pages.imageGallery,
+    primaryProperty: 'design',
+    relatedProperty: 'designs',
+    dexSelector: 'gallery',
+    profileProperty: 'id',
+    profileToggle: false,
+
+    sort: {
+      toggle: true,
+      key: "id",
+      order: "asc",
+      parameters: []
+    },
+
+    pagination: {
+      toggle: true,
+      bottomToggle: true,
+      amount: 12,
+    },
+
+  }
+```
+
+&nbsp;
+
+### Step 2.5 | Update relatedData function
+
+If you aren't using the most up to date version of v1.5.5, make sure to go to the `utilities.js` file and find the `relatedData` function in `charadex.manageData`. Completely overwrite it with the following: 
+
+```JS
 /* Relates data to a main sheet via a key
   ===================================================================== */
   async relateData (primaryArray, primaryKey, secondaryPageName, secondaryKey) {
@@ -107,25 +141,91 @@ Finally, find the `charadex.pages.masterlist` config and add the following insid
 
 ### Step 3 | Add gallery files
 
-Add the [`gallery.js`]() file to `styles/js/pages` folder, then add the [`gallery.html`]() file to the main folder. Make sure to update the meta data!
+Add the [`gallery.js`]() file to `styles/js/pages` folder, then add the [`gallery.html`]() file to the main folder. Make sure to update the meta data in the HTML file. 
 
 &nbsp;
 
-### Step 5 | Add to Masterlist
+### Step 4 | Add to Masterlist
 
-Find your `masterlist.js` file in the `styles/js/pages` folder and add the following snippet **within** the `if (listdata == profile)` brackets.
+Find your `masterlist.js` file in the `styles/js/pages` folder and add the following snippet **within** the `if (listData.type == 'profile')` brackets:
+
+```JS
+  // Create the image gallery
+  if (charadex.tools.checkArray(listData.profileArray[0].imagegallery)) {
+    let gallery = await charadex.initialize.page(
+      listData.profileArray[0].imagegallery,
+      charadex.page.masterlist.relatedData['image gallery']
+    );
+  }
+```
 
 Then find your `masterlist.html` file and add the following to the **Nav Tabs** portion of the gallery profile.
 
-```html
-
+```HTML
+  <li class="col p-1 nav-item" role="presentation">
+    <a class="w-100 btn btn-primary" id="image-gallery-tab" data-toggle="tab" href="#image-gallery" 
+    aria-controls="image-gallery" aria-selected="true">Gallery</a>
+  </li>
 ```
 
 Finally add this snippet _after_ the **Main Profile** tab pane.
 
-```html
+```HTML
+  <!-- Image Gallery
+  <!-- ----------------------------------------------------------- -->
+  <div class="tab-pane fade" id="image-gallery" role="tabpanel" aria-labelledby="image-gallery-tab" tabindex="0">
+    <h4 class="text-primary">Gallery</h4>
+    <div id="gallery-gallery">
 
+      <!-- Pagination
+      <!-- --------------------------------------------------------------- -->
+      <div style="display: none;" class="gallery-pagination-container">
+        <hr>
+        <div class="nav d-flex justify-content-center my-n2">
+          <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+          <ul class="pagination gallery-pagination gallery-pagination-top justify-content-center m-0"></ul>
+          <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+        </div>
+        <hr>
+      </div>
 
+      <!-- List -->
+      <!-- --------------------------------------------------------------- -->
+      <div class="row no-gutters m-n2 gallery-list"></div>
+
+      <!-- List Item -->
+      <!-- --------------------------------------------------------------- -->
+      <div style="display: none;">
+        <div class="col-md-4 p-2" id="gallery-gallery-item">
+          <div class="card bg-faded">
+
+            <!-- Image-->
+            <a class="card-body cd-gallery-card p-2 d-flex flex-fill profilelink" href="">
+              <img class="image img-fluid m-auto rounded" src="" >
+            </a>
+
+            <!-- Artist -->
+            <div class="card-footer bg-faded text-right px-3 py-1 small">
+              Artist: <a class="artist artistlink"></a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination
+      <!-- --------------------------------------------------------------- -->
+      <div style="display: none;" class="gallery-pagination-container">
+        <hr>
+        <div class="nav d-flex justify-content-center my-n2">
+          <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+          <ul class="pagination gallery-pagination gallery-pagination-bottom justify-content-center m-0"></ul>
+          <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 ```
 
 After that, you should be able to tag multiple characters in a gallery image and it'll show up in their profile!

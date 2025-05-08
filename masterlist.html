@@ -228,8 +228,12 @@
             aria-controls="profile" aria-selected="true">Profile</a>
           </li>
           <li class="col p-1 nav-item" role="presentation">
-            <a class="w-100 btn btn-primary" id="logs-tab" data-toggle="tab" href="#logs" aria-controls="logs" 
-            aria-selected="false">Logs</a>
+            <a class="w-100 btn btn-primary" id="image-gallery-tab" data-toggle="tab" href="#image-gallery" 
+            aria-controls="image-gallery" aria-selected="true">Gallery</a>
+          </li>
+          <li class="col p-1 nav-item" role="presentation">
+            <a class="w-100 btn btn-primary" id="logs-tab" data-toggle="tab" href="#logs" 
+            aria-controls="logs" aria-selected="false">Logs</a>
           </li>
         </ul>
         <hr class="my-0">
@@ -320,6 +324,62 @@
                     <div class="px-4 cd-text-pre notes"></div>
                   </div>
 
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Image Gallery
+          <!-- ----------------------------------------------------------- -->
+          <div class="tab-pane fade" id="image-gallery" role="tabpanel" aria-labelledby="image-gallery-tab" tabindex="0">
+            <h4 class="text-primary">Gallery</h4>
+            <div id="gallery-gallery">
+
+              <!-- Pagination
+              <!-- --------------------------------------------------------------- -->
+              <div style="display: none;" class="gallery-pagination-container">
+                <hr>
+                <div class="nav d-flex justify-content-center my-n2">
+                  <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                  <ul class="pagination gallery-pagination gallery-pagination-top justify-content-center m-0"></ul>
+                  <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
+                </div>
+                <hr>
+              </div>
+
+              <!-- List -->
+              <!-- --------------------------------------------------------------- -->
+              <div class="row no-gutters m-n2 gallery-list"></div>
+
+              <!-- List Item -->
+              <!-- --------------------------------------------------------------- -->
+              <div style="display: none;">
+                <div class="col-md-4 p-2" id="gallery-gallery-item">
+                  <div class="card bg-faded">
+
+                    <!-- Image-->
+                    <a class="card-body cd-gallery-card p-2 d-flex flex-fill profilelink" href="">
+                      <img class="image img-fluid m-auto rounded" src="" >
+                    </a>
+
+                    <!-- Artist -->
+                    <div class="card-footer bg-faded text-right px-3 py-1 small">
+                      Artist: <a class="artist artistlink"></a>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pagination
+              <!-- --------------------------------------------------------------- -->
+              <div style="display: none;" class="gallery-pagination-container">
+                <hr>
+                <div class="nav d-flex justify-content-center my-n2">
+                  <div class="btn-prev page-item"><a class="page-link"><i class="fa fa-chevron-left"></i></a></div>
+                  <ul class="pagination gallery-pagination gallery-pagination-bottom justify-content-center m-0"></ul>
+                  <div class="btn-next page-item"><a class="page-link"><i class="fa fa-chevron-right"></i></a></div>
                 </div>
               </div>
 

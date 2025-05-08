@@ -339,7 +339,7 @@ charadex.page.imageGallery = {
   search: {
     toggle: true,
     filterToggle: true,
-    parameters: ['All', 'Designs', 'Artist']
+    parameters: ['All', 'Designs', 'Artist', 'Tags']
   },
 
   prevNext: {
@@ -425,6 +425,8 @@ charadex.page.masterlist = {
 
     [charadex.sheet.pages.imageGallery]: {
 
+      ... charadex.page.imageGallery,
+
       sheetPage: charadex.sheet.pages.imageGallery,
       primaryProperty: 'design',
       relatedProperty: 'designs',
@@ -441,7 +443,7 @@ charadex.page.masterlist = {
 
       pagination: {
         toggle: true,
-        bottomToggle: false,
+        bottomToggle: true,
         amount: 12,
       },
 
