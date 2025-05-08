@@ -25,7 +25,7 @@ Open [this sheet](https://docs.google.com/spreadsheets/d/1vcUJX7MODFgdtY5BEYkMhA
 
 ### Step 2
 
-File Links: [config.js]()
+File Links: [config.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/styles/js/config.js)
 
 Find your `config.js` file, we'll be making several edits.
 
@@ -116,7 +116,7 @@ Finally, find the `charadex.pages.masterlist` config and add the following insid
 
 ### Step 2.5 | Update relatedData function
 
-File Links: [utilities.js]()
+File Links: [utilities.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/styles/js/utilities.js)
 
 If you aren't using the most up to date version of v1.5.5, make sure to go to the `utilities.js` file and find the `relatedData` function in `charadex.manageData`. Completely overwrite it with the following: 
 
@@ -147,7 +147,7 @@ If you aren't using the most up to date version of v1.5.5, make sure to go to th
 
 ### Step 3 | Add Gallery Files
 
-File Links: [gallery.html](), [gallery.js]()
+File Links: [gallery.html](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/gallery.html), [gallery.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/styles/js/pages/gallery.js)
 
 Add the `gallery.js` file to `styles/js/pages` folder, then add the `gallery.html` file to the main folder. Make sure to update the meta data in the HTML file. 
 
@@ -155,7 +155,7 @@ Add the `gallery.js` file to `styles/js/pages` folder, then add the `gallery.htm
 
 ### Step 4 | Add to Masterlist
 
-File Links: [masterlist.html](), [masterlist.js]()
+File Links: [masterlist.html](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/masterlist.html), [masterlist.js](https://github.com/charadex-team/charadex-v1.0/blob/v1.5.5/features/image-gallery/styles/js/pages/masterlist.js)
 
 Find your `masterlist.js` file in the `styles/js/pages` folder and add the following snippet **within** the `if (listData.type == 'profile')` brackets:
 
