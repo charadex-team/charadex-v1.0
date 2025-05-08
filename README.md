@@ -21,6 +21,8 @@ Note that you might have to edit some variables if you've edited config/page nam
 
 Open [this sheet](https://docs.google.com/spreadsheets/d/1vcUJX7MODFgdtY5BEYkMhAh0u_e7ea9yXQdCjRDhaI8/edit?gid=1485004280#gid=1485004280) and find the `Image Gallery` tab. Right click the tab and select `Copy to` then `Existing Spreadsheet`. Select your your current Masterlist spreadsheet.
 
+Note: You'll need to add your own Data Validation to this sheet - you can google that or [follow my very bare bones guide](https://github.com/charadex-team/charadex-v1.0/wiki/Google-Sheet-Tips#creating-new-dropdowns).
+
 &nbsp;
 
 ### Step 2
