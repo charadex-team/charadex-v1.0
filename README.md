@@ -1,8 +1,9 @@
 # Charadex v.1.5.5
 
 > [!IMPORTANT]
-> You can (tentatively) use this branch in development. **It is fully compatible with with the [Charadex v1.5.0 Google Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/).**
-> It can work with older sheets as well but it'll take a bit of work.
+> **This versions is meant to work with the [Charadex v1.5.0 Google Sheet](https://docs.google.com/spreadsheets/d/1GwgfLizD3HQCieGia6di-TfU4E3EipT9Jb0BDZQwNak/).**
+
+&nbsp;
 
 ## Changelog
 
