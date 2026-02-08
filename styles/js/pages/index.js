@@ -45,6 +45,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* Designs
   ===================================================================== */
   let designs = await charadex.initialize.page(null, charadex.page.index.designs, (arr) => {
+
+    // Sort the array in desc order
+    arr.sort((a,b) => b.id - a.id);
     
     // Splice the silly little array
     let sliceAmount = charadex.page.index.designs.amount || 6;
